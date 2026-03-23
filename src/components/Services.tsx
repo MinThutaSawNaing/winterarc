@@ -52,9 +52,9 @@ export default function Services() {
           </div>
 
           <p className="max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
-            We keep the process practical: define the right scope, design with
-            real users in mind, and deliver software that is easier to run and
-            easier to trust.
+            Businesses searching for freelance web development, freelance
+            software services, or custom product delivery in Myanmar can work
+            with us on practical, scalable solutions.
           </p>
         </div>
 

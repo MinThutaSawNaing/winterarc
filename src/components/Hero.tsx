@@ -23,7 +23,7 @@ export default function Hero() {
         <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div className="max-w-3xl">
             <span className="inline-flex items-center rounded-full border border-blue-500/25 bg-blue-950/40 px-4 py-2 text-sm font-medium tracking-wide text-white shadow-sm shadow-slate-950/20 backdrop-blur">
-              Software partner for ambitious businesses in Myanmar
+              Freelance software services and digital product delivery in Myanmar
             </span>
 
             <h1 className="mt-6 text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">
@@ -31,9 +31,10 @@ export default function Hero() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-100 sm:text-lg">
-              Winter Arc Myanmar designs and builds modern websites, cloud
-              platforms, and custom systems that help teams launch faster,
-              simplify operations, and present a stronger brand online.
+              Winter Arc Myanmar delivers freelance software services in
+              Myanmar, building modern websites, mobile apps, cloud platforms,
+              and custom systems that help businesses launch faster and grow
+              with confidence.
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">

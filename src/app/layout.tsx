@@ -1,6 +1,13 @@
 import type { Metadata } from 'next'
 import { Manrope, Space_Grotesk } from 'next/font/google'
 import '@/lib/fontawesome'
+import {
+  siteDescription,
+  siteKeywords,
+  siteName,
+  siteTitle,
+  siteUrl,
+} from '@/lib/site'
 import './globals.css'
 
 const bodyFont = Manrope({
@@ -14,9 +21,40 @@ const displayFont = Space_Grotesk({
 })
 
 export const metadata: Metadata = {
-  title: 'Winter Arc Myanmar',
-  description:
-    'Winter Arc Myanmar builds modern web, mobile, and cloud products for ambitious teams.',
+  metadataBase: siteUrl ? new URL(siteUrl) : undefined,
+  title: siteTitle,
+  description: siteDescription,
+  keywords: siteKeywords,
+  applicationName: siteName,
+  category: 'technology',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  alternates: siteUrl
+    ? {
+        canonical: '/',
+      }
+    : undefined,
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    title: siteTitle,
+    description: siteDescription,
+    siteName,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteTitle,
+    description: siteDescription,
+  },
   icons: {
     icon: '/icon.png',
   },

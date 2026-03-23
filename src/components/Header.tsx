@@ -92,7 +92,7 @@ export default function Header() {
 
           <button
             onClick={() => scrollToSection('#contact')}
-            className="rounded-full bg-[var(--color-brand)] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[rgba(37,99,235,0.24)] transition-all duration-300 hover:bg-[var(--color-brand-deep)]"
+            className="rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:bg-blue-700"
           >
             Start a Project
           </button>
@@ -133,7 +133,7 @@ export default function Header() {
 
             <button
               onClick={() => scrollToSection('#contact')}
-              className="mt-3 rounded-2xl bg-[var(--color-brand)] px-4 py-3 font-semibold text-white transition-colors hover:bg-[var(--color-brand-deep)]"
+              className="mt-3 rounded-2xl bg-blue-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
             >
               Start a Project
             </button>
