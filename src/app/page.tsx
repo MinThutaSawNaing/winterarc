@@ -6,14 +6,19 @@ import About from '@/components/About'
 import Technologies from '@/components/Technologies'
 import Portfolio from '@/components/Portfolio'
 import Testimonials from '@/components/Testimonials'
+import MyanmarSeoSection from '@/components/MyanmarSeoSection'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 import {
   contactDetails,
   siteDescription,
+  siteDescriptionMy,
   siteName,
+  siteNameMy,
   siteUrl,
+  serviceCatalog,
+  serviceCatalogMy,
 } from '@/lib/site'
 
 export default function Home() {
@@ -21,15 +26,13 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     name: siteName,
-    description: siteDescription,
+    alternateName: siteNameMy,
+    description: `${siteDescription} ${siteDescriptionMy}`,
     areaServed: 'Myanmar',
-    serviceType: [
-      'Freelance software services',
-      'Web development',
-      'Mobile app development',
-      'Cloud solutions',
-      'Custom software development',
-    ],
+    keywords: [...serviceCatalog, ...serviceCatalogMy],
+    serviceType: [...serviceCatalog, ...serviceCatalogMy],
+    knowsLanguage: ['en', 'my'],
+    availableLanguage: ['English', 'Burmese'],
     email: contactDetails.email,
     telephone: contactDetails.phone,
     address: {
@@ -48,6 +51,17 @@ export default function Home() {
       },
     ],
     sameAs: [contactDetails.facebook, contactDetails.whatsapp],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Software services in Myanmar',
+      itemListElement: [...serviceCatalog, ...serviceCatalogMy].map((item) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: item,
+        },
+      })),
+    },
     url: siteUrl || undefined,
   }
 
@@ -55,9 +69,10 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: siteName,
-    description: siteDescription,
+    alternateName: siteNameMy,
+    description: `${siteDescription} ${siteDescriptionMy}`,
     url: siteUrl || undefined,
-    inLanguage: 'en',
+    inLanguage: ['en', 'my'],
   }
 
   return (
@@ -72,6 +87,7 @@ export default function Home() {
       <Header />
       <Hero />
       <Services />
+      <MyanmarSeoSection />
       <About />
       <Technologies />
       <Portfolio />

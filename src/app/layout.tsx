@@ -3,7 +3,9 @@ import { Manrope, Space_Grotesk } from 'next/font/google'
 import '@/lib/fontawesome'
 import {
   siteDescription,
+  siteDescriptionMy,
   siteKeywords,
+  siteMetaDescription,
   siteName,
   siteTitle,
   siteUrl,
@@ -23,7 +25,7 @@ const displayFont = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: siteUrl ? new URL(siteUrl) : undefined,
   title: siteTitle,
-  description: siteDescription,
+  description: siteMetaDescription,
   keywords: siteKeywords,
   applicationName: siteName,
   category: 'technology',
@@ -43,17 +45,20 @@ export const metadata: Metadata = {
         canonical: '/',
       }
     : undefined,
+  other: {
+    'content-language': 'en, my',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     title: siteTitle,
-    description: siteDescription,
+    description: `${siteDescription} ${siteDescriptionMy}`,
     siteName,
   },
   twitter: {
     card: 'summary_large_image',
     title: siteTitle,
-    description: siteDescription,
+    description: siteMetaDescription,
   },
   icons: {
     icon: '/icon.png',
