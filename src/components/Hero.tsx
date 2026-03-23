@@ -40,7 +40,7 @@ export default function Hero() {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center rounded-2xl bg-lime-300 px-6 py-3.5 text-base font-semibold text-slate-950 shadow-lg shadow-lime-300/20 transition hover:bg-lime-200"
+                className="inline-flex items-center justify-center rounded-2xl bg-green-700 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-green-900/30 transition hover:bg-green-600"
               >
                 Start a project
               </a>

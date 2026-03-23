@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 const navItems = [
   { name: 'Overview', href: '#home' },
@@ -71,6 +72,8 @@ export default function Header() {
         </Link>
 
         <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher />
+
           <nav
             aria-label="Primary"
             className="flex items-center gap-1 rounded-full border border-slate-800 bg-slate-950/80 px-2 py-2"
@@ -117,6 +120,8 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="border-t border-[var(--color-line)] bg-[rgba(2,6,23,0.96)] shadow-2xl backdrop-blur-xl md:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5">
+            <LanguageSwitcher mobile />
+
             {navItems.map((item) => (
               <Link
                 key={item.name}
