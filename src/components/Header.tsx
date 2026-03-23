@@ -1,11 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const navItems = [
-  { name: 'Home', href: '#home' },
+  { name: 'Overview', href: '#home' },
   { name: 'Services', href: '#services' },
   { name: 'About', href: '#about' },
   { name: 'Technologies', href: '#technologies' },
@@ -15,36 +15,50 @@ const navItems = [
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState('home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
+    let frameId = 0
 
-      const sections = navItems.map((item) => item.href.replace('#', ''))
-      for (const section of [...sections].reverse()) {
-        const element = document.getElementById(section)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          if (rect.top <= 120) {
-            setActiveSection(section)
-            break
-          }
-        }
+    const handleScroll = () => {
+      if (frameId !== 0) {
+        return
       }
+
+      frameId = window.requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 24)
+        frameId = 0
+      })
     }
 
     handleScroll()
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      if (frameId !== 0) {
+        window.cancelAnimationFrame(frameId)
+      }
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? 'hidden' : ''
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileMenuOpen])
+
   const scrollToSection = (href: string) => {
-    const element = document.getElementById(href.replace('#', ''))
+    const targetId = href.replace('#', '')
+    const element = document.getElementById(targetId)
+
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
+      window.history.replaceState(null, '', href)
     }
+
     setMobileMenuOpen(false)
   }
 
@@ -52,11 +66,11 @@ export default function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'border-b border-slate-200 bg-white/95 shadow-lg backdrop-blur-md'
+          ? 'border-b border-[var(--color-line)] bg-[rgba(248,251,246,0.9)] shadow-[0_12px_40px_rgba(17,32,21,0.08)] backdrop-blur-xl'
           : 'bg-transparent'
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 md:h-20 lg:px-8">
+      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-6 md:h-20 lg:px-8">
         <Link
           href="#home"
           className="flex items-center gap-3"
@@ -65,37 +79,45 @@ export default function Header() {
             scrollToSection('#home')
           }}
         >
-          <div className="relative h-12 w-12 md:h-16 md:w-16 overflow-hidden rounded-full">
+          <div className="relative h-12 w-12 overflow-hidden rounded-2xl border border-white/50 shadow-lg shadow-[rgba(17,32,21,0.12)] md:h-14 md:w-14">
             <Image
               src="/logo.jpg"
               alt="Winter Arc Myanmar"
               fill
               className="object-cover"
+              priority
+              sizes="56px"
             />
           </div>
 
           <div className="flex flex-col">
             <span
-              className={`text-base font-bold transition-colors duration-300 md:text-xl ${
-                isScrolled ? 'text-blue-600' : 'text-white'
+              className={`text-base font-bold transition-colors duration-300 md:text-lg ${
+                isScrolled ? 'text-[var(--color-brand-deep)]' : 'text-white'
               }`}
             >
               Winter Arc Myanmar
             </span>
             <span
-              className={`hidden text-xs transition-colors duration-300 sm:block ${
-                isScrolled ? 'text-slate-600' : 'text-blue-100'
+              className={`hidden text-xs font-medium tracking-[0.24em] transition-colors duration-300 sm:block ${
+                isScrolled ? 'text-[var(--color-muted)]' : 'text-white/70'
               }`}
             >
-              Software Solutions
+              DIGITAL PRODUCT STUDIO
             </span>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
-          {navItems.map((item) => {
-            const isActive = activeSection === item.href.replace('#', '')
-            return (
+        <div className="hidden items-center gap-3 md:flex">
+          <nav
+            aria-label="Primary"
+            className={`flex items-center gap-1 rounded-full border px-2 py-2 ${
+              isScrolled
+                ? 'border-[var(--color-line)] bg-white/80'
+                : 'border-white/[0.18] bg-white/10 backdrop-blur-md'
+            }`}
+          >
+            {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
@@ -103,40 +125,38 @@ export default function Header() {
                   e.preventDefault()
                   scrollToSection(item.href)
                 }}
-                className={`group relative rounded-lg px-4 py-2 text-sm font-medium transition-all duration-300 ${
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
                   isScrolled
-                    ? 'text-slate-700 hover:text-blue-600'
-                    : 'text-white/90 hover:text-white'
-                } ${isActive ? (isScrolled ? 'text-blue-600' : 'text-white') : ''}`}
+                    ? 'text-[var(--color-muted)] hover:bg-[var(--color-brand-soft)] hover:text-[var(--color-brand-deep)]'
+                    : 'text-white/[0.84] hover:bg-white/[0.12] hover:text-white'
+                }`}
               >
                 {item.name}
-                <span
-                  className={`absolute bottom-0 left-1/2 h-0.5 -translate-x-1/2 rounded-full bg-blue-500 transition-all duration-300 ${
-                    isActive ? 'w-1/2' : 'w-0 group-hover:w-1/2'
-                  }`}
-                />
               </Link>
-            )
-          })}
+            ))}
+          </nav>
 
           <button
             onClick={() => scrollToSection('#contact')}
-            className={`ml-3 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
+            className={`rounded-full px-5 py-3 text-sm font-semibold transition-all duration-300 ${
               isScrolled
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25 hover:bg-blue-700'
-                : 'bg-white text-blue-600 hover:bg-blue-50'
+                ? 'bg-[var(--color-brand)] text-white shadow-lg shadow-[rgba(30,122,77,0.28)] hover:bg-[var(--color-brand-deep)]'
+                : 'bg-white text-[var(--color-brand-deep)] hover:bg-[var(--color-brand-soft)]'
             }`}
           >
-            Get Quote
+            Start a Project
           </button>
-        </nav>
+        </div>
 
         <button
           onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className={`rounded-lg p-2 transition-colors md:hidden ${
-            isScrolled ? 'text-slate-700 hover:bg-slate-100' : 'text-white hover:bg-white/10'
+          className={`rounded-full border p-2.5 transition-colors md:hidden ${
+            isScrolled
+              ? 'border-[var(--color-line)] bg-white/80 text-[var(--color-brand-deep)] hover:bg-white'
+              : 'border-white/[0.16] bg-white/10 text-white hover:bg-white/[0.14]'
           }`}
           aria-label="Toggle menu"
+          aria-expanded={mobileMenuOpen}
         >
           <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {mobileMenuOpen ? (
@@ -149,34 +169,27 @@ export default function Header() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="border-t border-slate-100 bg-white shadow-xl md:hidden">
-          <nav className="flex flex-col px-4 py-4">
-            {navItems.map((item) => {
-              const isActive = activeSection === item.href.replace('#', '')
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    scrollToSection(item.href)
-                  }}
-                  className={`rounded-lg px-4 py-3 text-base font-medium transition-all duration-200 ${
-                    isActive
-                      ? 'border-l-4 border-blue-600 bg-blue-50 text-blue-600'
-                      : 'text-slate-700 hover:bg-slate-50 hover:text-blue-600'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              )
-            })}
+        <div className="border-t border-[var(--color-line)] bg-[rgba(248,251,246,0.96)] shadow-2xl backdrop-blur-xl md:hidden">
+          <nav className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={(e) => {
+                  e.preventDefault()
+                  scrollToSection(item.href)
+                }}
+                className="rounded-2xl border border-transparent bg-white/70 px-4 py-3 text-base font-semibold text-[var(--color-brand-deep)] transition-all duration-200 hover:border-[rgba(30,122,77,0.15)] hover:bg-white"
+              >
+                {item.name}
+              </Link>
+            ))}
 
             <button
               onClick={() => scrollToSection('#contact')}
-              className="mt-4 rounded-lg bg-blue-600 py-3 font-medium text-white transition-colors hover:bg-blue-700"
+              className="mt-3 rounded-2xl bg-[var(--color-brand)] px-4 py-3 font-semibold text-white transition-colors hover:bg-[var(--color-brand-deep)]"
             >
-              Get Quote
+              Start a Project
             </button>
           </nav>
         </div>
