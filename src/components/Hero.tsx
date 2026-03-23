@@ -14,15 +14,15 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-[linear-gradient(180deg,#0f172a_0%,#13264a_46%,#f8fafc_46%,#f8fafc_100%)] pt-28"
+      className="relative overflow-hidden bg-[linear-gradient(180deg,#000000_0%,#020617_42%,#0f172a_100%)] pt-28"
     >
-      <div className="absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.28),transparent_36%),radial-gradient(circle_at_top_right,rgba(245,158,11,0.18),transparent_28%)]" />
-      <div className="absolute left-1/2 top-32 h-64 w-64 -translate-x-1/2 rounded-full bg-blue-400/10 blur-3xl" />
+      <div className="absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.35),transparent_36%),radial-gradient(circle_at_top_right,rgba(15,23,42,0.42),transparent_28%)]" />
+      <div className="absolute left-1/2 top-32 h-64 w-64 -translate-x-1/2 rounded-full bg-blue-500/10 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center rounded-full border border-white/20 bg-slate-950/25 px-4 py-2 text-sm font-medium tracking-wide text-white shadow-sm shadow-slate-950/20 backdrop-blur">
+            <span className="inline-flex items-center rounded-full border border-blue-500/25 bg-blue-950/40 px-4 py-2 text-sm font-medium tracking-wide text-white shadow-sm shadow-slate-950/20 backdrop-blur">
               Software partner for ambitious businesses in Myanmar
             </span>
 
@@ -54,7 +54,7 @@ export default function Hero() {
             <div className="mt-8 flex flex-col gap-3 text-sm text-slate-100 sm:flex-row sm:flex-wrap sm:gap-6">
               {highlights.map((item) => (
                 <div key={item} className="flex items-center gap-3">
-                  <span className="h-2.5 w-2.5 rounded-full bg-amber-300" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-blue-400" />
                   <span>{item}</span>
                 </div>
               ))}
@@ -73,7 +73,7 @@ export default function Hero() {
                       Strategy to launch
                     </p>
                   </div>
-                  <span className="rounded-full bg-emerald-400/20 px-3 py-1 text-xs font-semibold text-emerald-100">
+                  <span className="rounded-full bg-blue-500/20 px-3 py-1 text-xs font-semibold text-blue-100">
                     Available now
                   </span>
                 </div>
@@ -107,16 +107,16 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="mt-14 grid gap-4 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:grid-cols-3 sm:p-6">
+        <div className="mt-14 grid gap-4 rounded-[2rem] border border-slate-800 bg-slate-950/80 p-5 shadow-sm sm:grid-cols-3 sm:p-6">
           {metrics.map((item) => (
             <div
               key={item.label}
-              className="rounded-[1.5rem] bg-slate-50 px-5 py-4 text-center sm:text-left"
+              className="rounded-[1.5rem] border border-slate-800 bg-slate-900 px-5 py-4 text-center sm:text-left"
             >
-              <div className="text-2xl font-semibold text-slate-950">
+              <div className="text-2xl font-semibold text-white">
                 {item.value}
               </div>
-              <div className="mt-1 text-sm font-medium text-slate-600">
+              <div className="mt-1 text-sm font-medium text-slate-300">
                 {item.label}
               </div>
             </div>

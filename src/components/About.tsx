@@ -25,19 +25,19 @@ const principles = [
 
 export default function About() {
   return (
-    <section id="about" className="bg-white py-20 md:py-24">
+    <section id="about" className="bg-[linear-gradient(180deg,#020617_0%,#0f172a_100%)] py-20 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
-            <span className="inline-block rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-sm font-medium text-amber-700">
+            <span className="inline-block rounded-full border border-blue-500/20 bg-blue-950/50 px-4 py-1.5 text-sm font-medium text-blue-100">
               About Winter Arc Myanmar
             </span>
 
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl lg:text-5xl">
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-5xl">
               A product-minded team focused on dependable digital delivery.
             </h2>
 
-            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 md:text-lg">
+            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
               We help businesses move from ideas and operational pain points to
               software that feels modern, efficient, and credible. Our work
               blends design clarity, practical engineering, and close
@@ -48,12 +48,12 @@ export default function About() {
               {stats.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-5"
+                  className="rounded-[1.75rem] border border-slate-800 bg-slate-900 p-5"
                 >
-                  <div className="text-2xl font-semibold text-slate-950 md:text-3xl">
+                  <div className="text-2xl font-semibold text-white md:text-3xl">
                     {item.value}
                   </div>
-                  <div className="mt-2 text-sm font-medium text-slate-600">
+                  <div className="mt-2 text-sm font-medium text-slate-300">
                     {item.label}
                   </div>
                 </div>
@@ -61,9 +61,9 @@ export default function About() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-5 sm:p-7">
-            <div className="rounded-[1.75rem] bg-slate-950 p-6 text-white sm:p-8">
-              <p className="text-sm font-medium uppercase tracking-[0.22em] text-slate-300">
+          <div className="rounded-[2rem] border border-slate-800 bg-slate-950 p-5 sm:p-7">
+            <div className="rounded-[1.75rem] bg-[linear-gradient(180deg,#0f172a_0%,#172554_100%)] p-6 text-white sm:p-8">
+              <p className="text-sm font-medium uppercase tracking-[0.22em] text-slate-200">
                 How we work
               </p>
 
@@ -79,7 +79,7 @@ export default function About() {
                       </span>
                       <div>
                         <h3 className="text-lg font-semibold">{item.title}</h3>
-                        <p className="mt-2 text-sm leading-7 text-slate-300">
+                        <p className="mt-2 text-sm leading-7 text-slate-200">
                           {item.description}
                         </p>
                       </div>

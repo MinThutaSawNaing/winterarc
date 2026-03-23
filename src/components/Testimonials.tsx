@@ -21,16 +21,16 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="bg-slate-50 py-20 md:py-24">
+    <section className="bg-black py-20 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col gap-5 md:max-w-3xl">
-          <span className="inline-block w-fit rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-sm font-medium text-amber-700">
+          <span className="inline-block w-fit rounded-full border border-blue-500/20 bg-blue-950/50 px-4 py-1.5 text-sm font-medium text-blue-100">
             Testimonials
           </span>
-          <h2 className="text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl lg:text-5xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-5xl">
             Clients trust us to bring calm, clarity, and follow-through to the work.
           </h2>
-          <p className="text-base leading-8 text-slate-600 md:text-lg">
+          <p className="text-base leading-8 text-slate-300 md:text-lg">
             Good delivery is not only about shipping features. It is also about
             communication, consistency, and making the process feel manageable.
           </p>
@@ -40,21 +40,21 @@ export default function Testimonials() {
           {testimonials.map((item) => (
             <article
               key={item.name}
-              className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm"
+              className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 shadow-sm"
             >
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-amber-500">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-300">
                 Five-star feedback
               </p>
 
-              <p className="mt-5 text-base leading-8 text-slate-700">
+              <p className="mt-5 text-base leading-8 text-slate-200">
                 &ldquo;{item.feedback}&rdquo;
               </p>
 
-              <div className="mt-6 border-t border-slate-200 pt-5">
-                <h3 className="text-base font-semibold text-slate-950">
+              <div className="mt-6 border-t border-slate-800 pt-5">
+                <h3 className="text-base font-semibold text-white">
                   {item.name}
                 </h3>
-                <p className="mt-1 text-sm text-slate-500">{item.company}</p>
+                <p className="mt-1 text-sm text-slate-400">{item.company}</p>
               </div>
             </article>
           ))}

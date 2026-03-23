@@ -29,16 +29,16 @@ const projects = [
 
 export default function Portfolio() {
   return (
-    <section id="portfolio" className="bg-white py-20 md:py-24">
+    <section id="portfolio" className="bg-[linear-gradient(180deg,#020617_0%,#0b1120_100%)] py-20 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-5 md:max-w-3xl">
-          <span className="inline-block w-fit rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700">
+          <span className="inline-block w-fit rounded-full border border-blue-500/20 bg-blue-950/50 px-4 py-1.5 text-sm font-medium text-blue-100">
             Selected work
           </span>
-          <h2 className="text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl lg:text-5xl">
+          <h2 className="text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-5xl">
             A focused portfolio of products built to solve specific business problems.
           </h2>
-          <p className="text-base leading-8 text-slate-600 md:text-lg">
+          <p className="text-base leading-8 text-slate-300 md:text-lg">
             These examples highlight the kinds of platforms and capabilities we
             help clients bring to market with stronger UX, cleaner structure,
             and dependable technical foundations.
@@ -49,7 +49,7 @@ export default function Portfolio() {
           {projects.map((project) => (
             <article
               key={project.title}
-              className="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              className="overflow-hidden rounded-[2rem] border border-slate-800 bg-slate-950 shadow-sm transition hover:-translate-y-1 hover:border-blue-700/40 hover:shadow-lg"
             >
               <div className="relative h-56 w-full">
                 <Image
@@ -62,15 +62,15 @@ export default function Portfolio() {
               </div>
 
               <div className="p-6">
-                <span className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-600">
+                <span className="inline-flex rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-slate-200">
                   {project.category}
                 </span>
 
-                <h3 className="mt-4 text-xl font-semibold text-slate-950">
+                <h3 className="mt-4 text-xl font-semibold text-white">
                   {project.title}
                 </h3>
 
-                <p className="mt-3 text-sm leading-7 text-slate-600">
+                <p className="mt-3 text-sm leading-7 text-slate-300">
                   {project.description}
                 </p>
 
@@ -78,7 +78,7 @@ export default function Portfolio() {
                   {project.tech.map((item) => (
                     <span
                       key={item}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700"
+                      className="rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-xs font-medium text-slate-200"
                     >
                       {item}
                     </span>

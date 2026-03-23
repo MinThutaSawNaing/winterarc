@@ -25,7 +25,7 @@ const contactMethods = [
     value: 'winterarcmyanmar@yahoo.com',
     href: 'mailto:winterarcmyanmar@yahoo.com?subject=Inquiry%20from%20Website&body=Hello%20Winter%20Arc%20Myanmar,',
     icon: faEnvelope,
-    iconClass: 'text-amber-300',
+    iconClass: 'text-blue-200',
   },
   {
     label: 'Phone',
@@ -53,13 +53,13 @@ const contactMethods = [
     value: 'Insein, Yangon, Myanmar 11011',
     href: 'https://maps.google.com/?q=Insein,Yangon,Myanmar',
     icon: faLocationDot,
-    iconClass: 'text-rose-300',
+    iconClass: 'text-slate-200',
   },
 ]
 
 export default function Contact() {
   return (
-    <section id="contact" className="bg-slate-950 py-20 md:py-24">
+    <section id="contact" className="bg-[linear-gradient(180deg,#020617_0%,#000000_100%)] py-20 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
@@ -77,7 +77,7 @@ export default function Contact() {
               path forward.
             </p>
 
-            <div className="mt-8 rounded-[2rem] border border-white/10 bg-white/5 p-6">
+            <div className="mt-8 rounded-[2rem] border border-slate-800 bg-slate-900/70 p-6">
               <div className="flex items-start gap-4">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-slate-100">
                   <FontAwesomeIcon icon={faBuilding} />
@@ -90,7 +90,7 @@ export default function Contact() {
                   <div className="mt-4 flex items-start gap-3 text-sm leading-7 text-slate-200">
                     <FontAwesomeIcon
                       icon={faClock}
-                      className="mt-1 text-amber-300"
+                      className="mt-1 text-blue-200"
                     />
                     <span>Monday - Friday, 9:00 AM - 6:00 PM</span>
                   </div>
@@ -106,7 +106,7 @@ export default function Contact() {
                 href={item.href}
                 target={item.href.startsWith('http') ? '_blank' : undefined}
                 rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 transition hover:bg-white/10"
+                className="rounded-[1.75rem] border border-slate-800 bg-slate-900/70 p-5 transition hover:border-blue-700/40 hover:bg-slate-900"
               >
                 <div
                   className={`flex h-11 w-11 items-center justify-center rounded-2xl bg-white/10 ${item.iconClass}`}

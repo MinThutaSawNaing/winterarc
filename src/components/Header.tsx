@@ -38,7 +38,7 @@ export default function Header() {
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-line)] bg-[rgba(255,255,255,0.88)] shadow-[0_12px_36px_rgba(15,23,42,0.08)] backdrop-blur-xl"
+      className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-line)] bg-[rgba(2,6,23,0.84)] shadow-[0_12px_36px_rgba(2,6,23,0.45)] backdrop-blur-xl"
     >
       <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-6 md:h-20 lg:px-8">
         <Link
@@ -49,7 +49,7 @@ export default function Header() {
             scrollToSection('#home')
           }}
         >
-          <div className="relative h-12 w-14 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-[rgba(15,23,42,0.1)] md:h-14 md:w-16">
+          <div className="relative h-12 w-14 overflow-hidden rounded-2xl border border-slate-700 bg-slate-950 shadow-lg shadow-[rgba(2,6,23,0.4)] md:h-14 md:w-16">
             <Image
               src="/icon.png"
               alt="Winter Arc Myanmar"
@@ -61,10 +61,10 @@ export default function Header() {
           </div>
 
           <div className="flex flex-col">
-            <span className="text-base font-bold text-[var(--color-brand-deep)] md:text-lg">
+            <span className="text-base font-bold text-white md:text-lg">
               Winter Arc Myanmar
             </span>
-            <span className="hidden text-xs font-medium tracking-[0.24em] text-slate-500 sm:block">
+            <span className="hidden text-xs font-medium tracking-[0.24em] text-slate-300 sm:block">
               DIGITAL PRODUCT STUDIO
             </span>
           </div>
@@ -73,7 +73,7 @@ export default function Header() {
         <div className="hidden items-center gap-3 md:flex">
           <nav
             aria-label="Primary"
-            className="flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50/90 px-2 py-2"
+            className="flex items-center gap-1 rounded-full border border-slate-800 bg-slate-950/80 px-2 py-2"
           >
             {navItems.map((item) => (
               <Link
@@ -83,7 +83,7 @@ export default function Header() {
                   e.preventDefault()
                   scrollToSection(item.href)
                 }}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-[var(--color-muted)] transition-all duration-200 hover:bg-[var(--color-brand-soft)] hover:text-[var(--color-brand-deep)]"
+                className="rounded-full px-4 py-2 text-sm font-semibold text-slate-200 transition-all duration-200 hover:bg-[var(--color-brand-soft)] hover:text-white"
               >
                 {item.name}
               </Link>
@@ -100,7 +100,7 @@ export default function Header() {
 
         <button
           onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className="rounded-full border border-slate-200 bg-slate-50 p-2.5 text-[var(--color-brand-deep)] transition-colors hover:bg-white md:hidden"
+          className="rounded-full border border-slate-700 bg-slate-950 p-2.5 text-white transition-colors hover:bg-slate-900 md:hidden"
           aria-label="Toggle menu"
           aria-expanded={mobileMenuOpen}
         >
@@ -115,7 +115,7 @@ export default function Header() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="border-t border-[var(--color-line)] bg-[rgba(255,255,255,0.96)] shadow-2xl backdrop-blur-xl md:hidden">
+        <div className="border-t border-[var(--color-line)] bg-[rgba(2,6,23,0.96)] shadow-2xl backdrop-blur-xl md:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5">
             {navItems.map((item) => (
               <Link
@@ -125,7 +125,7 @@ export default function Header() {
                   e.preventDefault()
                   scrollToSection(item.href)
                 }}
-                className="rounded-2xl border border-transparent bg-slate-50 px-4 py-3 text-base font-semibold text-[var(--color-brand-deep)] transition-all duration-200 hover:border-slate-200 hover:bg-white"
+                className="rounded-2xl border border-transparent bg-slate-950 px-4 py-3 text-base font-semibold text-white transition-all duration-200 hover:border-slate-700 hover:bg-slate-900"
               >
                 {item.name}
               </Link>

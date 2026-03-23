@@ -33,20 +33,20 @@ const technologies = [
 
 export default function Technologies() {
   return (
-    <section id="technologies" className="bg-slate-50 py-20 md:py-24">
+    <section id="technologies" className="bg-black py-20 md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
+        <div className="rounded-[2rem] border border-slate-800 bg-slate-950 p-6 shadow-sm sm:p-8 lg:p-10">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <span className="inline-block rounded-full border border-slate-200 bg-slate-100 px-4 py-1.5 text-sm font-medium text-slate-700">
+              <span className="inline-block rounded-full border border-blue-500/20 bg-blue-950/50 px-4 py-1.5 text-sm font-medium text-blue-100">
                 Technologies
               </span>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 md:text-4xl">
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">
                 Modern tools, chosen to keep products scalable and maintainable.
               </h2>
             </div>
 
-            <p className="max-w-2xl text-base leading-8 text-slate-600">
+            <p className="max-w-2xl text-base leading-8 text-slate-300">
               Our stack supports fast interfaces, reliable backend workflows,
               and cloud-ready deployment without adding unnecessary complexity.
             </p>
@@ -56,10 +56,10 @@ export default function Technologies() {
             {technologies.map((tech) => (
               <div
                 key={tech.name}
-                className="rounded-[1.5rem] border border-slate-200 bg-slate-50 px-5 py-6 text-center transition hover:border-slate-300 hover:bg-white"
+                className="rounded-[1.5rem] border border-slate-800 bg-slate-900 px-5 py-6 text-center transition hover:border-blue-700/40 hover:bg-slate-950"
               >
                 <div className={`text-4xl ${tech.color}`}>{tech.icon}</div>
-                <p className="mt-4 text-sm font-semibold text-slate-800">
+                <p className="mt-4 text-sm font-semibold text-white">
                   {tech.name}
                 </p>
               </div>
