@@ -1,10 +1,12 @@
+import LocalizedText from '@/components/LocalizedText'
+
 const footerLinks = [
-  { name: 'Home', href: '#home' },
-  { name: 'Services', href: '#services' },
-  { name: 'About', href: '#about' },
-  { name: 'Technologies', href: '#technologies' },
-  { name: 'Portfolio', href: '#portfolio' },
-  { name: 'Contact', href: '#contact' },
+  { en: 'Home', my: 'ပင်မ', href: '#home' },
+  { en: 'Services', my: 'ဝန်ဆောင်မှုများ', href: '#services' },
+  { en: 'About', my: 'အကြောင်းအရာ', href: '#about' },
+  { en: 'Technologies', my: 'နည်းပညာများ', href: '#technologies' },
+  { en: 'Portfolio', my: 'လုပ်ဆောင်ခဲ့သည့်အရာများ', href: '#portfolio' },
+  { en: 'Contact', my: 'ဆက်သွယ်ရန်', href: '#contact' },
 ]
 
 export default function Footer() {
@@ -14,11 +16,13 @@ export default function Footer() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-xl">
             <h3 className="text-xl font-semibold text-white">
-              Winter Arc Myanmar
+              <LocalizedText en="Winter Arc Myanmar" my="ဝင်းတာအာ့ခ် မြန်မာ" />
             </h3>
             <p className="mt-3 text-sm leading-7 text-slate-200">
-              Modern websites, platforms, and software systems designed to feel
-              clear, credible, and easy to use.
+              <LocalizedText
+                en="Modern websites, platforms, and software systems designed to feel clear, credible, and easy to use."
+                my="ရှင်းလင်းပြီး ယုံကြည်စိတ်ချရကာ အသုံးပြုရလွယ်ကူသော website, platform နှင့် software system များကို တည်ဆောက်ပေးပါသည်။"
+              />
             </p>
           </div>
 
@@ -28,11 +32,11 @@ export default function Footer() {
           >
             {footerLinks.map((item) => (
               <a
-                key={item.name}
+                key={item.href}
                 href={item.href}
                 className="text-slate-300 transition hover:text-white"
               >
-                {item.name}
+                <LocalizedText en={item.en} my={item.my} />
               </a>
             ))}
           </nav>
@@ -40,7 +44,10 @@ export default function Footer() {
 
         <div className="mt-8 border-t border-slate-800 pt-6">
           <p className="text-sm text-slate-400">
-            Copyright 2026 Winter Arc Myanmar. All rights reserved.
+            <LocalizedText
+              en="Copyright 2026 Winter Arc Myanmar. All rights reserved."
+              my="မူပိုင်ခွင့် 2026 Winter Arc Myanmar။ မူပိုင်ခွင့်အားလုံး ထိန်းသိမ်းထားသည်။"
+            />
           </p>
         </div>
       </div>

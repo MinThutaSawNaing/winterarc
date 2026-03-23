@@ -4,14 +4,15 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
+import LocalizedText from '@/components/LocalizedText'
 
 const navItems = [
-  { name: 'Overview', href: '#home' },
-  { name: 'Services', href: '#services' },
-  { name: 'About', href: '#about' },
-  { name: 'Technologies', href: '#technologies' },
-  { name: 'Portfolio', href: '#portfolio' },
-  { name: 'Contact', href: '#contact' },
+  { en: 'Overview', my: 'ပင်မ', href: '#home' },
+  { en: 'Services', my: 'ဝန်ဆောင်မှုများ', href: '#services' },
+  { en: 'About', my: 'အကြောင်းအရာ', href: '#about' },
+  { en: 'Technologies', my: 'နည်းပညာများ', href: '#technologies' },
+  { en: 'Portfolio', my: 'လုပ်ဆောင်ခဲ့သည့်အရာများ', href: '#portfolio' },
+  { en: 'Contact', my: 'ဆက်သွယ်ရန်', href: '#contact' },
 ]
 
 export default function Header() {
@@ -63,10 +64,16 @@ export default function Header() {
 
           <div className="flex flex-col">
             <span className="text-base font-bold text-white md:text-lg">
-              Winter Arc Myanmar
+              <LocalizedText
+                en="Winter Arc Myanmar"
+                my="ဝင်းတာအာ့ခ် မြန်မာ"
+              />
             </span>
             <span className="hidden text-xs font-medium tracking-[0.24em] text-slate-300 sm:block">
-              DIGITAL PRODUCT STUDIO
+              <LocalizedText
+                en="DIGITAL PRODUCT STUDIO"
+                my="ဒစ်ဂျစ်တယ်ထုတ်ကုန် စတူဒီယို"
+              />
             </span>
           </div>
         </Link>
@@ -80,7 +87,7 @@ export default function Header() {
           >
             {navItems.map((item) => (
               <Link
-                key={item.name}
+                key={item.href}
                 href={item.href}
                 onClick={(e) => {
                   e.preventDefault()
@@ -88,7 +95,7 @@ export default function Header() {
                 }}
                 className="rounded-full px-4 py-2 text-sm font-semibold text-slate-200 transition-all duration-200 hover:bg-[var(--color-brand-soft)] hover:text-white"
               >
-                {item.name}
+                <LocalizedText en={item.en} my={item.my} />
               </Link>
             ))}
           </nav>
@@ -97,7 +104,7 @@ export default function Header() {
             onClick={() => scrollToSection('#contact')}
             className="rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:bg-blue-700"
           >
-            Start a Project
+            <LocalizedText en="Start a Project" my="ပရောဂျက် စတင်ရန်" />
           </button>
         </div>
 
@@ -124,7 +131,7 @@ export default function Header() {
 
             {navItems.map((item) => (
               <Link
-                key={item.name}
+                key={item.href}
                 href={item.href}
                 onClick={(e) => {
                   e.preventDefault()
@@ -132,7 +139,7 @@ export default function Header() {
                 }}
                 className="rounded-2xl border border-transparent bg-slate-950 px-4 py-3 text-base font-semibold text-white transition-all duration-200 hover:border-slate-700 hover:bg-slate-900"
               >
-                {item.name}
+                <LocalizedText en={item.en} my={item.my} />
               </Link>
             ))}
 
@@ -140,7 +147,7 @@ export default function Header() {
               onClick={() => scrollToSection('#contact')}
               className="mt-3 rounded-2xl bg-blue-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
             >
-              Start a Project
+              <LocalizedText en="Start a Project" my="ပရောဂျက် စတင်ရန်" />
             </button>
           </nav>
         </div>

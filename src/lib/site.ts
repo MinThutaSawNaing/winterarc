@@ -8,7 +8,7 @@ export const siteDescription =
   'Winter Arc Myanmar offers freelance software services in Myanmar, including web development, mobile apps, cloud systems, UI/UX design, and custom business software.'
 
 export const siteDescriptionMy =
-  'Winter Arc Myanmar သည် မြန်မာနိုင်ငံအတွက် freelance software service များကို ပေးနေပြီး website development, mobile app development, cloud system နှင့် custom business software များကို တည်ဆောက်ပေးပါသည်။'
+  'Winter Arc Myanmar သည် မြန်မာနိုင်ငံအတွက် freelance software service များကို ပေးဆောင်ပြီး website development, mobile app development, cloud system နှင့် custom business software များကို တည်ဆောက်ပေးပါသည်။'
 
 export const siteMetaDescription =
   'Freelance software services in Myanmar for web, mobile, cloud, and custom systems. မြန်မာနိုင်ငံအတွက် website, app နှင့် software service များ။'
