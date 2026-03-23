@@ -63,7 +63,7 @@ export default function Contact() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
-            <span className="inline-block rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium text-slate-200">
+            <span className="inline-block rounded-full border border-white/[0.12] bg-white/[0.08] px-4 py-1.5 text-sm font-medium text-slate-100">
               Contact
             </span>
 
@@ -71,7 +71,7 @@ export default function Contact() {
               Start the conversation with a team that values clear communication.
             </h2>
 
-            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
+            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-200 md:text-lg">
               Reach out for project inquiries, product discussions, or support
               planning. We respond with practical next steps and a realistic
               path forward.
@@ -83,11 +83,11 @@ export default function Contact() {
                   <FontAwesomeIcon icon={faBuilding} />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-400">Company</p>
+                  <p className="text-sm text-slate-300">Company</p>
                   <p className="mt-1 text-lg font-semibold text-white">
                     Winter Arc Myanmar
                   </p>
-                  <div className="mt-4 flex items-start gap-3 text-sm leading-7 text-slate-300">
+                  <div className="mt-4 flex items-start gap-3 text-sm leading-7 text-slate-200">
                     <FontAwesomeIcon
                       icon={faClock}
                       className="mt-1 text-amber-300"
@@ -113,7 +113,7 @@ export default function Contact() {
                 >
                   <FontAwesomeIcon icon={item.icon} />
                 </div>
-                <p className="mt-4 text-sm text-slate-400">{item.label}</p>
+                <p className="mt-4 text-sm text-slate-300">{item.label}</p>
                 <p className="mt-1 text-base font-semibold leading-7 text-white">
                   {item.value}
                 </p>

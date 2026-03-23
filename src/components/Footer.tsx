@@ -16,7 +16,7 @@ export default function Footer() {
             <h3 className="text-xl font-semibold text-white">
               Winter Arc Myanmar
             </h3>
-            <p className="mt-3 text-sm leading-7 text-slate-400">
+            <p className="mt-3 text-sm leading-7 text-slate-300">
               Modern websites, platforms, and software systems designed to feel
               clear, credible, and easy to use.
             </p>
@@ -30,7 +30,7 @@ export default function Footer() {
               <a
                 key={item.name}
                 href={item.href}
-                className="transition hover:text-white"
+                className="text-slate-300 transition hover:text-white"
               >
                 {item.name}
               </a>

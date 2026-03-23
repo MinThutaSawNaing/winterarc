@@ -22,7 +22,7 @@ export default function Hero() {
       <div className="relative mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-medium tracking-wide text-blue-50 backdrop-blur">
+            <span className="inline-flex items-center rounded-full border border-white/20 bg-slate-950/25 px-4 py-2 text-sm font-medium tracking-wide text-white shadow-sm shadow-slate-950/20 backdrop-blur">
               Software partner for ambitious businesses in Myanmar
             </span>
 
@@ -30,7 +30,7 @@ export default function Hero() {
               Digital products that feel clear, credible, and ready to grow.
             </h1>
 
-            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-200 sm:text-lg">
+            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-100 sm:text-lg">
               Winter Arc Myanmar designs and builds modern websites, cloud
               platforms, and custom systems that help teams launch faster,
               simplify operations, and present a stronger brand online.
@@ -51,7 +51,7 @@ export default function Hero() {
               </a>
             </div>
 
-            <div className="mt-8 flex flex-col gap-3 text-sm text-slate-200 sm:flex-row sm:flex-wrap sm:gap-6">
+            <div className="mt-8 flex flex-col gap-3 text-sm text-slate-100 sm:flex-row sm:flex-wrap sm:gap-6">
               {highlights.map((item) => (
                 <div key={item} className="flex items-center gap-3">
                   <span className="h-2.5 w-2.5 rounded-full bg-amber-300" />
@@ -66,14 +66,14 @@ export default function Hero() {
               <div className="rounded-[1.75rem] border border-white/10 bg-slate-950/40 p-6 text-white">
                 <div className="flex items-center justify-between border-b border-white/10 pb-4">
                   <div>
-                    <p className="text-sm font-medium text-slate-300">
+                    <p className="text-sm font-medium text-slate-200">
                       Delivery model
                     </p>
                     <p className="mt-1 text-xl font-semibold">
                       Strategy to launch
                     </p>
                   </div>
-                  <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-200">
+                  <span className="rounded-full bg-emerald-400/20 px-3 py-1 text-xs font-semibold text-emerald-100">
                     Available now
                   </span>
                 </div>
@@ -94,7 +94,7 @@ export default function Hero() {
                         </span>
                         <div>
                           <h2 className="text-base font-semibold">{title}</h2>
-                          <p className="mt-1 text-sm leading-7 text-slate-300">
+                          <p className="mt-1 text-sm leading-7 text-slate-200">
                             {description}
                           </p>
                         </div>
