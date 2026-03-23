@@ -20,7 +20,8 @@ export const siteKeywords = [
 ]
 
 export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || null
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ||
+  'https://winterarc.asia'
 
 export const contactDetails = {
   email: 'winterarcmyanmar@yahoo.com',
