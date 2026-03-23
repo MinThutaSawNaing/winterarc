@@ -12,12 +12,8 @@ import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 import {
   contactDetails,
   siteDescription,
-  siteDescriptionMy,
   siteName,
-  siteNameMy,
   siteUrl,
-  serviceCatalog,
-  serviceCatalogMy,
 } from '@/lib/site'
 
 export default function Home() {
@@ -25,13 +21,15 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     name: siteName,
-    alternateName: siteNameMy,
-    description: `${siteDescription} ${siteDescriptionMy}`,
+    description: siteDescription,
     areaServed: 'Myanmar',
-    keywords: [...serviceCatalog, ...serviceCatalogMy],
-    serviceType: [...serviceCatalog, ...serviceCatalogMy],
-    knowsLanguage: ['en', 'my'],
-    availableLanguage: ['English', 'Burmese'],
+    serviceType: [
+      'Freelance software services',
+      'Web development',
+      'Mobile app development',
+      'Cloud solutions',
+      'Custom software development',
+    ],
     email: contactDetails.email,
     telephone: contactDetails.phone,
     address: {
@@ -50,17 +48,6 @@ export default function Home() {
       },
     ],
     sameAs: [contactDetails.facebook, contactDetails.whatsapp],
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Software services in Myanmar',
-      itemListElement: [...serviceCatalog, ...serviceCatalogMy].map((item) => ({
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: item,
-        },
-      })),
-    },
     url: siteUrl || undefined,
   }
 
@@ -68,10 +55,9 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: siteName,
-    alternateName: siteNameMy,
-    description: `${siteDescription} ${siteDescriptionMy}`,
+    description: siteDescription,
     url: siteUrl || undefined,
-    inLanguage: ['en', 'my'],
+    inLanguage: 'en',
   }
 
   return (

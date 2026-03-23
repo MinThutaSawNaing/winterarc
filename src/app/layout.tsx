@@ -1,12 +1,9 @@
 import type { Metadata } from 'next'
 import { Manrope, Space_Grotesk } from 'next/font/google'
-import { LanguageProvider } from '@/components/LanguageProvider'
 import '@/lib/fontawesome'
 import {
   siteDescription,
-  siteDescriptionMy,
   siteKeywords,
-  siteMetaDescription,
   siteName,
   siteTitle,
   siteUrl,
@@ -26,7 +23,7 @@ const displayFont = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: siteUrl ? new URL(siteUrl) : undefined,
   title: siteTitle,
-  description: siteMetaDescription,
+  description: siteDescription,
   keywords: siteKeywords,
   applicationName: siteName,
   category: 'technology',
@@ -46,20 +43,17 @@ export const metadata: Metadata = {
         canonical: '/',
       }
     : undefined,
-  other: {
-    'content-language': 'en, my',
-  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     title: siteTitle,
-    description: `${siteDescription} ${siteDescriptionMy}`,
+    description: siteDescription,
     siteName,
   },
   twitter: {
     card: 'summary_large_image',
     title: siteTitle,
-    description: siteMetaDescription,
+    description: siteDescription,
   },
   icons: {
     icon: '/icon.png',
@@ -72,11 +66,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" data-lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
         className={`${bodyFont.variable} ${displayFont.variable} bg-[var(--color-surface)] text-[var(--color-ink)] antialiased`}
       >
-        <LanguageProvider>{children}</LanguageProvider>
+        {children}
       </body>
     </html>
   )

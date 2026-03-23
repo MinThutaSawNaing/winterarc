@@ -3,16 +3,14 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import LanguageSwitcher from '@/components/LanguageSwitcher'
-import LocalizedText from '@/components/LocalizedText'
 
 const navItems = [
-  { en: 'Overview', my: 'ပင်မ', href: '#home' },
-  { en: 'Services', my: 'ဝန်ဆောင်မှုများ', href: '#services' },
-  { en: 'About', my: 'အကြောင်းအရာ', href: '#about' },
-  { en: 'Technologies', my: 'နည်းပညာများ', href: '#technologies' },
-  { en: 'Portfolio', my: 'လုပ်ဆောင်ခဲ့သည့်အရာများ', href: '#portfolio' },
-  { en: 'Contact', my: 'ဆက်သွယ်ရန်', href: '#contact' },
+  { name: 'Overview', href: '#home' },
+  { name: 'Services', href: '#services' },
+  { name: 'About', href: '#about' },
+  { name: 'Technologies', href: '#technologies' },
+  { name: 'Portfolio', href: '#portfolio' },
+  { name: 'Contact', href: '#contact' },
 ]
 
 export default function Header() {
@@ -64,30 +62,22 @@ export default function Header() {
 
           <div className="flex flex-col">
             <span className="text-base font-bold text-white md:text-lg">
-              <LocalizedText
-                en="Winter Arc Myanmar"
-                my="ဝင်းတာအာ့ခ် မြန်မာ"
-              />
+              Winter Arc Myanmar
             </span>
             <span className="hidden text-xs font-medium tracking-[0.24em] text-slate-300 sm:block">
-              <LocalizedText
-                en="DIGITAL PRODUCT STUDIO"
-                my="ဒစ်ဂျစ်တယ်ထုတ်ကုန် စတူဒီယို"
-              />
+              DIGITAL PRODUCT STUDIO
             </span>
           </div>
         </Link>
 
         <div className="hidden items-center gap-3 md:flex">
-          <LanguageSwitcher />
-
           <nav
             aria-label="Primary"
             className="flex items-center gap-1 rounded-full border border-slate-800 bg-slate-950/80 px-2 py-2"
           >
             {navItems.map((item) => (
               <Link
-                key={item.href}
+                key={item.name}
                 href={item.href}
                 onClick={(e) => {
                   e.preventDefault()
@@ -95,7 +85,7 @@ export default function Header() {
                 }}
                 className="rounded-full px-4 py-2 text-sm font-semibold text-slate-200 transition-all duration-200 hover:bg-[var(--color-brand-soft)] hover:text-white"
               >
-                <LocalizedText en={item.en} my={item.my} />
+                {item.name}
               </Link>
             ))}
           </nav>
@@ -104,7 +94,7 @@ export default function Header() {
             onClick={() => scrollToSection('#contact')}
             className="rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:bg-blue-700"
           >
-            <LocalizedText en="Start a Project" my="ပရောဂျက် စတင်ရန်" />
+            Start a Project
           </button>
         </div>
 
@@ -127,11 +117,9 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="border-t border-[var(--color-line)] bg-[rgba(2,6,23,0.96)] shadow-2xl backdrop-blur-xl md:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5">
-            <LanguageSwitcher mobile />
-
             {navItems.map((item) => (
               <Link
-                key={item.href}
+                key={item.name}
                 href={item.href}
                 onClick={(e) => {
                   e.preventDefault()
@@ -139,7 +127,7 @@ export default function Header() {
                 }}
                 className="rounded-2xl border border-transparent bg-slate-950 px-4 py-3 text-base font-semibold text-white transition-all duration-200 hover:border-slate-700 hover:bg-slate-900"
               >
-                <LocalizedText en={item.en} my={item.my} />
+                {item.name}
               </Link>
             ))}
 
@@ -147,7 +135,7 @@ export default function Header() {
               onClick={() => scrollToSection('#contact')}
               className="mt-3 rounded-2xl bg-blue-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
             >
-              <LocalizedText en="Start a Project" my="ပရောဂျက် စတင်ရန်" />
+              Start a Project
             </button>
           </nav>
         </div>
