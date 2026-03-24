@@ -75,13 +75,20 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: siteUrl ? [`${siteUrl}/logo.jpg`] : undefined,
   },
+  manifest: '/site.webmanifest',
   verification: googleSiteVerification
     ? {
         google: googleSiteVerification,
       }
     : undefined,
   icons: {
-    icon: '/icon.png',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-192.png', type: 'image/png', sizes: '192x192' },
+      { url: '/favicon-512.png', type: 'image/png', sizes: '512x512' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
 }
 
