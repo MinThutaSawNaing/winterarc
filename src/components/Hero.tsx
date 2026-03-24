@@ -56,7 +56,7 @@ export default function Hero() {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand)] px-7 py-3.5 text-base font-semibold text-white shadow-[0_18px_34px_rgba(15,118,110,0.22)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)]"
+                className="animate-shimmer inline-flex items-center justify-center rounded-full border border-white/15 bg-[linear-gradient(120deg,var(--color-brand-deep)_0%,var(--color-brand)_35%,#14b8a6_50%,var(--color-brand)_65%,var(--color-brand-deep)_100%)] bg-[length:220%_100%] px-7 py-3.5 text-base font-semibold !text-white shadow-[0_18px_34px_rgba(15,118,110,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(15,118,110,0.28)]"
               >
                 Start a Strategic Conversation
               </a>
