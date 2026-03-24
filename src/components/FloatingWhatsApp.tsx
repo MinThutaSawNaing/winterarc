@@ -19,12 +19,14 @@ export default function FloatingWhatsApp() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
-        className="group flex items-center gap-3 rounded-full border border-white/60 bg-[rgba(18,94,56,0.92)] px-4 py-3 text-white shadow-[0_20px_45px_rgba(15,81,48,0.35)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-[rgba(18,94,56,1)]"
+        className="group relative flex items-center gap-3 rounded-full border border-white/80 bg-white/90 px-4 py-3 text-[var(--color-ink)] shadow-[0_24px_42px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white"
       >
-        <span className="absolute inset-0 -z-10 rounded-full bg-[rgba(30,122,77,0.35)] blur-xl transition-opacity duration-300 group-hover:opacity-100 animate-halo" />
-        <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
+        <span className="absolute inset-0 -z-10 rounded-full bg-[rgba(15,118,110,0.16)] blur-xl transition-opacity duration-300 group-hover:opacity-100 animate-halo" />
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-brand)] text-white">
+          <FontAwesomeIcon icon={faWhatsapp} className="text-xl" />
+        </span>
 
-        <span className="hidden text-sm font-semibold tracking-wide md:inline">
+        <span className="hidden text-sm font-semibold tracking-[0.01em] md:inline">
           WhatsApp Us
         </span>
       </a>

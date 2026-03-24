@@ -9,16 +9,16 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-800 bg-black">
+    <footer className="bg-[var(--color-panel-dark)] text-white">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-xl">
-            <h3 className="text-xl font-semibold text-white">
+            <h3 className="text-xl font-semibold tracking-[-0.03em] text-white">
               Winter Arc Myanmar
             </h3>
-            <p className="mt-3 text-sm leading-7 text-slate-200">
-              Modern websites, platforms, and software systems designed to feel
-              clear, credible, and easy to use.
+            <p className="mt-3 text-sm leading-7 text-slate-300">
+              Websites, platforms, and software systems designed to feel clear,
+              credible, and ready to support long-term growth.
             </p>
           </div>
 
@@ -30,7 +30,7 @@ export default function Footer() {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-slate-300 transition hover:text-white"
+                className="transition hover:text-white"
               >
                 {item.name}
               </a>
@@ -38,7 +38,7 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="mt-8 border-t border-slate-800 pt-6">
+        <div className="mt-8 border-t border-white/10 pt-6">
           <p className="text-sm text-slate-400">
             Copyright 2026 Winter Arc Myanmar. All rights reserved.
           </p>

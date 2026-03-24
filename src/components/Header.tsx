@@ -15,6 +15,20 @@ const navItems = [
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24)
+    }
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? 'hidden' : ''
@@ -29,7 +43,7 @@ export default function Header() {
     const element = document.getElementById(targetId)
 
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
       window.history.replaceState(null, '', href)
     }
 
@@ -38,9 +52,13 @@ export default function Header() {
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-50 border-b border-[var(--color-line)] bg-[rgba(2,6,23,0.84)] shadow-[0_12px_36px_rgba(2,6,23,0.45)] backdrop-blur-xl"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'border-b border-[rgba(18,26,40,0.08)] bg-[rgba(247,245,239,0.82)] shadow-[0_16px_40px_rgba(15,23,42,0.08)] backdrop-blur-2xl'
+          : 'bg-transparent'
+      }`}
     >
-      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-6 md:h-20 lg:px-8">
+      <div className="mx-auto flex h-[5.25rem] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="#home"
           className="flex items-center gap-3"
@@ -49,23 +67,23 @@ export default function Header() {
             scrollToSection('#home')
           }}
         >
-          <div className="relative h-12 w-14 overflow-hidden rounded-2xl border border-slate-700 bg-slate-950 shadow-lg shadow-[rgba(2,6,23,0.4)] md:h-14 md:w-16">
+          <div className="relative h-12 w-14 overflow-hidden rounded-[1.35rem] border border-white/70 bg-[linear-gradient(180deg,#102237_0%,#173152_100%)] shadow-[0_18px_34px_rgba(15,23,42,0.18)] md:h-14 md:w-16">
             <Image
               src="/icon.png"
               alt="Winter Arc Myanmar"
               fill
-              className="scale-[1.28] object-cover object-center"
+              className="scale-[1.18] object-cover object-center"
               priority
               sizes="(min-width: 768px) 64px, 56px"
             />
           </div>
 
           <div className="flex flex-col">
-            <span className="text-base font-bold text-white md:text-lg">
+            <span className="text-base font-bold tracking-[-0.03em] text-[var(--color-ink)] md:text-lg">
               Winter Arc Myanmar
             </span>
-            <span className="hidden text-xs font-medium tracking-[0.24em] text-slate-300 sm:block">
-              DIGITAL PRODUCT STUDIO
+            <span className="hidden text-[11px] font-semibold tracking-[0.26em] text-[var(--color-muted)] sm:block">
+              ENTERPRISE DIGITAL DELIVERY
             </span>
           </div>
         </Link>
@@ -73,7 +91,7 @@ export default function Header() {
         <div className="hidden items-center gap-3 md:flex">
           <nav
             aria-label="Primary"
-            className="flex items-center gap-1 rounded-full border border-slate-800 bg-slate-950/80 px-2 py-2"
+            className="flex items-center gap-1 rounded-full border border-white/70 bg-white/75 p-2 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur-xl"
           >
             {navItems.map((item) => (
               <Link
@@ -83,7 +101,7 @@ export default function Header() {
                   e.preventDefault()
                   scrollToSection(item.href)
                 }}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-slate-200 transition-all duration-200 hover:bg-[var(--color-brand-soft)] hover:text-white"
+                className="rounded-full px-4 py-2 text-sm font-semibold text-[var(--color-muted)] transition-all duration-200 hover:bg-[var(--color-brand-soft)] hover:text-[var(--color-ink)]"
               >
                 {item.name}
               </Link>
@@ -92,15 +110,15 @@ export default function Header() {
 
           <button
             onClick={() => scrollToSection('#contact')}
-            className="rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-300 hover:bg-blue-700"
+            className="rounded-full bg-[var(--color-accent)] px-5 py-3 text-sm font-semibold text-white shadow-[0_16px_30px_rgba(180,83,9,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#9a470a]"
           >
-            Start a Project
+            Book a Discovery Call
           </button>
         </div>
 
         <button
           onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className="rounded-full border border-slate-700 bg-slate-950 p-2.5 text-white transition-colors hover:bg-slate-900 md:hidden"
+          className="rounded-full border border-white/70 bg-white/80 p-2.5 text-[var(--color-ink)] shadow-[0_12px_24px_rgba(15,23,42,0.07)] transition-colors hover:bg-white md:hidden"
           aria-label="Toggle menu"
           aria-expanded={mobileMenuOpen}
         >
@@ -115,7 +133,7 @@ export default function Header() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="border-t border-[var(--color-line)] bg-[rgba(2,6,23,0.96)] shadow-2xl backdrop-blur-xl md:hidden">
+        <div className="border-t border-[rgba(18,26,40,0.08)] bg-[rgba(247,245,239,0.96)] shadow-[0_18px_42px_rgba(15,23,42,0.09)] backdrop-blur-2xl md:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5">
             {navItems.map((item) => (
               <Link
@@ -125,7 +143,7 @@ export default function Header() {
                   e.preventDefault()
                   scrollToSection(item.href)
                 }}
-                className="rounded-2xl border border-transparent bg-slate-950 px-4 py-3 text-base font-semibold text-white transition-all duration-200 hover:border-slate-700 hover:bg-slate-900"
+                className="rounded-[1.35rem] border border-transparent bg-white px-4 py-3 text-base font-semibold text-[var(--color-ink)] shadow-[0_10px_20px_rgba(15,23,42,0.04)] transition-all duration-200 hover:border-[rgba(15,118,110,0.18)] hover:bg-[rgba(15,118,110,0.04)]"
               >
                 {item.name}
               </Link>
@@ -133,9 +151,9 @@ export default function Header() {
 
             <button
               onClick={() => scrollToSection('#contact')}
-              className="mt-3 rounded-2xl bg-blue-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
+              className="mt-3 rounded-[1.35rem] bg-[var(--color-accent)] px-4 py-3 font-semibold text-white transition-colors hover:bg-[#9a470a]"
             >
-              Start a Project
+              Book a Discovery Call
             </button>
           </nav>
         </div>
