@@ -9,6 +9,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
+    host: siteUrl || undefined,
     sitemap: siteUrl ? `${siteUrl}/sitemap.xml` : undefined,
   }
 }

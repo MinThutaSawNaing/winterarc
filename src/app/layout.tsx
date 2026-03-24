@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Manrope, Space_Grotesk } from 'next/font/google'
 import '@/lib/fontawesome'
 import {
+  googleSiteVerification,
   siteDescription,
   siteKeywords,
   siteName,
@@ -26,7 +27,16 @@ export const metadata: Metadata = {
   description: siteDescription,
   keywords: siteKeywords,
   applicationName: siteName,
+  authors: [{ name: siteName, url: siteUrl || undefined }],
+  creator: siteName,
+  publisher: siteName,
   category: 'technology',
+  referrer: 'origin-when-cross-origin',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   robots: {
     index: true,
     follow: true,
@@ -40,7 +50,7 @@ export const metadata: Metadata = {
   },
   alternates: siteUrl
     ? {
-        canonical: '/',
+        canonical: siteUrl,
       }
     : undefined,
   openGraph: {
@@ -49,12 +59,27 @@ export const metadata: Metadata = {
     title: siteTitle,
     description: siteDescription,
     siteName,
+    url: siteUrl || undefined,
+    images: siteUrl
+      ? [
+          {
+            url: `${siteUrl}/logo.jpg`,
+            alt: `${siteName} logo`,
+          },
+        ]
+      : undefined,
   },
   twitter: {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
+    images: siteUrl ? [`${siteUrl}/logo.jpg`] : undefined,
   },
+  verification: googleSiteVerification
+    ? {
+        google: googleSiteVerification,
+      }
+    : undefined,
   icons: {
     icon: '/icon.png',
   },

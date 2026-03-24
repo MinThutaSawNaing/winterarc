@@ -23,6 +23,11 @@ export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ||
   'https://winterarc.asia'
 
+export const googleSiteVerification =
+  process.env.GOOGLE_SITE_VERIFICATION ||
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+  ''
+
 export const contactDetails = {
   email: 'winterarcmyanmar@yahoo.com',
   phone: '+95 9 977 144 320',
