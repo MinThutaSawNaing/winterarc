@@ -226,7 +226,7 @@ export default function LoliAssistant() {
               href={contactDetails.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center rounded-full bg-[var(--color-accent)] px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(180,83,9,0.22)] transition hover:-translate-y-0.5 hover:bg-[#9a470a]"
             >
               WhatsApp the Team
             </a>
