@@ -26,12 +26,89 @@ function jsonResponse(body: object, status = 200) {
 
 function isAllowedOrigin(request: NextRequest) {
   const origin = request.headers.get('origin')
+  const fetchSite = request.headers.get('sec-fetch-site')
 
   if (!origin) {
     return true
   }
 
-  return origin === request.nextUrl.origin
+  const originHost = normalizeHost(origin)
+
+  if (!originHost) {
+    return false
+  }
+
+  if (
+    fetchSite === 'same-origin' ||
+    fetchSite === 'same-site' ||
+    fetchSite === 'none'
+  ) {
+    return true
+  }
+
+  return getAllowedHosts(request).has(originHost)
+}
+
+function getAllowedHosts(request: NextRequest) {
+  const allowedHosts = new Set<string>()
+  const directHost = normalizeHost(request.headers.get('host'))
+  const forwardedHost = normalizeForwardedHost(request.headers.get('x-forwarded-host'))
+
+  if (directHost) {
+    allowedHosts.add(directHost)
+  }
+
+  if (forwardedHost) {
+    allowedHosts.add(forwardedHost)
+  }
+
+  for (const value of [
+    process.env.URL,
+    process.env.DEPLOY_URL,
+    process.env.DEPLOY_PRIME_URL,
+    process.env.SITE_URL,
+    process.env.NEXT_PUBLIC_SITE_URL,
+  ]) {
+    const normalized = normalizeHost(value)
+
+    if (normalized) {
+      allowedHosts.add(normalized)
+    }
+  }
+
+  return allowedHosts
+}
+
+function normalizeForwardedHost(value: string | null) {
+  if (!value) {
+    return ''
+  }
+
+  const firstValue = value.split(',')[0]?.trim()
+
+  return normalizeHost(firstValue)
+}
+
+function normalizeHost(value: string | null | undefined) {
+  if (!value) {
+    return ''
+  }
+
+  const trimmedValue = value.trim()
+
+  if (!trimmedValue) {
+    return ''
+  }
+
+  try {
+    const url = new URL(
+      trimmedValue.includes('://') ? trimmedValue : `https://${trimmedValue}`
+    )
+
+    return url.hostname.toLowerCase()
+  } catch {
+    return ''
+  }
 }
 
 function getUsage(request: NextRequest) {
