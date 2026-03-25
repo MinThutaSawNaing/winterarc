@@ -6,6 +6,7 @@ import About from '@/components/About'
 import Technologies from '@/components/Technologies'
 import Portfolio from '@/components/Portfolio'
 import Testimonials from '@/components/Testimonials'
+import LoliAssistant from '@/components/LoliAssistant'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
@@ -79,6 +80,7 @@ export default function Home() {
       <Technologies />
       <Portfolio />
       <Testimonials />
+      <LoliAssistant />
       <FloatingWhatsApp />
       <Contact />
       <Footer />

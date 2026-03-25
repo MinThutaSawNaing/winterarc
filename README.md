@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is the Winter Arc Myanmar website built with [Next.js](https://nextjs.org).
 
 ## Getting Started
 
-First, run the development server:
+1. Create a local env file from the example:
+
+```bash
+cp .env.example .env.local
+```
+
+2. Add your APIFree.ai credentials:
+
+- `APIFREE_API_KEY`: server-side key from APIFree.ai
+- `LOLI_MODEL`: the Gemini model id you want to use through APIFree.ai
+- `LOLI_COOKIE_SECRET`: a long random string used to sign the per-device rate-limit cookie
+
+3. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Loli Assistant
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- The site includes a `Loli` assistant backed by APIFree.ai's OpenAI-compatible `/v1/chat/completions` endpoint.
+- The APIFree.ai key stays on the server in `src/app/api/loli/route.ts`.
+- Each browser/device is limited to 3 questions using a signed HTTP-only cookie.
+- When the limit is reached, the UI directs visitors to contact Winter Arc Myanmar by WhatsApp or email.
+- Because the assistant uses a secure server route, this app must be deployed as a normal Next.js app or serverless deployment, not as `output: 'export'` static HTML.
 
-## Learn More
+## Notes
 
-To learn more about Next.js, take a look at the following resources:
+- Do not expose `APIFREE_API_KEY` in client-side code.
+- The per-device limit is cookie-based, so clearing cookies will reset the limit.
+- You can override the assistant behavior with `LOLI_SYSTEM_PROMPT` if you want a stricter or more branded personality prompt.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Commands
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev
+npm run lint
+npm run build
+```
