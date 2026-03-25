@@ -33,6 +33,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## Notes
 
 - Do not expose `APIFREE_API_KEY` in client-side code.
+- The production site URL is defined in `src/lib/site.ts` as `https://winterarc.asia`, so `NEXT_PUBLIC_SITE_URL` is no longer needed for deployment.
+- Netlify is configured to omit `NEXT_PUBLIC_SITE_URL` from secret scanning because that value is intentionally public if it still exists in your site settings.
 - The per-device limit is cookie-based, so clearing cookies will reset the limit.
 - You can override the assistant behavior with `LOLI_SYSTEM_PROMPT` if you want a stricter or more branded personality prompt.
 

@@ -19,9 +19,7 @@ export const siteKeywords = [
   'software outsourcing Myanmar',
 ]
 
-export const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') ||
-  'https://winterarc.asia'
+export const siteUrl = 'https://winterarc.asia'
 
 export const googleSiteVerification =
   process.env.GOOGLE_SITE_VERIFICATION ||
