@@ -281,13 +281,13 @@ export default function LoliAssistant() {
             className="absolute inset-0 h-full w-full bg-[rgba(16,24,39,0.38)] backdrop-blur-[2px]"
           />
 
-          <div className="relative flex h-full items-end justify-center p-4 sm:items-center sm:p-8 md:p-10">
+          <div className="relative flex h-full items-end justify-center overflow-y-auto p-3 sm:items-center sm:p-6 md:p-8">
             <div
               role="dialog"
               aria-modal="true"
               aria-labelledby="loli-dialog-title"
               aria-describedby="loli-dialog-description"
-              className="relative z-10 flex w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.985),rgba(247,245,239,0.965))] shadow-[0_40px_100px_rgba(15,23,42,0.22)] backdrop-blur-2xl max-sm:max-h-[calc(100vh-1rem)] sm:max-h-[min(90vh,56rem)]"
+              className="relative z-10 my-auto flex w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.985),rgba(247,245,239,0.965))] shadow-[0_40px_100px_rgba(15,23,42,0.22)] backdrop-blur-2xl max-h-[calc(100vh-1.5rem)] sm:max-h-[calc(100vh-3rem)]"
             >
               <div className="flex items-start justify-between gap-4 border-b border-[rgba(18,26,40,0.08)] px-6 py-5 sm:px-7">
                 <div className="flex items-center gap-3">
@@ -386,7 +386,7 @@ export default function LoliAssistant() {
                     </a>
                     <a
                       href={`mailto:${contactDetails.email}`}
-                      className="inline-flex items-center justify-center rounded-full border border-[#c8d3df] bg-[#eef3f8] px-5 py-3 text-sm font-semibold text-[#102237] shadow-[0_10px_24px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 hover:bg-[#e4edf5] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20"
+                      className="inline-flex items-center justify-center rounded-full border border-[#9fb4c9] bg-[#dce8f4] px-5 py-3 text-sm font-semibold text-[#102237] shadow-[0_10px_24px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 hover:bg-[#cfdfef] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20"
                     >
                       Email the Team
                     </a>
