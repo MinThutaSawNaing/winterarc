@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import {
   LOLI_API_URL,
-  LOLI_COOKIE_MAX_AGE_SECONDS,
-  LOLI_LIMIT,
   LOLI_USAGE_COOKIE,
   buildLoliSystemPrompt,
   createEmptyUsage,
@@ -11,6 +9,7 @@ import {
   readUsageCookie,
   sanitizeChatMessages,
 } from '@/lib/loli'
+import { LOLI_COOKIE_MAX_AGE_SECONDS, LOLI_LIMIT } from '@/lib/loli-config'
 import { contactDetails } from '@/lib/site'
 
 export const runtime = 'nodejs'
@@ -148,7 +147,7 @@ export async function POST(request: NextRequest) {
     return jsonResponse(
       {
         message:
-          'This device has already used all 3 free Loli questions. Please contact us on WhatsApp or email for more help.',
+          `This device has already used all ${LOLI_LIMIT} free Loli questions. Please contact us on WhatsApp or email for more help.`,
         usage: currentUsage,
         contact: {
           whatsapp: contactDetails.whatsapp,

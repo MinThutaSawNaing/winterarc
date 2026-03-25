@@ -9,7 +9,6 @@ import Testimonials from '@/components/Testimonials'
 import LoliAssistant from '@/components/LoliAssistant'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
-import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 import {
   contactDetails,
   siteDescription,
@@ -83,10 +82,9 @@ export default function Home() {
       <Technologies />
       <Portfolio />
       <Testimonials />
-      <LoliAssistant />
-      <FloatingWhatsApp />
       <Contact />
       <Footer />
+      <LoliAssistant />
     </main>
   )
 }

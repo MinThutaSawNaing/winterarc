@@ -1,10 +1,9 @@
 import { createHmac, randomUUID } from 'node:crypto'
 import { contactDetails, siteName } from '@/lib/site'
+import { LOLI_COOKIE_MAX_AGE_SECONDS, LOLI_LIMIT } from '@/lib/loli-config'
 
 export const LOLI_API_URL = 'https://api.apifree.ai/v1/chat/completions'
 export const LOLI_USAGE_COOKIE = 'loli_usage'
-export const LOLI_LIMIT = 3
-export const LOLI_COOKIE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365
 
 export type LoliRole = 'assistant' | 'user'
 

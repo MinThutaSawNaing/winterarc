@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { LOLI_OPEN_EVENT } from '@/lib/loli-config'
 
 const navItems = [
   { name: 'Overview', href: '#home' },
@@ -59,6 +60,13 @@ export default function Header() {
   }, [mobileMenuOpen])
 
   const scrollToSection = (href: string) => {
+    if (href === '#loli') {
+      window.dispatchEvent(new CustomEvent(LOLI_OPEN_EVENT))
+      window.history.replaceState(null, '', href)
+      setMobileMenuOpen(false)
+      return
+    }
+
     const targetId = href.replace('#', '')
     const element = document.getElementById(targetId)
 
