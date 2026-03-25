@@ -281,13 +281,13 @@ export default function LoliAssistant() {
             className="absolute inset-0 h-full w-full bg-[rgba(16,24,39,0.38)] backdrop-blur-[2px]"
           />
 
-          <div className="relative flex h-full items-end justify-center overflow-y-auto p-3 sm:items-center sm:p-6 md:p-8">
+          <div className="relative flex h-full items-end justify-center overflow-y-auto p-2 sm:items-center sm:p-4 md:p-5">
             <div
               role="dialog"
               aria-modal="true"
               aria-labelledby="loli-dialog-title"
               aria-describedby="loli-dialog-description"
-              className="relative z-10 my-auto flex w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.985),rgba(247,245,239,0.965))] shadow-[0_40px_100px_rgba(15,23,42,0.22)] backdrop-blur-2xl max-h-[calc(100vh-1.5rem)] sm:max-h-[calc(100vh-3rem)]"
+              className="relative z-10 my-auto flex h-[calc(100dvh-1rem)] w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.985),rgba(247,245,239,0.965))] shadow-[0_40px_100px_rgba(15,23,42,0.22)] backdrop-blur-2xl sm:h-[min(92vh,56rem)]"
             >
               <div className="flex items-start justify-between gap-4 border-b border-[rgba(18,26,40,0.08)] px-6 py-5 sm:px-7">
                 <div className="flex items-center gap-3">
@@ -339,8 +339,8 @@ export default function LoliAssistant() {
                 </div>
               </div>
 
-              <div className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
-                <aside className="border-b border-[rgba(18,26,40,0.08)] bg-[linear-gradient(180deg,rgba(15,23,42,0.98),rgba(21,30,47,0.94))] px-6 py-6 text-white lg:border-b-0 lg:border-r lg:px-7 lg:py-7">
+              <div className="grid min-h-0 flex-1 gap-0 lg:grid-cols-[0.92fr_1.08fr]">
+                <aside className="overflow-y-auto border-b border-[rgba(18,26,40,0.08)] bg-[linear-gradient(180deg,rgba(15,23,42,0.98),rgba(21,30,47,0.94))] px-5 py-5 text-white lg:border-b-0 lg:border-r lg:px-6 lg:py-6">
                   <span className="inline-flex rounded-full border border-white/10 bg-white/[0.08] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-100">
                     Premium AI support
                   </span>
@@ -395,7 +395,7 @@ export default function LoliAssistant() {
 
                 <div className="flex min-h-0 flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,245,239,0.98))]">
                   <div
-                    className="min-h-0 flex-1 space-y-4 overflow-y-auto px-6 py-6 sm:px-7 sm:py-7"
+                    className="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-5 sm:px-6 sm:py-6"
                     role="log"
                     aria-live="polite"
                     aria-relevant="additions text"
@@ -422,7 +422,7 @@ export default function LoliAssistant() {
                     <div ref={bottomRef} />
                   </div>
 
-                  <div className="border-t border-[rgba(18,26,40,0.08)] bg-white/90 px-6 py-5 backdrop-blur-sm sm:px-7">
+                  <div className="border-t border-[rgba(18,26,40,0.08)] bg-white/90 px-5 py-4 backdrop-blur-sm sm:px-6 sm:py-5">
                     <div className="grid gap-2 sm:grid-cols-3">
                       {suggestedQuestions.map((question) => (
                         <button
