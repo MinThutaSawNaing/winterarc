@@ -339,28 +339,28 @@ export default function LoliAssistant() {
                 </div>
               </div>
 
-              <div className="grid min-h-0 flex-1 gap-0 lg:grid-cols-[0.92fr_1.08fr]">
-                <aside className="overflow-y-auto border-b border-[rgba(18,26,40,0.08)] bg-[linear-gradient(180deg,rgba(15,23,42,0.98),rgba(21,30,47,0.94))] px-5 py-5 text-white lg:border-b-0 lg:border-r lg:px-6 lg:py-6">
+              <div className="grid min-h-0 flex-1 gap-0 lg:grid-cols-[0.78fr_1.22fr]">
+                <aside className="overflow-y-auto border-b border-[rgba(18,26,40,0.08)] bg-[linear-gradient(180deg,rgba(15,23,42,0.98),rgba(21,30,47,0.94))] px-5 py-4 text-white lg:border-b-0 lg:border-r lg:px-6 lg:py-5">
                   <span className="inline-flex rounded-full border border-white/10 bg-white/[0.08] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-100">
                     Premium AI support
                   </span>
 
-                  <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-white sm:text-[2rem]">
+                  <h2 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-white sm:text-[1.75rem]">
                     Fast answers, clear next steps, and a human handoff when you
                     need one.
                   </h2>
 
-                  <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300 sm:text-[0.95rem]">
+                  <p className="mt-3 max-w-xl text-sm leading-6 text-slate-300 sm:text-[0.95rem]">
                     Loli is built for visitors who want a quick, polished way to
                     understand Winter Arc Myanmar&apos;s services, process, and
                     fit before reaching out directly.
                   </p>
 
-                  <div className="mt-5 rounded-[1.2rem] border border-white/10 bg-white/5 px-4 py-3 text-sm leading-6 text-slate-100">
+                  <div className="mt-4 rounded-[1.2rem] border border-white/10 bg-white/5 px-4 py-3 text-sm leading-6 text-slate-100">
                     {statusMessage}
                   </div>
 
-                  <div className="mt-6 grid gap-3">
+                  <div className="mt-5 grid gap-3">
                     {[
                       'Service overviews, project fit, and next-step guidance.',
                       'Secure by design. Chat stays on our server.',
@@ -375,7 +375,7 @@ export default function LoliAssistant() {
                     ))}
                   </div>
 
-                  <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col">
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row lg:flex-col">
                     <a
                       href={contactDetails.whatsapp}
                       target="_blank"
@@ -395,7 +395,7 @@ export default function LoliAssistant() {
 
                 <div className="flex min-h-0 flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,245,239,0.98))]">
                   <div
-                    className="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-5 sm:px-6 sm:py-6"
+                    className="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4 sm:px-6 sm:py-5"
                     role="log"
                     aria-live="polite"
                     aria-relevant="additions text"
@@ -422,7 +422,7 @@ export default function LoliAssistant() {
                     <div ref={bottomRef} />
                   </div>
 
-                  <div className="border-t border-[rgba(18,26,40,0.08)] bg-white/90 px-5 py-4 backdrop-blur-sm sm:px-6 sm:py-5">
+                  <div className="border-t border-[rgba(18,26,40,0.08)] bg-white/90 px-5 py-3 backdrop-blur-sm sm:px-6 sm:py-4">
                     <div className="grid gap-2 sm:grid-cols-3">
                       {suggestedQuestions.map((question) => (
                         <button
@@ -436,7 +436,7 @@ export default function LoliAssistant() {
                       ))}
                     </div>
 
-                    <form className="mt-5 space-y-3" onSubmit={handleSubmit}>
+                    <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
                       <label htmlFor="loli-question" className="sr-only">
                         Ask Loli a question
                       </label>
@@ -451,7 +451,7 @@ export default function LoliAssistant() {
                             : 'Ask about services, timelines, or how to get started...'
                         }
                         disabled={isBlocked || isLoading}
-                        rows={4}
+                        rows={3}
                         maxLength={1200}
                         className="w-full rounded-[1.4rem] border border-[rgba(18,26,40,0.08)] bg-white px-4 py-3 text-[var(--color-ink)] shadow-[0_8px_18px_rgba(15,23,42,0.04)] outline-none transition placeholder:text-slate-400 focus:border-[rgba(15,118,110,0.35)] focus:ring-4 focus:ring-[rgba(15,118,110,0.12)] disabled:cursor-not-allowed disabled:bg-slate-50"
                       />
