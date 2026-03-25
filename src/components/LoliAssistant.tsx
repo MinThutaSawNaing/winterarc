@@ -422,21 +422,21 @@ export default function LoliAssistant() {
                     <div ref={bottomRef} />
                   </div>
 
-                  <div className="border-t border-[rgba(18,26,40,0.08)] bg-white/90 px-5 py-3 backdrop-blur-sm sm:px-6 sm:py-4">
+                  <div className="border-t border-[rgba(18,26,40,0.08)] bg-white/90 px-4 py-2.5 backdrop-blur-sm sm:px-5 sm:py-3">
                     <div className="grid gap-2 sm:grid-cols-3">
                       {suggestedQuestions.map((question) => (
                         <button
                           key={question}
                           type="button"
                           onClick={() => handleSuggestion(question)}
-                          className="rounded-[1.2rem] border border-[rgba(18,26,40,0.08)] bg-white px-4 py-3 text-left text-sm font-medium leading-6 text-[var(--color-ink)] shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[rgba(15,118,110,0.2)] hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)]"
+                          className="rounded-[1rem] border border-[rgba(18,26,40,0.08)] bg-white px-3 py-2 text-left text-xs font-medium leading-5 text-[var(--color-ink)] shadow-[0_6px_14px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[rgba(15,118,110,0.2)] hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)]"
                         >
                           {question}
                         </button>
                       ))}
                     </div>
 
-                    <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
+                    <form className="mt-3 space-y-2.5" onSubmit={handleSubmit}>
                       <label htmlFor="loli-question" className="sr-only">
                         Ask Loli a question
                       </label>
@@ -451,13 +451,13 @@ export default function LoliAssistant() {
                             : 'Ask about services, timelines, or how to get started...'
                         }
                         disabled={isBlocked || isLoading}
-                        rows={3}
+                        rows={2}
                         maxLength={1200}
-                        className="w-full rounded-[1.4rem] border border-[rgba(18,26,40,0.08)] bg-white px-4 py-3 text-[var(--color-ink)] shadow-[0_8px_18px_rgba(15,23,42,0.04)] outline-none transition placeholder:text-slate-400 focus:border-[rgba(15,118,110,0.35)] focus:ring-4 focus:ring-[rgba(15,118,110,0.12)] disabled:cursor-not-allowed disabled:bg-slate-50"
+                        className="w-full rounded-[1.1rem] border border-[rgba(18,26,40,0.08)] bg-white px-3.5 py-2.5 text-sm text-[var(--color-ink)] shadow-[0_8px_18px_rgba(15,23,42,0.04)] outline-none transition placeholder:text-slate-400 focus:border-[rgba(15,118,110,0.35)] focus:ring-4 focus:ring-[rgba(15,118,110,0.12)] disabled:cursor-not-allowed disabled:bg-slate-50"
                       />
 
-                      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                        <p className="text-sm leading-6 text-[var(--color-muted)]">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <p className="text-xs leading-5 text-[var(--color-muted)]">
                           {LOLI_LIMIT}-question device limit. For more, contact us
                           directly.
                         </p>
@@ -465,7 +465,7 @@ export default function LoliAssistant() {
                         <button
                           type="submit"
                           disabled={!input.trim() || isBlocked || isLoading}
-                          className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand)] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_30px_rgba(15,118,110,0.2)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.16)] disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none"
+                          className="inline-flex items-center justify-center self-end rounded-full bg-[var(--color-brand)] px-4 py-2 text-xs font-semibold text-white shadow-[0_12px_24px_rgba(15,118,110,0.2)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.16)] disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none"
                         >
                           {isLoading ? 'Sending...' : 'Ask Loli'}
                         </button>
