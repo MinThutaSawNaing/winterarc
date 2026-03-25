@@ -50,6 +50,18 @@ export default function LoliAssistant() {
   const bottomRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLTextAreaElement | null>(null)
 
+  const closeAssistant = () => {
+    setIsOpen(false)
+
+    if (window.location.hash === '#loli') {
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}${window.location.search}`
+      )
+    }
+  }
+
   useEffect(() => {
     const loadUsage = async () => {
       try {
@@ -105,7 +117,7 @@ export default function LoliAssistant() {
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        setIsOpen(false)
+        closeAssistant()
       }
     }
 
@@ -231,7 +243,7 @@ export default function LoliAssistant() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-5 right-5 z-40 flex max-w-[16rem] items-center gap-3 rounded-full border border-white/80 bg-white/92 px-3 py-2.5 text-left text-[var(--color-ink)] shadow-[0_24px_42px_rgba(15,23,42,0.12)] backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.16)] md:bottom-7 md:right-7"
+        className="fixed bottom-5 right-5 z-40 flex max-w-[17rem] items-center gap-3 rounded-full border border-white/80 bg-white/94 px-4 py-3.5 text-left text-[var(--color-ink)] shadow-[0_24px_42px_rgba(15,23,42,0.12)] backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.16)] md:bottom-7 md:right-7"
         aria-label="Open Loli AI assistant"
         aria-haspopup="dialog"
         aria-expanded={isOpen}
@@ -265,19 +277,19 @@ export default function LoliAssistant() {
           <button
             type="button"
             aria-label="Close Loli assistant"
-            onClick={() => setIsOpen(false)}
+            onClick={closeAssistant}
             className="absolute inset-0 h-full w-full bg-[rgba(16,24,39,0.38)] backdrop-blur-[2px]"
           />
 
-          <div className="relative flex h-full items-end justify-center p-3 sm:items-center sm:p-6">
+          <div className="relative flex h-full items-end justify-center p-4 sm:items-center sm:p-8 md:p-10">
             <div
               role="dialog"
               aria-modal="true"
               aria-labelledby="loli-dialog-title"
               aria-describedby="loli-dialog-description"
-              className="relative z-10 flex w-full max-w-4xl flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(247,245,239,0.96))] shadow-[0_40px_100px_rgba(15,23,42,0.22)] backdrop-blur-2xl sm:max-h-[min(88vh,52rem)]"
+              className="relative z-10 flex w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.985),rgba(247,245,239,0.965))] shadow-[0_40px_100px_rgba(15,23,42,0.22)] backdrop-blur-2xl max-sm:max-h-[calc(100vh-1rem)] sm:max-h-[min(90vh,56rem)]"
             >
-              <div className="flex items-start justify-between gap-4 border-b border-[rgba(18,26,40,0.08)] px-5 py-4 sm:px-6">
+              <div className="flex items-start justify-between gap-4 border-b border-[rgba(18,26,40,0.08)] px-6 py-5 sm:px-7">
                 <div className="flex items-center gap-3">
                   <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[rgba(18,26,40,0.08)] bg-[linear-gradient(180deg,#f8f5ee,#ece7db)]">
                     <Image
@@ -307,13 +319,20 @@ export default function LoliAssistant() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={closeAssistant}
+                    className="hidden rounded-full border border-[rgba(18,26,40,0.08)] bg-white px-4 py-2 text-sm font-semibold text-[var(--color-ink)] transition hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)] sm:inline-flex"
+                  >
+                    Back to site
+                  </button>
                   <span className="hidden rounded-full border border-[rgba(15,118,110,0.12)] bg-[var(--color-brand-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-brand-deep)] sm:inline-flex">
                     {usage.questionsRemaining}/{usage.limit} left
                   </span>
                   <button
                     type="button"
-                    onClick={() => setIsOpen(false)}
-                    className="rounded-full border border-[rgba(18,26,40,0.08)] bg-white px-4 py-2 text-sm font-semibold text-[var(--color-ink)] transition hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)]"
+                    onClick={closeAssistant}
+                    className="rounded-full border border-[rgba(18,26,40,0.08)] bg-[var(--color-ink)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1f2b3d] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)]"
                   >
                     Close
                   </button>
@@ -321,17 +340,17 @@ export default function LoliAssistant() {
               </div>
 
               <div className="grid gap-0 lg:grid-cols-[0.92fr_1.08fr]">
-                <aside className="border-b border-[rgba(18,26,40,0.08)] bg-[linear-gradient(180deg,rgba(15,23,42,0.98),rgba(21,30,47,0.94))] px-5 py-5 text-white lg:border-b-0 lg:border-r lg:px-6">
+                <aside className="border-b border-[rgba(18,26,40,0.08)] bg-[linear-gradient(180deg,rgba(15,23,42,0.98),rgba(21,30,47,0.94))] px-6 py-6 text-white lg:border-b-0 lg:border-r lg:px-7 lg:py-7">
                   <span className="inline-flex rounded-full border border-white/10 bg-white/[0.08] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-100">
                     Premium AI support
                   </span>
 
-                  <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-white">
+                  <h2 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-white sm:text-[2rem]">
                     Fast answers, clear next steps, and a human handoff when you
                     need one.
                   </h2>
 
-                  <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300">
+                  <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300 sm:text-[0.95rem]">
                     Loli is built for visitors who want a quick, polished way to
                     understand Winter Arc Myanmar&apos;s services, process, and
                     fit before reaching out directly.
@@ -361,13 +380,13 @@ export default function LoliAssistant() {
                       href={contactDetails.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:-translate-y-0.5"
+                      className="inline-flex items-center justify-center rounded-full bg-[var(--color-accent)] px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(180,83,9,0.22)] transition hover:-translate-y-0.5 hover:bg-[#9a470a] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20"
                     >
                       WhatsApp the Team
                     </a>
                     <a
                       href={`mailto:${contactDetails.email}`}
-                      className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/10"
+                      className="inline-flex items-center justify-center rounded-full border border-[#c8d3df] bg-[#eef3f8] px-5 py-3 text-sm font-semibold text-[#102237] shadow-[0_10px_24px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 hover:bg-[#e4edf5] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20"
                     >
                       Email the Team
                     </a>
@@ -376,7 +395,7 @@ export default function LoliAssistant() {
 
                 <div className="flex min-h-0 flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,245,239,0.98))]">
                   <div
-                    className="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-5 sm:px-6"
+                    className="min-h-0 flex-1 space-y-4 overflow-y-auto px-6 py-6 sm:px-7 sm:py-7"
                     role="log"
                     aria-live="polite"
                     aria-relevant="additions text"
@@ -403,21 +422,21 @@ export default function LoliAssistant() {
                     <div ref={bottomRef} />
                   </div>
 
-                  <div className="border-t border-[rgba(18,26,40,0.08)] bg-white/80 px-5 py-4 backdrop-blur-sm sm:px-6">
+                  <div className="border-t border-[rgba(18,26,40,0.08)] bg-white/90 px-6 py-5 backdrop-blur-sm sm:px-7">
                     <div className="grid gap-2 sm:grid-cols-3">
                       {suggestedQuestions.map((question) => (
                         <button
                           key={question}
                           type="button"
                           onClick={() => handleSuggestion(question)}
-                          className="rounded-[1.2rem] border border-[rgba(18,26,40,0.08)] bg-white px-3 py-2 text-left text-sm font-medium leading-6 text-[var(--color-ink)] shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[rgba(15,118,110,0.2)] hover:bg-[rgba(15,118,110,0.04)]"
+                          className="rounded-[1.2rem] border border-[rgba(18,26,40,0.08)] bg-white px-4 py-3 text-left text-sm font-medium leading-6 text-[var(--color-ink)] shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[rgba(15,118,110,0.2)] hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)]"
                         >
                           {question}
                         </button>
                       ))}
                     </div>
 
-                    <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
+                    <form className="mt-5 space-y-3" onSubmit={handleSubmit}>
                       <label htmlFor="loli-question" className="sr-only">
                         Ask Loli a question
                       </label>
@@ -437,7 +456,7 @@ export default function LoliAssistant() {
                         className="w-full rounded-[1.4rem] border border-[rgba(18,26,40,0.08)] bg-white px-4 py-3 text-[var(--color-ink)] shadow-[0_8px_18px_rgba(15,23,42,0.04)] outline-none transition placeholder:text-slate-400 focus:border-[rgba(15,118,110,0.35)] focus:ring-4 focus:ring-[rgba(15,118,110,0.12)] disabled:cursor-not-allowed disabled:bg-slate-50"
                       />
 
-                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <p className="text-sm leading-6 text-[var(--color-muted)]">
                           {LOLI_LIMIT}-question device limit. For more, contact us
                           directly.
@@ -446,7 +465,7 @@ export default function LoliAssistant() {
                         <button
                           type="submit"
                           disabled={!input.trim() || isBlocked || isLoading}
-                          className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand)] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_30px_rgba(15,118,110,0.2)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)] disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none"
+                          className="inline-flex items-center justify-center rounded-full bg-[var(--color-brand)] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_30px_rgba(15,118,110,0.2)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.16)] disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none"
                         >
                           {isLoading ? 'Sending...' : 'Ask Loli'}
                         </button>
