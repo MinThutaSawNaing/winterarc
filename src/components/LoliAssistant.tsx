@@ -319,13 +319,6 @@ export default function LoliAssistant() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={closeAssistant}
-                    className="hidden rounded-full border border-[rgba(18,26,40,0.08)] bg-white px-4 py-2 text-sm font-semibold text-[var(--color-ink)] transition hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)] sm:inline-flex"
-                  >
-                    Back to site
-                  </button>
                   <span className="hidden rounded-full border border-[rgba(15,118,110,0.12)] bg-[var(--color-brand-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-brand-deep)] sm:inline-flex">
                     {usage.questionsRemaining}/{usage.limit} left
                   </span>
