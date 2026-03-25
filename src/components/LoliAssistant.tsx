@@ -30,6 +30,12 @@ const fallbackUsage: UsageState = {
   locked: false,
 }
 
+const suggestedQuestions = [
+  'What can Winter Arc Myanmar help with?',
+  'How do I start a project here?',
+  'What happens after the 3-question limit?',
+]
+
 export default function LoliAssistant() {
   const [messages, setMessages] = useState<ChatMessage[]>([introMessage])
   const [input, setInput] = useState('')
@@ -39,6 +45,7 @@ export default function LoliAssistant() {
     'Loading available questions...'
   )
   const bottomRef = useRef<HTMLDivElement | null>(null)
+  const inputRef = useRef<HTMLTextAreaElement | null>(null)
 
   useEffect(() => {
     const loadUsage = async () => {
@@ -75,6 +82,11 @@ export default function LoliAssistant() {
       block: 'end',
     })
   }, [messages, isLoading])
+
+  const handleSuggestion = (question: string) => {
+    setInput(question)
+    inputRef.current?.focus()
+  }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -172,19 +184,19 @@ export default function LoliAssistant() {
   return (
     <section
       id="loli"
-      className="section-shell relative overflow-hidden bg-[linear-gradient(180deg,#f7f5ef_0%,#efe8dc_100%)] py-20 md:py-24"
+      className="section-shell relative overflow-hidden bg-[linear-gradient(180deg,#f7f5ef_0%,#efe8dc_100%)] py-16 md:py-24"
     >
-      <div className="hero-orb left-[5%] top-20 h-56 w-56 bg-[rgba(15,118,110,0.14)]" />
-      <div className="hero-orb right-[7%] top-28 h-60 w-60 bg-[rgba(180,83,9,0.16)]" />
+      <div className="hero-orb left-[5%] top-20 h-40 w-40 bg-[rgba(15,118,110,0.14)] sm:h-56 sm:w-56" />
+      <div className="hero-orb right-[7%] top-28 h-44 w-44 bg-[rgba(180,83,9,0.16)] sm:h-60 sm:w-60" />
 
-      <div className="relative mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.88fr_1.12fr] lg:px-8">
+      <div className="relative mx-auto grid max-w-7xl gap-6 px-4 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-8 lg:px-8">
         <div className="panel-card-dark rounded-[2rem] p-6 sm:p-8">
           <span className="inline-flex rounded-full border border-white/10 bg-white/[0.08] px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.18em] text-emerald-100">
             AI Concierge
           </span>
 
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white md:text-4xl">
-            Meet Loli, the on-site assistant for quick project questions.
+            Meet Loli, Winter Arc Myanmar&apos;s on-site assistant for quick project questions.
           </h2>
 
           <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
@@ -194,64 +206,47 @@ export default function LoliAssistant() {
             device gets 3 free questions.
           </p>
 
-          <div className="mt-8 grid gap-4">
-            <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/[0.55]">
-                Use Loli for
-              </p>
-              <p className="mt-3 text-sm leading-7 text-slate-200">
-                Service overviews, project fit, next-step questions, and basic
-                guidance before talking to the team.
-              </p>
-            </div>
-
-            <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/[0.55]">
-                Keep private details out
-              </p>
-              <p className="mt-3 text-sm leading-7 text-slate-200">
-                Please do not paste passwords, secret keys, payment data, or
-                confidential project files into the chat.
-              </p>
-            </div>
-
-            <div className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/[0.55]">
-                Need more than 3 questions?
-              </p>
-              <p className="mt-3 text-sm leading-7 text-slate-200">
-                Continue the conversation on WhatsApp or email and the team will
-                help directly.
-              </p>
-
-              <div className="mt-4 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href={contactDetails.whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:-translate-y-0.5"
-                >
-                  Contact on WhatsApp
-                </a>
-                <a
-                  href={`mailto:${contactDetails.email}`}
-                  className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/10"
-                >
-                  Email the Team
-                </a>
+          <div className="mt-8 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            {[
+              'Service overviews, project fit, and next-step guidance.',
+              'Private data stays out. Keep passwords and keys out of chat.',
+              'Need more help? Continue with WhatsApp or email.',
+            ].map((item) => (
+              <div
+                key={item}
+                className="rounded-[1.5rem] border border-white/10 bg-white/5 p-4 text-sm leading-7 text-slate-200"
+              >
+                {item}
               </div>
-            </div>
+            ))}
+          </div>
+
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+            <a
+              href={contactDetails.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:-translate-y-0.5"
+            >
+              WhatsApp the Team
+            </a>
+            <a
+              href={`mailto:${contactDetails.email}`}
+              className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/10"
+            >
+              Email the Team
+            </a>
           </div>
         </div>
 
         <div className="panel-card rounded-[2rem] p-4 shadow-[0_28px_60px_rgba(15,23,42,0.12)] sm:p-5">
           <div className="rounded-[1.7rem] border border-[rgba(18,26,40,0.08)] bg-white/80 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)] sm:p-5">
-            <div className="flex flex-col gap-4 border-b border-[var(--color-line)] pb-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-4 border-b border-[var(--color-line)] pb-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-deep)]">
                   Loli Chat
                 </p>
-                <p className="mt-1 text-sm leading-6 text-[var(--color-muted)]">
+                <p className="mt-1 max-w-xl text-sm leading-6 text-[var(--color-muted)]">
                   {statusMessage}
                 </p>
               </div>
@@ -261,7 +256,12 @@ export default function LoliAssistant() {
               </div>
             </div>
 
-            <div className="mt-4 h-[25rem] space-y-4 overflow-y-auto rounded-[1.4rem] bg-[linear-gradient(180deg,rgba(244,241,234,0.8),rgba(255,255,255,0.92))] p-4 sm:h-[28rem]">
+            <div
+              className="mt-4 h-[24rem] space-y-4 overflow-y-auto rounded-[1.4rem] bg-[linear-gradient(180deg,rgba(244,241,234,0.8),rgba(255,255,255,0.92))] p-4 sm:h-[28rem]"
+              role="log"
+              aria-live="polite"
+              aria-relevant="additions text"
+            >
               {messages.map((message, index) => (
                 <div
                   key={`${message.role}-${index}-${message.content.slice(0, 16)}`}
@@ -284,11 +284,25 @@ export default function LoliAssistant() {
               <div ref={bottomRef} />
             </div>
 
+            <div className="mt-4 grid gap-2 sm:grid-cols-3">
+              {suggestedQuestions.map((question) => (
+                <button
+                  key={question}
+                  type="button"
+                  onClick={() => handleSuggestion(question)}
+                  className="rounded-[1.2rem] border border-[rgba(18,26,40,0.08)] bg-white px-3 py-2 text-left text-sm font-medium leading-6 text-[var(--color-ink)] shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[rgba(15,118,110,0.2)] hover:bg-[rgba(15,118,110,0.04)]"
+                >
+                  {question}
+                </button>
+              ))}
+            </div>
+
             <form className="mt-4 space-y-3" onSubmit={handleSubmit}>
               <label htmlFor="loli-question" className="sr-only">
                 Ask Loli a question
               </label>
               <textarea
+                ref={inputRef}
                 id="loli-question"
                 value={input}
                 onChange={(event) => setInput(event.target.value)}

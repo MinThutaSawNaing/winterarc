@@ -62,7 +62,10 @@ export default function Home() {
   }
 
   return (
-    <main className="relative isolate min-h-screen overflow-x-hidden bg-[var(--color-bg)] text-[var(--color-ink)]">
+    <main
+      id="main-content"
+      className="relative isolate min-h-screen overflow-x-hidden bg-[var(--color-bg)] text-[var(--color-ink)]"
+    >
       <Script
         id="winter-arc-schema-org"
         type="application/ld+json"

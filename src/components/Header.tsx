@@ -17,6 +17,7 @@ const navItems = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const mobileNavId = 'primary-navigation'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +37,24 @@ export default function Header() {
 
     return () => {
       document.body.style.overflow = ''
+    }
+  }, [mobileMenuOpen])
+
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      return
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleEscape)
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape)
     }
   }, [mobileMenuOpen])
 
@@ -83,13 +102,13 @@ export default function Header() {
             <span className="text-base font-bold tracking-[-0.03em] text-[var(--color-ink)] md:text-lg">
               Winter Arc Myanmar
             </span>
-            <span className="hidden text-[11px] font-semibold tracking-[0.26em] text-[var(--color-muted)] sm:block">
+            <span className="hidden text-[11px] font-semibold tracking-[0.26em] text-[var(--color-muted)] lg:block">
               ENTERPRISE DIGITAL DELIVERY
             </span>
           </div>
         </Link>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <nav
             aria-label="Primary"
             className="flex items-center gap-1 rounded-full border border-white/70 bg-white/75 p-2 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur-xl"
@@ -118,8 +137,11 @@ export default function Header() {
         </div>
 
         <button
+          type="button"
+          aria-controls={mobileNavId}
+          aria-haspopup="dialog"
           onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className="rounded-full border border-white/70 bg-white/80 p-2.5 text-[var(--color-ink)] shadow-[0_12px_24px_rgba(15,23,42,0.07)] transition-colors hover:bg-white md:hidden"
+          className="rounded-full border border-white/70 bg-white/80 p-2.5 text-[var(--color-ink)] shadow-[0_12px_24px_rgba(15,23,42,0.07)] transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.16)] xl:hidden"
           aria-label="Toggle menu"
           aria-expanded={mobileMenuOpen}
         >
@@ -134,8 +156,30 @@ export default function Header() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="border-t border-[rgba(18,26,40,0.08)] bg-[rgba(247,245,239,0.96)] shadow-[0_18px_42px_rgba(15,23,42,0.09)] backdrop-blur-2xl md:hidden">
-          <nav className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5">
+        <div className="fixed inset-x-0 top-[5.25rem] z-40 xl:hidden">
+          <button
+            type="button"
+            aria-label="Close navigation menu"
+            onClick={() => setMobileMenuOpen(false)}
+            className="absolute inset-0 z-0 h-[calc(100vh-5.25rem)] w-full cursor-default bg-[rgba(16,24,39,0.28)] backdrop-blur-[2px]"
+          />
+          <nav
+            id={mobileNavId}
+            aria-label="Primary"
+            className="relative z-10 mx-4 max-h-[calc(100vh-6.25rem)] overflow-y-auto rounded-[1.75rem] border border-[rgba(18,26,40,0.08)] bg-[rgba(247,245,239,0.98)] px-4 py-4 shadow-[0_24px_60px_rgba(15,23,42,0.18)] backdrop-blur-2xl"
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)]">
+                Quick navigation
+              </p>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="rounded-full border border-[rgba(18,26,40,0.08)] bg-white px-3 py-1.5 text-xs font-semibold text-[var(--color-ink)]"
+              >
+                Close
+              </button>
+            </div>
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -144,7 +188,7 @@ export default function Header() {
                   e.preventDefault()
                   scrollToSection(item.href)
                 }}
-                className="rounded-[1.35rem] border border-transparent bg-white px-4 py-3 text-base font-semibold text-[var(--color-ink)] shadow-[0_10px_20px_rgba(15,23,42,0.04)] transition-all duration-200 hover:border-[rgba(15,118,110,0.18)] hover:bg-[rgba(15,118,110,0.04)]"
+                className="rounded-[1.35rem] border border-transparent bg-white px-4 py-3 text-base font-semibold text-[var(--color-ink)] shadow-[0_10px_20px_rgba(15,23,42,0.04)] transition-all duration-200 hover:border-[rgba(15,118,110,0.18)] hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.14)]"
               >
                 {item.name}
               </Link>
@@ -152,7 +196,7 @@ export default function Header() {
 
             <button
               onClick={() => scrollToSection('#contact')}
-              className="mt-3 rounded-[1.35rem] bg-[var(--color-accent)] px-4 py-3 font-semibold text-white transition-colors hover:bg-[#9a470a]"
+              className="mt-3 rounded-[1.35rem] bg-[var(--color-accent)] px-4 py-3 font-semibold text-white transition-colors hover:bg-[#9a470a] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(180,83,9,0.18)]"
             >
               Book a Discovery Call
             </button>

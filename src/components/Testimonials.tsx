@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
+
 const testimonials = [
   {
     name: 'Aung Min',
@@ -21,9 +24,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section
-      className="section-shell bg-[linear-gradient(180deg,#152033_0%,#101827_100%)] py-20 text-white md:py-24"
-    >
+    <section className="section-shell bg-[linear-gradient(180deg,#152033_0%,#101827_100%)] py-20 text-white md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col gap-5 md:max-w-3xl">
           <span className="inline-flex w-fit rounded-full border border-white/[0.12] bg-white/[0.08] px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.18em] text-amber-100">
@@ -44,9 +45,9 @@ export default function Testimonials() {
               key={item.name}
               className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_20px_40px_rgba(0,0,0,0.14)] backdrop-blur-sm"
             >
-              <div className="flex items-center gap-1 text-amber-300">
+              <div className="flex items-center gap-1 text-amber-300" aria-label="Five out of five stars">
                 {Array.from({ length: 5 }).map((_, index) => (
-                  <span key={index}>★</span>
+                  <FontAwesomeIcon key={index} icon={faStar} aria-hidden="true" />
                 ))}
               </div>
 
