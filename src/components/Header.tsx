@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { LOLI_OPEN_EVENT } from '@/lib/loli-config'
+import { lockBodyScroll, unlockBodyScroll } from '@/lib/body-scroll-lock'
 
 const navItems = [
   { name: 'Overview', href: '#home' },
@@ -34,10 +35,14 @@ export default function Header() {
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? 'hidden' : ''
+    if (!mobileMenuOpen) {
+      return
+    }
+
+    lockBodyScroll()
 
     return () => {
-      document.body.style.overflow = ''
+      unlockBodyScroll()
     }
   }, [mobileMenuOpen])
 

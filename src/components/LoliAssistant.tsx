@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { LOLI_LIMIT, LOLI_OPEN_EVENT } from '@/lib/loli-config'
 import { contactDetails } from '@/lib/site'
+import { lockBodyScroll, unlockBodyScroll } from '@/lib/body-scroll-lock'
 
 type ChatRole = 'assistant' | 'user'
 
@@ -50,6 +51,22 @@ export default function LoliAssistant() {
   const bottomRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLTextAreaElement | null>(null)
 
+  const openAssistant = (question?: string) => {
+    setIsOpen(true)
+
+    if (question) {
+      setInput(question)
+    }
+
+    if (window.location.hash !== '#loli') {
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}${window.location.search}#loli`
+      )
+    }
+  }
+
   const closeAssistant = () => {
     setIsOpen(false)
 
@@ -93,13 +110,23 @@ export default function LoliAssistant() {
 
   useEffect(() => {
     const handleOpen = () => {
+      openAssistant()
+    }
+
+    const handleHashChange = () => {
+      setIsOpen(window.location.hash === '#loli')
+    }
+
+    if (window.location.hash === '#loli') {
       setIsOpen(true)
     }
 
     window.addEventListener(LOLI_OPEN_EVENT, handleOpen)
+    window.addEventListener('hashchange', handleHashChange)
 
     return () => {
       window.removeEventListener(LOLI_OPEN_EVENT, handleOpen)
+      window.removeEventListener('hashchange', handleHashChange)
     }
   }, [])
 
@@ -121,7 +148,7 @@ export default function LoliAssistant() {
       }
     }
 
-    document.body.style.overflow = 'hidden'
+    lockBodyScroll()
     window.addEventListener('keydown', handleEscape)
 
     const focusTimer = window.setTimeout(() => {
@@ -131,14 +158,12 @@ export default function LoliAssistant() {
     return () => {
       window.removeEventListener('keydown', handleEscape)
       window.clearTimeout(focusTimer)
-      document.body.style.overflow = ''
+      unlockBodyScroll()
     }
   }, [isOpen])
 
   const handleSuggestion = (question: string) => {
-    setIsOpen(true)
-    setInput(question)
-    inputRef.current?.focus()
+    openAssistant(question)
   }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -242,8 +267,8 @@ export default function LoliAssistant() {
     <>
       <button
         type="button"
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-5 right-5 z-40 flex max-w-[17rem] items-center gap-3 rounded-full border border-white/80 bg-white/94 px-4 py-3.5 text-left text-[var(--color-ink)] shadow-[0_24px_42px_rgba(15,23,42,0.12)] backdrop-blur-xl transition hover:-translate-y-1 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.16)] md:bottom-7 md:right-7"
+        onClick={() => openAssistant()}
+        className="fixed bottom-4 right-4 z-40 flex items-center gap-3 rounded-full border border-white/80 bg-white/95 px-4 py-3 text-left text-[var(--color-ink)] shadow-[0_18px_36px_rgba(15,23,42,0.16)] backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.16)] sm:bottom-6 sm:right-6"
         aria-label="Open Loli AI assistant"
         aria-haspopup="dialog"
         aria-expanded={isOpen}
@@ -259,16 +284,8 @@ export default function LoliAssistant() {
         </span>
 
         <span className="flex min-w-0 flex-col">
-          <span className="text-sm font-semibold tracking-[-0.02em]">
-            Ask Loli
-          </span>
-          <span className="text-xs text-[var(--color-muted)]">
-            Winter Arc AI concierge
-          </span>
-        </span>
-
-        <span className="hidden rounded-full bg-[var(--color-brand-soft)] px-2.5 py-1 text-xs font-semibold text-[var(--color-brand-deep)] sm:inline-flex">
-          {LOLI_LIMIT} free questions
+          <span className="text-sm font-semibold tracking-[-0.02em]">Ask Loli</span>
+          <span className="text-xs text-[var(--color-muted)]">AI concierge</span>
         </span>
       </button>
 
@@ -278,196 +295,155 @@ export default function LoliAssistant() {
             type="button"
             aria-label="Close Loli assistant"
             onClick={closeAssistant}
-            className="absolute inset-0 h-full w-full bg-[rgba(16,24,39,0.38)] backdrop-blur-[2px]"
+            className="absolute inset-0 h-full w-full bg-[rgba(16,24,39,0.44)] backdrop-blur-[2px]"
           />
 
-          <div className="relative flex h-full items-end justify-center overflow-y-auto p-2 sm:items-center sm:p-4 md:p-5">
-            <div
+          <div className="relative z-10 flex h-full items-end justify-center sm:items-center sm:p-4">
+            <section
               role="dialog"
               aria-modal="true"
               aria-labelledby="loli-dialog-title"
               aria-describedby="loli-dialog-description"
-              className="relative z-10 my-auto flex h-[calc(100dvh-1rem)] w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.985),rgba(247,245,239,0.965))] shadow-[0_40px_100px_rgba(15,23,42,0.22)] backdrop-blur-2xl sm:h-[min(92vh,56rem)]"
+              className="relative flex h-[100dvh] w-full max-w-3xl flex-col overflow-hidden border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.985),rgba(247,245,239,0.98))] shadow-[0_30px_90px_rgba(15,23,42,0.22)] sm:h-[min(92vh,56rem)] sm:rounded-[1.75rem]"
             >
-              <div className="flex items-start justify-between gap-4 border-b border-[rgba(18,26,40,0.08)] px-6 py-5 sm:px-7">
-                <div className="flex items-center gap-3">
-                  <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full border border-[rgba(18,26,40,0.08)] bg-[linear-gradient(180deg,#f8f5ee,#ece7db)]">
+              <header className="flex items-start justify-between gap-3 border-b border-[rgba(18,26,40,0.08)] px-4 py-3.5 sm:px-5 sm:py-4">
+                <div className="flex min-w-0 items-center gap-3">
+                  <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full border border-[rgba(18,26,40,0.08)] bg-[linear-gradient(180deg,#f8f5ee,#ece7db)]">
                     <Image
                       src="/images/portfolio/loli-logo.png"
                       alt=""
                       fill
-                      sizes="48px"
+                      sizes="40px"
                       className="object-cover"
                     />
                   </span>
 
-                  <div>
+                  <div className="min-w-0">
                     <p
                       id="loli-dialog-title"
-                      className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-brand-deep)]"
+                      className="truncate text-sm font-semibold tracking-[0.08em] text-[var(--color-brand-deep)]"
                     >
                       Loli AI Concierge
                     </p>
                     <p
                       id="loli-dialog-description"
-                      className="mt-1 max-w-2xl text-sm leading-6 text-[var(--color-muted)]"
+                      className="truncate text-xs text-[var(--color-muted)]"
                     >
-                      A calm, server-backed assistant for quick questions about
-                      Winter Arc Myanmar, with a {LOLI_LIMIT}-question limit per device.
+                      {usage.questionsRemaining}/{usage.limit} free questions left on this device
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <span className="hidden rounded-full border border-[rgba(15,118,110,0.12)] bg-[var(--color-brand-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-brand-deep)] sm:inline-flex">
-                    {usage.questionsRemaining}/{usage.limit} left
-                  </span>
-                  <button
-                    type="button"
-                    onClick={closeAssistant}
-                    className="rounded-full border border-[rgba(18,26,40,0.08)] bg-[var(--color-ink)] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1f2b3d] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)]"
-                  >
-                    Close
-                  </button>
+                <button
+                  type="button"
+                  onClick={closeAssistant}
+                  className="rounded-full border border-[rgba(18,26,40,0.08)] bg-[var(--color-ink)] px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-[#1f2b3d] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)]"
+                >
+                  Close
+                </button>
+              </header>
+
+              <div
+                className="min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4 sm:px-5"
+                role="log"
+                aria-live="polite"
+                aria-relevant="additions text"
+              >
+                <div className="rounded-2xl border border-[rgba(15,118,110,0.15)] bg-[var(--color-brand-soft)] px-3.5 py-2.5 text-xs leading-5 text-[var(--color-brand-deep)]">
+                  {statusMessage}
                 </div>
-              </div>
 
-              <div className="grid min-h-0 flex-1 gap-0 lg:grid-cols-[0.78fr_1.22fr]">
-                <aside className="overflow-y-auto border-b border-[rgba(18,26,40,0.08)] bg-[linear-gradient(180deg,rgba(15,23,42,0.98),rgba(21,30,47,0.94))] px-5 py-4 text-white lg:border-b-0 lg:border-r lg:px-6 lg:py-5">
-                  <span className="inline-flex rounded-full border border-white/10 bg-white/[0.08] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-100">
-                    Premium AI support
-                  </span>
-
-                  <h2 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-white sm:text-[1.75rem]">
-                    Fast answers, clear next steps, and a human handoff when you
-                    need one.
-                  </h2>
-
-                  <p className="mt-3 max-w-xl text-sm leading-6 text-slate-300 sm:text-[0.95rem]">
-                    Loli is built for visitors who want a quick, polished way to
-                    understand Winter Arc Myanmar&apos;s services, process, and
-                    fit before reaching out directly.
-                  </p>
-
-                  <div className="mt-4 rounded-[1.2rem] border border-white/10 bg-white/5 px-4 py-3 text-sm leading-6 text-slate-100">
-                    {statusMessage}
-                  </div>
-
-                  <div className="mt-5 grid gap-3">
-                    {[
-                      'Service overviews, project fit, and next-step guidance.',
-                      'Secure by design. Chat stays on our server.',
-                      'Need more? Continue with WhatsApp or email.',
-                    ].map((item) => (
-                      <div
-                        key={item}
-                        className="rounded-[1.4rem] border border-white/10 bg-white/5 px-4 py-3 text-sm leading-6 text-slate-100"
-                      >
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-5 flex flex-col gap-3 sm:flex-row lg:flex-col">
-                    <a
-                      href={contactDetails.whatsapp}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-full bg-[var(--color-accent)] px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(180,83,9,0.22)] transition hover:-translate-y-0.5 hover:bg-[#9a470a] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20"
-                    >
-                      WhatsApp the Team
-                    </a>
-                    <a
-                      href={`mailto:${contactDetails.email}`}
-                      className="inline-flex items-center justify-center rounded-full border border-[#9fb4c9] bg-[#dce8f4] px-5 py-3 text-sm font-semibold text-[#102237] shadow-[0_10px_24px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 hover:bg-[#cfdfef] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/20"
-                    >
-                      Email the Team
-                    </a>
-                  </div>
-                </aside>
-
-                <div className="flex min-h-0 flex-col bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,245,239,0.98))]">
+                {messages.map((message, index) => (
                   <div
-                    className="min-h-0 flex-1 space-y-4 overflow-y-auto px-5 py-4 sm:px-6 sm:py-5"
-                    role="log"
-                    aria-live="polite"
-                    aria-relevant="additions text"
+                    key={`${message.role}-${index}-${message.content.slice(0, 16)}`}
+                    className={`max-w-[90%] rounded-2xl px-3.5 py-2.5 text-sm leading-6 shadow-[0_8px_18px_rgba(15,23,42,0.05)] sm:max-w-[82%] ${
+                      message.role === 'assistant'
+                        ? 'mr-auto bg-white text-[var(--color-ink)]'
+                        : 'ml-auto bg-[var(--color-brand)] text-white'
+                    }`}
                   >
-                    {messages.map((message, index) => (
-                      <div
-                        key={`${message.role}-${index}-${message.content.slice(0, 16)}`}
-                        className={`max-w-[90%] rounded-[1.4rem] px-4 py-3 text-sm leading-7 shadow-[0_8px_18px_rgba(15,23,42,0.05)] sm:text-[0.95rem] ${
-                          message.role === 'assistant'
-                            ? 'mr-auto bg-white text-[var(--color-ink)]'
-                            : 'ml-auto bg-[var(--color-brand)] text-white'
-                        }`}
-                      >
-                        {message.content}
-                      </div>
-                    ))}
-
-                    {isLoading && (
-                      <div className="mr-auto inline-flex rounded-[1.35rem] bg-white px-4 py-3 text-sm font-medium text-[var(--color-muted)] shadow-[0_8px_18px_rgba(15,23,42,0.05)]">
-                        Loli is thinking...
-                      </div>
-                    )}
-
-                    <div ref={bottomRef} />
+                    {message.content}
                   </div>
+                ))}
 
-                  <div className="border-t border-[rgba(18,26,40,0.08)] bg-white/90 px-4 py-2.5 backdrop-blur-sm sm:px-5 sm:py-3">
-                    <div className="grid gap-2 sm:grid-cols-3">
-                      {suggestedQuestions.map((question) => (
-                        <button
-                          key={question}
-                          type="button"
-                          onClick={() => handleSuggestion(question)}
-                          className="rounded-[1rem] border border-[rgba(18,26,40,0.08)] bg-white px-3 py-2 text-left text-xs font-medium leading-5 text-[var(--color-ink)] shadow-[0_6px_14px_rgba(15,23,42,0.04)] transition hover:-translate-y-0.5 hover:border-[rgba(15,118,110,0.2)] hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)]"
-                        >
-                          {question}
-                        </button>
-                      ))}
-                    </div>
-
-                    <form className="mt-3 space-y-2.5" onSubmit={handleSubmit}>
-                      <label htmlFor="loli-question" className="sr-only">
-                        Ask Loli a question
-                      </label>
-                      <textarea
-                        ref={inputRef}
-                        id="loli-question"
-                        value={input}
-                        onChange={(event) => setInput(event.target.value)}
-                        placeholder={
-                          isBlocked
-                            ? `This device reached the ${LOLI_LIMIT}-question limit. Contact us for more help.`
-                            : 'Ask about services, timelines, or how to get started...'
-                        }
-                        disabled={isBlocked || isLoading}
-                        rows={2}
-                        maxLength={1200}
-                        className="w-full rounded-[1.1rem] border border-[rgba(18,26,40,0.08)] bg-white px-3.5 py-2.5 text-sm text-[var(--color-ink)] shadow-[0_8px_18px_rgba(15,23,42,0.04)] outline-none transition placeholder:text-slate-400 focus:border-[rgba(15,118,110,0.35)] focus:ring-4 focus:ring-[rgba(15,118,110,0.12)] disabled:cursor-not-allowed disabled:bg-slate-50"
-                      />
-
-                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                        <p className="text-xs leading-5 text-[var(--color-muted)]">
-                          {LOLI_LIMIT}-question device limit. For more, contact us
-                          directly.
-                        </p>
-
-                        <button
-                          type="submit"
-                          disabled={!input.trim() || isBlocked || isLoading}
-                          className="inline-flex items-center justify-center self-end rounded-full bg-[var(--color-brand)] px-4 py-2 text-xs font-semibold text-white shadow-[0_12px_24px_rgba(15,118,110,0.2)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.16)] disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none"
-                        >
-                          {isLoading ? 'Sending...' : 'Ask Loli'}
-                        </button>
-                      </div>
-                    </form>
+                {isLoading && (
+                  <div className="mr-auto inline-flex rounded-2xl bg-white px-3.5 py-2.5 text-sm font-medium text-[var(--color-muted)] shadow-[0_8px_18px_rgba(15,23,42,0.05)]">
+                    Loli is thinking...
                   </div>
-                </div>
+                )}
+
+                <div ref={bottomRef} />
               </div>
-            </div>
+
+              <footer className="border-t border-[rgba(18,26,40,0.08)] bg-white/92 px-3.5 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur-sm sm:px-5 sm:pb-4">
+                <div className="mb-2.5 flex gap-2 overflow-x-auto pb-1">
+                  {suggestedQuestions.map((question) => (
+                    <button
+                      key={question}
+                      type="button"
+                      onClick={() => handleSuggestion(question)}
+                      className="shrink-0 rounded-full border border-[rgba(18,26,40,0.08)] bg-white px-3 py-1.5 text-xs font-medium text-[var(--color-ink)] shadow-[0_6px_14px_rgba(15,23,42,0.04)] transition hover:border-[rgba(15,118,110,0.2)] hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.12)]"
+                    >
+                      {question}
+                    </button>
+                  ))}
+                </div>
+
+                <form onSubmit={handleSubmit}>
+                  <label htmlFor="loli-question" className="sr-only">
+                    Ask Loli a question
+                  </label>
+
+                  <div className="flex items-end gap-2">
+                    <textarea
+                      ref={inputRef}
+                      id="loli-question"
+                      value={input}
+                      onChange={(event) => setInput(event.target.value)}
+                      placeholder={
+                        isBlocked
+                          ? `This device reached the ${LOLI_LIMIT}-question limit. Contact us for more help.`
+                          : 'Ask about services, timelines, or how to get started...'
+                      }
+                      disabled={isBlocked || isLoading}
+                      rows={2}
+                      maxLength={1200}
+                      className="min-h-[5rem] flex-1 resize-none rounded-2xl border border-[rgba(18,26,40,0.08)] bg-white px-3 py-2.5 text-sm text-[var(--color-ink)] shadow-[0_8px_18px_rgba(15,23,42,0.04)] outline-none transition placeholder:text-slate-400 focus:border-[rgba(15,118,110,0.35)] focus:ring-4 focus:ring-[rgba(15,118,110,0.12)] disabled:cursor-not-allowed disabled:bg-slate-50"
+                    />
+
+                    <button
+                      type="submit"
+                      disabled={!input.trim() || isBlocked || isLoading}
+                      className="inline-flex h-11 items-center justify-center rounded-full bg-[var(--color-brand)] px-4 text-xs font-semibold text-white shadow-[0_12px_24px_rgba(15,118,110,0.2)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.16)] disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none"
+                    >
+                      {isLoading ? 'Sending...' : 'Send'}
+                    </button>
+                  </div>
+
+                  <div className="mt-2 flex flex-col gap-2 text-xs text-[var(--color-muted)] sm:flex-row sm:items-center sm:justify-between">
+                    <p>
+                      {LOLI_LIMIT}-question device limit. For more, contact us directly.
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={contactDetails.whatsapp}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full border border-[rgba(15,118,110,0.16)] bg-[rgba(15,118,110,0.06)] px-2.5 py-1 font-semibold text-[var(--color-brand-deep)]"
+                      >
+                        WhatsApp
+                      </a>
+                      <a
+                        href={`mailto:${contactDetails.email}`}
+                        className="rounded-full border border-[rgba(18,26,40,0.12)] bg-white px-2.5 py-1 font-semibold text-[var(--color-ink)]"
+                      >
+                        Email
+                      </a>
+                    </div>
+                  </div>
+                </form>
+              </footer>
+            </section>
           </div>
         </div>
       )}
