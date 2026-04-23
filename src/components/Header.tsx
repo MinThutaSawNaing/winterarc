@@ -112,7 +112,7 @@ export default function Header() {
           </div>
 
           <div className="flex flex-col">
-            <span className="text-base font-bold tracking-[-0.03em] text-[var(--color-ink)] md:text-lg">
+            <span className="text-sm font-bold tracking-[-0.02em] text-[var(--color-ink)] md:text-base">
               Winter Arc Myanmar
             </span>
             <span className="hidden text-[11px] font-semibold tracking-[0.26em] text-[var(--color-muted)] lg:block">
@@ -134,7 +134,7 @@ export default function Header() {
                   e.preventDefault()
                   scrollToSection(item.href)
                 }}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-[var(--color-muted)] transition-all duration-200 hover:bg-[var(--color-brand-soft)] hover:text-[var(--color-ink)]"
+                className="rounded-full px-4 py-2 text-xs font-semibold text-[var(--color-muted)] transition-all duration-200 hover:bg-[var(--color-brand-soft)] hover:text-[var(--color-ink)]"
               >
                 {item.name}
               </Link>
@@ -143,7 +143,7 @@ export default function Header() {
 
           <button
             onClick={() => scrollToSection('#contact')}
-            className="rounded-full bg-[var(--color-accent)] px-5 py-3 text-sm font-semibold text-white shadow-[0_16px_30px_rgba(180,83,9,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#9a470a]"
+            className="rounded-full bg-[var(--color-accent)] px-5 py-3 text-xs font-semibold text-white shadow-[0_16px_30px_rgba(180,83,9,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#9a470a]"
           >
             Book a Discovery Call
           </button>
@@ -201,7 +201,7 @@ export default function Header() {
                   e.preventDefault()
                   scrollToSection(item.href)
                 }}
-                className="rounded-[1.35rem] border border-transparent bg-white px-4 py-3 text-base font-semibold text-[var(--color-ink)] shadow-[0_10px_20px_rgba(15,23,42,0.04)] transition-all duration-200 hover:border-[rgba(15,118,110,0.18)] hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.14)]"
+                className="rounded-[1.35rem] border border-transparent bg-white px-4 py-3 text-sm font-semibold text-[var(--color-ink)] shadow-[0_10px_20px_rgba(15,23,42,0.04)] transition-all duration-200 hover:border-[rgba(15,118,110,0.18)] hover:bg-[rgba(15,118,110,0.04)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(15,118,110,0.14)]"
               >
                 {item.name}
               </Link>

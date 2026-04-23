@@ -32,9 +32,7 @@ export default function Hero() {
       id="home"
       className="section-shell relative overflow-hidden pt-28 text-[var(--color-ink)]"
     >
-      <div className="absolute inset-x-0 top-0 h-[42rem] bg-[linear-gradient(180deg,#f6f3ed_0%,#efe8dd_55%,transparent_100%)]" />
-      <div className="hero-orb left-[8%] top-24 h-64 w-64 bg-[rgba(15,118,110,0.12)]" />
-      <div className="hero-orb right-[6%] top-20 h-72 w-72 bg-[rgba(180,83,9,0.14)]" />
+      <div className="absolute inset-x-0 top-0 h-[36rem] bg-[linear-gradient(180deg,#f6f3ed_0%,#efe8dd_45%,transparent_100%)]" />
 
       <div className="relative mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
@@ -43,11 +41,11 @@ export default function Hero() {
               Enterprise-grade digital delivery for ambitious teams in Myanmar
             </span>
 
-            <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-[var(--color-ink)] sm:text-5xl lg:text-7xl">
+            <h1 className="mt-6 max-w-4xl text-3xl font-semibold leading-[1.1] tracking-[-0.03em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
               Build software that looks credible in the boardroom and works beautifully in the real world.
             </h1>
 
-            <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--color-muted)] sm:text-lg">
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-[var(--color-muted)] sm:text-base">
               Winter Arc Myanmar partners with businesses to shape modern websites,
               internal tools, mobile products, and cloud platforms with the rigor,
               clarity, and UX standards expected from mature digital teams.
@@ -56,13 +54,13 @@ export default function Hero() {
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <a
                 href="#contact"
-                className="animate-shimmer inline-flex items-center justify-center rounded-full border border-white/15 bg-[linear-gradient(120deg,var(--color-brand-deep)_0%,var(--color-brand)_35%,#14b8a6_50%,var(--color-brand)_65%,var(--color-brand-deep)_100%)] bg-[length:220%_100%] px-7 py-3.5 text-base font-semibold !text-white shadow-[0_18px_34px_rgba(15,118,110,0.22)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(15,118,110,0.28)]"
+                className="inline-flex items-center justify-center rounded-full border border-white/15 bg-[var(--color-brand)] px-6 py-3 text-sm font-semibold !text-white shadow-[0_14px_26px_rgba(15,118,110,0.2)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)]"
               >
                 Start a Strategic Conversation
               </a>
               <a
                 href="#portfolio"
-                className="inline-flex items-center justify-center rounded-full border border-[rgba(18,26,40,0.1)] bg-white/80 px-7 py-3.5 text-base font-semibold text-[var(--color-ink)] shadow-[0_12px_28px_rgba(15,23,42,0.06)] backdrop-blur transition hover:-translate-y-0.5 hover:bg-white"
+                className="inline-flex items-center justify-center rounded-full border border-[rgba(18,26,40,0.1)] bg-white/80 px-6 py-3 text-sm font-semibold text-[var(--color-ink)] shadow-[0_10px_22px_rgba(15,23,42,0.06)] backdrop-blur transition hover:-translate-y-0.5 hover:bg-white"
               >
                 Review Selected Work
               </a>
@@ -88,7 +86,7 @@ export default function Hero() {
                   <p className="text-sm font-semibold uppercase tracking-[0.22em] text-white/[0.6]">
                     Delivery model
                   </p>
-                  <p className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-white">
+                  <p className="mt-2 text-xl font-semibold tracking-[-0.03em] text-white">
                     Strategy, UX, and software execution in one workflow
                   </p>
                 </div>
@@ -108,7 +106,7 @@ export default function Hero() {
                         0{index + 1}
                       </span>
                       <div>
-                        <h2 className="text-lg font-semibold text-white">
+                        <h2 className="text-base font-semibold text-white">
                           {track.name}
                         </h2>
                         <p className="mt-2 text-sm leading-7 text-slate-300">
@@ -126,7 +124,7 @@ export default function Hero() {
                     <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/[0.55]">
                       Typical focus areas
                     </p>
-                    <p className="mt-2 text-base font-medium text-white">
+                    <p className="mt-2 text-sm font-medium leading-6 text-white">
                       Websites, business systems, SaaS platforms, and digital modernization projects.
                     </p>
                   </div>
@@ -145,7 +143,7 @@ export default function Hero() {
               key={item.label}
               className="panel-card rounded-[1.5rem] px-5 py-5 shadow-[0_10px_24px_rgba(15,23,42,0.05)]"
             >
-              <div className="text-lg font-semibold tracking-[-0.03em] text-[var(--color-ink)] sm:text-2xl">
+              <div className="text-base font-semibold tracking-[-0.02em] text-[var(--color-ink)] sm:text-xl">
                 {item.value}
               </div>
               <div className="mt-2 text-sm leading-6 text-[var(--color-muted)]">

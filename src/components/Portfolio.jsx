@@ -39,10 +39,10 @@ export default function Portfolio() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-5 md:max-w-3xl">
           <span className="section-label">Selected work</span>
-          <h2 className="text-3xl font-semibold tracking-[-0.04em] text-[var(--color-ink)] md:text-4xl lg:text-5xl">
+          <h2 className="text-2xl font-semibold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl lg:text-4xl">
             Examples of digital products shaped around business clarity, not just feature delivery.
           </h2>
-          <p className="text-base leading-8 text-[var(--color-muted)] md:text-lg">
+          <p className="text-sm leading-7 text-[var(--color-muted)] md:text-base">
             These portfolio snapshots reflect the kinds of platforms and solutions
             we help teams bring to market with stronger interface quality and more
             dependable technical structure.
@@ -72,7 +72,7 @@ export default function Portfolio() {
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-semibold tracking-[-0.03em] text-[var(--color-ink)]">
+                <h3 className="text-lg font-semibold tracking-[-0.02em] text-[var(--color-ink)]">
                   {project.title}
                 </h3>
 

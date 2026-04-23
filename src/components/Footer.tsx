@@ -13,10 +13,10 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-xl">
-            <h3 className="text-xl font-semibold tracking-[-0.03em] text-white">
+            <h3 className="text-lg font-semibold tracking-[-0.02em] text-white">
               Winter Arc Myanmar
             </h3>
-            <p className="mt-3 text-sm leading-7 text-slate-300">
+            <p className="mt-3 text-xs leading-6 text-slate-300 sm:text-sm">
               Websites, platforms, and software systems designed to feel clear,
               credible, and ready to support long-term growth.
             </p>

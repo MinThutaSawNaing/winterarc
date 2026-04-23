@@ -72,9 +72,6 @@ export default function Home() {
           __html: JSON.stringify([organizationSchema, websiteSchema]),
         }}
       />
-      <div className="hero-orb left-[-5rem] top-[7rem] h-56 w-56 bg-[rgba(15,118,110,0.16)]" />
-      <div className="hero-orb right-[-2rem] top-[16rem] h-64 w-64 bg-[rgba(180,83,9,0.16)]" />
-      <div className="pointer-events-none absolute inset-0 enterprise-grid opacity-50" />
       <Header />
       <Hero />
       <Services />

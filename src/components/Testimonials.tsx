@@ -27,13 +27,13 @@ export default function Testimonials() {
     <section className="section-shell bg-[linear-gradient(180deg,#152033_0%,#101827_100%)] py-20 text-white md:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col gap-5 md:max-w-3xl">
-          <span className="inline-flex w-fit rounded-full border border-white/[0.12] bg-white/[0.08] px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.18em] text-amber-100">
+          <span className="inline-flex w-fit rounded-full border border-white/[0.12] bg-white/[0.08] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-amber-100">
             Testimonials
           </span>
-          <h2 className="text-3xl font-semibold tracking-[-0.04em] text-white md:text-4xl lg:text-5xl">
+          <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white md:text-3xl lg:text-4xl">
             Clients trust us to bring structure, calm communication, and professional finish to the work.
           </h2>
-          <p className="text-base leading-8 text-slate-300 md:text-lg">
+          <p className="text-sm leading-7 text-slate-300 md:text-base">
             Good delivery is not only about shipping features. It is also about
             making the process feel clear, collaborative, and under control.
           </p>
@@ -51,12 +51,12 @@ export default function Testimonials() {
                 ))}
               </div>
 
-              <p className="mt-5 text-base leading-8 text-slate-100">
+              <p className="mt-5 text-sm leading-7 text-slate-100 md:text-base">
                 &ldquo;{item.feedback}&rdquo;
               </p>
 
               <div className="mt-6 border-t border-white/10 pt-5">
-                <h3 className="text-base font-semibold text-white">
+                <h3 className="text-sm font-semibold text-white md:text-base">
                   {item.name}
                 </h3>
                 <p className="mt-1 text-sm text-slate-400">{item.company}</p>

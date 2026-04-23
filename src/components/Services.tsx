@@ -47,7 +47,7 @@ export default function Services() {
         <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
           <div>
             <span className="section-label">Services</span>
-            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-[var(--color-ink)] md:text-4xl lg:text-5xl">
+            <h2 className="mt-4 text-2xl font-semibold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl lg:text-4xl">
               The capabilities companies need when they want sharper UX and more dependable delivery.
             </h2>
           </div>
@@ -56,7 +56,7 @@ export default function Services() {
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-brand-deep)]">
               Engagement approach
             </p>
-            <p className="mt-3 text-base leading-8 text-[var(--color-muted)] md:text-lg">
+            <p className="mt-3 text-sm leading-7 text-[var(--color-muted)] md:text-base">
               We help teams move from fragmented requirements and unclear interfaces
               toward software that feels deliberate, scalable, and ready to represent
               the business well.
@@ -74,7 +74,7 @@ export default function Services() {
                 <FontAwesomeIcon icon={service.icon} />
               </div>
 
-              <h3 className="mt-6 text-xl font-semibold tracking-[-0.03em] text-[var(--color-ink)]">
+              <h3 className="mt-5 text-lg font-semibold tracking-[-0.02em] text-[var(--color-ink)]">
                 {service.title}
               </h3>
 

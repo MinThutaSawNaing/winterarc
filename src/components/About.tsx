@@ -31,11 +31,11 @@ export default function About() {
           <div>
             <span className="section-label">About Winter Arc Myanmar</span>
 
-            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-[var(--color-ink)] md:text-4xl lg:text-5xl">
+            <h2 className="mt-4 text-2xl font-semibold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl lg:text-4xl">
               A product-minded team for organizations that want software to feel as strong as their business.
             </h2>
 
-            <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--color-muted)] md:text-lg">
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-[var(--color-muted)] md:text-base">
               We work at the intersection of UX clarity, technical execution, and
               practical decision-making. That means fewer disconnected deliverables
               and a more coherent product from first conversation to launch.
@@ -47,7 +47,7 @@ export default function About() {
                   key={item.label}
                   className="panel-card rounded-[1.6rem] p-5 shadow-[0_14px_30px_rgba(15,23,42,0.05)]"
                 >
-                  <div className="text-2xl font-semibold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl">
+                  <div className="text-xl font-semibold tracking-[-0.02em] text-[var(--color-ink)] md:text-2xl">
                     {item.value}
                   </div>
                   <div className="mt-2 text-sm font-medium leading-6 text-[var(--color-muted)]">
@@ -75,7 +75,7 @@ export default function About() {
                         0{index + 1}
                       </span>
                       <div>
-                        <h3 className="text-lg font-semibold text-white">
+                        <h3 className="text-base font-semibold text-white">
                           {item.title}
                         </h3>
                         <p className="mt-2 text-sm leading-7 text-slate-300">

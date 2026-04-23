@@ -72,15 +72,15 @@ export default function Contact() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div className="panel-card-dark rounded-[2rem] p-6 sm:p-8">
-            <span className="inline-flex rounded-full border border-white/10 bg-white/[0.08] px-4 py-1.5 text-sm font-semibold uppercase tracking-[0.18em] text-emerald-100">
+            <span className="inline-flex rounded-full border border-white/10 bg-white/[0.08] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-emerald-100">
               Contact
             </span>
 
-            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white md:text-4xl lg:text-5xl">
+            <h2 className="mt-4 text-2xl font-semibold tracking-[-0.03em] text-white md:text-3xl lg:text-4xl">
               Start the conversation with a team that takes both business goals and UX seriously.
             </h2>
 
-            <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
               Reach out for project inquiries, product planning, redesign work,
               or support discussions. We aim to make the next step feel clear,
               practical, and easy to act on.
@@ -93,7 +93,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-sm text-slate-300">Company</p>
-                  <p className="mt-1 text-lg font-semibold text-white">
+                  <p className="mt-1 text-base font-semibold text-white">
                     Winter Arc Myanmar
                   </p>
                   <div className="mt-4 flex items-start gap-3 text-sm leading-7 text-slate-200">
@@ -141,7 +141,7 @@ export default function Contact() {
                 <p className="mt-4 text-sm font-medium text-[var(--color-muted)]">
                   {item.label}
                 </p>
-                <p className="mt-1 text-base font-semibold leading-7 text-[var(--color-ink)]">
+                <p className="mt-1 text-sm font-semibold leading-7 text-[var(--color-ink)] md:text-base">
                   {item.value}
                 </p>
               </a>
