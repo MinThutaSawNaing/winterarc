@@ -1,3 +1,5 @@
+import TypewriterText from '@/components/TypewriterText'
+
 const highlights = [
   'Executive-ready product strategy',
   'Design systems that scale across teams',
@@ -5,7 +7,7 @@ const highlights = [
 ]
 
 const metrics = [
-  { value: '10+', label: 'Projects delivered' },
+  { value: '30+', label: 'Projects delivered' },
   { value: '4+', label: 'Years of experience' },
   { value: 'End-to-end', label: 'Strategy, UX, engineering' },
   { value: 'Myanmar-based', label: 'Local presence, global standards' },
@@ -42,7 +44,7 @@ export default function Hero() {
             </span>
 
             <h1 className="mt-6 max-w-4xl text-3xl font-bold leading-[1.12] tracking-[-0.03em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
-              Build software that earns trust in the boardroom and works beautifully in the real world.
+              <TypewriterText text="Build software that earns trust in the boardroom and works beautifully in the real world." />
             </h1>
 
             <p className="mt-5 max-w-2xl text-sm leading-7 text-[var(--color-muted)] sm:text-base">
