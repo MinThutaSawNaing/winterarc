@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { LOLI_OPEN_EVENT } from '@/lib/loli-config'
 import { lockBodyScroll, unlockBodyScroll } from '@/lib/body-scroll-lock'
+import ContactModal from '@/components/ContactModal'
 
 const navItems = [
   { name: 'Overview', href: '#home' },
@@ -19,6 +20,7 @@ const navItems = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [contactModalOpen, setContactModalOpen] = useState(false)
   const mobileNavId = 'primary-navigation'
 
   useEffect(() => {
@@ -142,7 +144,7 @@ export default function Header() {
           </nav>
 
           <button
-            onClick={() => scrollToSection('#contact')}
+            onClick={() => setContactModalOpen(true)}
             className="rounded-lg bg-[var(--color-brand)] px-4 py-2.5 text-xs font-semibold text-white shadow-[0_1px_3px_rgba(0,0,0,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)] hover:shadow-[0_4px_6px_rgba(37,99,235,0.2)]"
           >
             Book a Call
@@ -208,7 +210,10 @@ export default function Header() {
             ))}
 
             <button
-              onClick={() => scrollToSection('#contact')}
+              onClick={() => {
+                setContactModalOpen(true)
+                setMobileMenuOpen(false)
+              }}
               className="mt-3 rounded-lg bg-[var(--color-brand)] px-4 py-3 font-semibold text-white transition-colors hover:bg-[var(--color-brand-deep)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(37,99,235,0.16)]"
             >
               Book a Call
@@ -216,6 +221,8 @@ export default function Header() {
           </nav>
         </div>
       )}
+
+      <ContactModal open={contactModalOpen} onClose={() => setContactModalOpen(false)} />
     </header>
   )
 }
