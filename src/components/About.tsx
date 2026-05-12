@@ -1,7 +1,7 @@
 const stats = [
   { value: '4+', label: 'Years of experience' },
   { value: '10+', label: 'Products and launches' },
-  { value: '10+', label: 'Client partnerships' },
+  { value: '50+', label: 'Client partnerships' },
   { value: '24/7 mindset', label: 'Responsive collaboration' },
 ]
 

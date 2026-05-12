@@ -13,7 +13,7 @@ import {
 } from 'react-icons/si'
 
 const technologies = [
-  { name: 'Next.js', icon: <SiNextdotjs />, color: 'text-white' },
+  { name: 'Next.js', icon: <SiNextdotjs size="1em" className="inline-block" />, color: 'text-white' },
   { name: 'React', icon: <FontAwesomeIcon icon={faReact} />, color: 'text-cyan-300' },
   {
     name: 'Tailwind CSS',
