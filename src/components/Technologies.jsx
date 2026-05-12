@@ -17,18 +17,18 @@ const technologies = [
   { name: 'React', icon: <FontAwesomeIcon icon={faReact} />, color: 'text-cyan-300' },
   {
     name: 'Tailwind CSS',
-    icon: <SiTailwindcss />,
+    icon: <SiTailwindcss size="1em" className="inline-block" />,
     color: 'text-sky-300',
   },
   {
     name: 'TypeScript',
-    icon: <SiTypescript />,
+    icon: <SiTypescript size="1em" className="inline-block" />,
     color: 'text-blue-300',
   },
   { name: 'Node.js', icon: <FontAwesomeIcon icon={faNodeJs} />, color: 'text-emerald-300' },
   { name: 'Python', icon: <FontAwesomeIcon icon={faPython} />, color: 'text-amber-300' },
   { name: 'AWS', icon: <FontAwesomeIcon icon={faAws} />, color: 'text-orange-300' },
-  { name: 'Laravel', icon: <SiLaravel />, color: 'text-rose-300' },
+  { name: 'Laravel', icon: <SiLaravel size="1em" className="inline-block" />, color: 'text-rose-300' },
 ]
 
 export default function Technologies() {
