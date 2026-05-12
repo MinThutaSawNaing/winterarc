@@ -10,37 +10,79 @@ const footerLinks = [
 export default function Footer() {
   return (
     <footer className="bg-[var(--color-panel-dark)] text-white">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-          <div className="max-w-xl">
-            <h3 className="text-lg font-semibold tracking-[-0.02em] text-white">
-              Winter Arc Myanmar
-            </h3>
-            <p className="mt-3 text-xs leading-6 text-slate-300 sm:text-sm">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14">
+        <div className="grid gap-10 md:grid-cols-2">
+          <div className="max-w-md">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded bg-blue-600">
+                <span className="text-sm font-bold">W</span>
+              </div>
+              <h3 className="text-base font-bold tracking-[-0.02em] text-white">
+                Winter Arc Myanmar
+              </h3>
+            </div>
+            <p className="mt-4 text-sm leading-7 text-slate-300">
               Websites, platforms, and software systems designed to feel clear,
               credible, and ready to support long-term growth.
             </p>
           </div>
 
-          <nav
-            aria-label="Footer"
-            className="flex flex-wrap gap-x-5 gap-y-3 text-sm text-slate-300"
-          >
-            {footerLinks.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="transition hover:text-white"
-              >
-                {item.name}
-              </a>
-            ))}
-          </nav>
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                Navigation
+              </p>
+              <nav aria-label="Footer" className="mt-4 flex flex-col gap-2.5">
+                {footerLinks.slice(0, 3).map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-sm text-slate-300 transition hover:text-white"
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </nav>
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                More
+              </p>
+              <nav aria-label="Footer secondary" className="mt-4 flex flex-col gap-2.5">
+                {footerLinks.slice(3).map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-sm text-slate-300 transition hover:text-white"
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </nav>
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
+                Contact
+              </p>
+              <div className="mt-4 flex flex-col gap-2.5 text-sm text-slate-300">
+                <p>Insein, Yangon, Myanmar</p>
+                <a href="mailto:winterarcmyanmar@yahoo.com" className="transition hover:text-white">
+                  winterarcmyanmar@yahoo.com
+                </a>
+                <a href="tel:+959977144320" className="transition hover:text-white">
+                  +95 9 977 144 320
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="mt-8 border-t border-white/10 pt-6">
+        <div className="mt-10 border-t border-white/10 pt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-400">
-            Copyright 2026 Winter Arc Myanmar. All rights reserved.
+            &copy; {new Date().getFullYear()} Winter Arc Myanmar. All rights reserved.
+          </p>
+          <p className="text-sm text-slate-500">
+            Enterprise digital delivery for Myanmar.
           </p>
         </div>
       </div>

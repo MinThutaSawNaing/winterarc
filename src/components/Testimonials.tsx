@@ -24,42 +24,42 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="section-shell bg-[linear-gradient(180deg,#152033_0%,#101827_100%)] py-20 text-white md:py-24">
+    <section className="section-shell bg-[var(--color-bg-alt)] py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col gap-5 md:max-w-3xl">
-          <span className="inline-flex w-fit rounded-full border border-white/[0.12] bg-white/[0.08] px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-amber-100">
+          <span className="section-label">
             Testimonials
           </span>
-          <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white md:text-3xl lg:text-4xl">
+          <h2 className="text-2xl font-bold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl lg:text-4xl">
             Clients trust us to bring structure, calm communication, and professional finish to the work.
           </h2>
-          <p className="text-sm leading-7 text-slate-300 md:text-base">
+          <p className="text-sm leading-7 text-[var(--color-muted)] md:text-base">
             Good delivery is not only about shipping features. It is also about
             making the process feel clear, collaborative, and under control.
           </p>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-3">
           {testimonials.map((item) => (
             <article
               key={item.name}
-              className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_20px_40px_rgba(0,0,0,0.14)] backdrop-blur-sm"
+              className="panel-card rounded-xl p-6"
             >
-              <div className="flex items-center gap-1 text-amber-300" aria-label="Five out of five stars">
+              <div className="flex items-center gap-1 text-amber-400" aria-label="Five out of five stars">
                 {Array.from({ length: 5 }).map((_, index) => (
-                  <FontAwesomeIcon key={index} icon={faStar} aria-hidden="true" />
+                  <FontAwesomeIcon key={index} icon={faStar} aria-hidden="true" className="text-sm" />
                 ))}
               </div>
 
-              <p className="mt-5 text-sm leading-7 text-slate-100 md:text-base">
+              <p className="mt-4 text-sm leading-7 text-[var(--color-ink)] md:text-base">
                 &ldquo;{item.feedback}&rdquo;
               </p>
 
-              <div className="mt-6 border-t border-white/10 pt-5">
-                <h3 className="text-sm font-semibold text-white md:text-base">
+              <div className="mt-6 border-t border-[var(--color-line)] pt-5">
+                <h3 className="text-sm font-bold text-[var(--color-ink)] md:text-base">
                   {item.name}
                 </h3>
-                <p className="mt-1 text-sm text-slate-400">{item.company}</p>
+                <p className="mt-1 text-sm text-[var(--color-muted)]">{item.company}</p>
               </div>
             </article>
           ))}

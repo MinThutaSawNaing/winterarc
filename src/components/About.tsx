@@ -9,7 +9,7 @@ const principles = [
   {
     title: 'Business context comes first',
     description:
-      'We connect design and engineering decisions to business goals, risk, and operational realities before we define the solution.',
+      'We connect design and engineering decisions to business goals, risk, and operational realities before defining the solution.',
   },
   {
     title: 'Polish is treated as a requirement',
@@ -19,19 +19,19 @@ const principles = [
   {
     title: 'Delivery stays collaborative',
     description:
-      'Stakeholders get a clear line of sight into priorities, progress, and next decisions instead of being handed surprises late.',
+      'Stakeholders get a clear line of sight into priorities, progress, and next decisions instead of surprises.',
   },
 ]
 
 export default function About() {
   return (
-    <section id="about" className="section-shell bg-[var(--color-bg)] py-20 md:py-24">
+    <section id="about" className="section-shell bg-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
           <div>
             <span className="section-label">About Winter Arc Myanmar</span>
 
-            <h2 className="mt-4 text-2xl font-semibold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl lg:text-4xl">
+            <h2 className="mt-4 text-2xl font-bold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl lg:text-4xl">
               A product-minded team for organizations that want software to feel as strong as their business.
             </h2>
 
@@ -45,9 +45,9 @@ export default function About() {
               {stats.map((item) => (
                 <div
                   key={item.label}
-                  className="panel-card rounded-[1.6rem] p-5 shadow-[0_14px_30px_rgba(15,23,42,0.05)]"
+                  className="panel-card rounded-xl p-5"
                 >
-                  <div className="text-xl font-semibold tracking-[-0.02em] text-[var(--color-ink)] md:text-2xl">
+                  <div className="text-xl font-bold tracking-[-0.02em] text-[var(--color-brand)] md:text-2xl">
                     {item.value}
                   </div>
                   <div className="mt-2 text-sm font-medium leading-6 text-[var(--color-muted)]">
@@ -58,24 +58,24 @@ export default function About() {
             </div>
           </div>
 
-          <div className="panel-card-dark rounded-[2rem] p-5 sm:p-7">
-            <div className="rounded-[1.7rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-6 sm:p-8">
-              <p className="text-sm font-medium uppercase tracking-[0.22em] text-white/65">
+          <div className="panel-card-dark rounded-2xl p-6 sm:p-8">
+            <div className="rounded-xl border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))] p-6 sm:p-7">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200/70">
                 Why teams choose us
               </p>
 
-              <div className="mt-6 grid gap-5">
+              <div className="mt-6 grid gap-4">
                 {principles.map((item, index) => (
                   <div
                     key={item.title}
-                    className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5"
+                    className="rounded-xl border border-white/8 bg-white/[0.04] p-5"
                   >
                     <div className="flex items-start gap-4">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-sm font-semibold text-slate-100">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/10 text-xs font-semibold text-blue-100">
                         0{index + 1}
                       </span>
                       <div>
-                        <h3 className="text-base font-semibold text-white">
+                        <h3 className="text-sm font-semibold text-white">
                           {item.title}
                         </h3>
                         <p className="mt-2 text-sm leading-7 text-slate-300">
