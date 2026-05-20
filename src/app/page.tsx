@@ -1,8 +1,9 @@
-import Script from 'next/script'
+﻿import Script from 'next/script'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import Services from '@/components/Services'
 import About from '@/components/About'
+import TeamMembers from '@/components/TeamMembers'
 import Technologies from '@/components/Technologies'
 import Customers from '@/components/Customers'
 import Portfolio from '@/components/Portfolio'
@@ -77,6 +78,7 @@ export default function Home() {
       <Hero />
       <Services />
       <About />
+      <TeamMembers />
       <Technologies />
       <Customers />
       <Portfolio />
