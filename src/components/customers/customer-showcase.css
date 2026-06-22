@@ -32,7 +32,7 @@
 
 .three-d-hover-gallery__item:focus-visible .three-d-hover-gallery__card {
   box-shadow:
-    0 0 0 3px var(--color-brand-soft),
+    0 0 0 3px var(--color-brand-soft, #3b82f6),
     0 16px 40px rgba(15, 23, 42, 0.14);
 }
 
@@ -57,7 +57,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background: var(--color-panel-dark);
+  background: var(--color-panel-dark, #1a1a2e);
 }
 
 .three-d-hover-gallery__image {
@@ -130,7 +130,7 @@
 }
 
 .three-d-hover-gallery__dot:focus-visible {
-  outline: 2px solid var(--color-brand);
+  outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
@@ -140,21 +140,19 @@
   transform: scale(1);
 }
 
-@media (max-width: 768px) {
+/* ── Responsive: Tablets (640px–1023px) ── */
+@media (max-width: 1023px) {
   .three-d-hover-gallery {
-    padding: 2rem 0.75rem 1.5rem;
-    border-radius: 0.875rem;
+    padding: 2.5rem 0.75rem 1.75rem;
   }
 
   .three-d-hover-gallery__hint {
-    font-size: 0.6875rem;
-    margin-bottom: 0.75rem;
+    font-size: 0.7rem;
+    margin-bottom: 0.85rem;
   }
 
   .three-d-hover-gallery__info {
-    padding: 1rem;
-    transform: translateY(0);
-    opacity: 1;
+    padding: 1rem 0.875rem;
   }
 
   .three-d-hover-gallery__title {
@@ -164,17 +162,100 @@
   .three-d-hover-gallery__caption {
     font-size: 0.75rem;
   }
+
+  .three-d-hover-gallery__dots {
+    gap: 0.4rem;
+    margin-top: 1rem;
+  }
+
+  .three-d-hover-gallery__dot {
+    width: 0.45rem;
+    height: 0.45rem;
+  }
+
+  .three-d-hover-gallery__dot--active {
+    width: 1.25rem;
+  }
 }
 
+/* ── Responsive: Phones (< 640px) ── */
+@media (max-width: 639px) {
+  .three-d-hover-gallery {
+    padding: 2rem 0.5rem 1.25rem;
+    border-radius: 0.75rem;
+  }
+
+  .three-d-hover-gallery__hint {
+    font-size: 0.6rem;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.06em;
+  }
+
+  .three-d-hover-gallery__track {
+    min-height: 30vw;
+  }
+
+  .three-d-hover-gallery__item {
+    min-width: 12vw;
+  }
+
+  .three-d-hover-gallery__card {
+    border-radius: 0.625rem;
+  }
+
+  .three-d-hover-gallery__info {
+    padding: 0.75rem 0.6rem;
+    transform: translateY(0);
+    opacity: 1;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.92), transparent 70%);
+  }
+
+  .three-d-hover-gallery__title {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .three-d-hover-gallery__caption {
+    font-size: 0.625rem;
+    line-height: 1.2;
+    margin-top: 0.1rem;
+  }
+
+  .three-d-hover-gallery__dots {
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+  }
+
+  .three-d-hover-gallery__dot {
+    width: 0.4rem;
+    height: 0.4rem;
+  }
+
+  .three-d-hover-gallery__dot--active {
+    width: 1rem;
+  }
+
+  /* On phones, always show info overlay for better touch UX */
+  .three-d-hover-gallery__item:hover .three-d-hover-gallery__info,
+  .three-d-hover-gallery__card--expanded .three-d-hover-gallery__info {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .three-d-hover-gallery__item,
   .three-d-hover-gallery__card,
   .three-d-hover-gallery__info,
-  .three-d-hover-gallery__image {
+  .three-d-hover-gallery__image,
+  .three-d-hover-gallery__dot {
     transition: none !important;
+    animation: none !important;
   }
 }
 
+/* ── Customer Globe styles (kept from original) ── */
 .customer-globe-shell {
   display: flex;
   flex-direction: column;
@@ -191,7 +272,7 @@
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--color-muted);
+  color: var(--color-muted, #94a3b8);
 }
 
 .customer-globe-canvas-wrap {
@@ -216,11 +297,11 @@
 .customer-globe__info {
   width: 100%;
   border-radius: 0.875rem;
-  border: 1px solid var(--color-line);
-  background: var(--color-bg-alt);
+  border: 1px solid var(--color-line, rgba(255, 255, 255, 0.08));
+  background: var(--color-bg-alt, #1e293b);
   padding: 1rem 1.125rem;
   text-align: center;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card, 0 8px 24px rgba(0, 0, 0, 0.15));
 }
 
 .customer-globe__eyebrow {
@@ -229,7 +310,7 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-brand);
+  color: var(--color-brand, #3b82f6);
 }
 
 .customer-globe__title {
@@ -237,7 +318,7 @@
   font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.45;
-  color: var(--color-ink);
+  color: var(--color-ink, #f1f5f9);
 }
 
 @media (max-width: 640px) {

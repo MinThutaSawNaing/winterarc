@@ -78,6 +78,7 @@ export default function ThreeDHoverGallery({
   const [containerWidth, setContainerWidth] = useState(0)
   const containerRef = useRef<HTMLDivElement>(null)
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const galleryImages = images || customerPhotos.map((p) => p.src)
   const galleryData = images
@@ -88,6 +89,18 @@ export default function ThreeDHoverGallery({
         caption: '',
       }))
     : customerPhotos
+
+  // Responsive breakpoints
+  const isMobile = containerWidth < 640
+  const isTablet = containerWidth >= 640 && containerWidth < 1024
+
+  // Responsive overrides
+  const responsiveItemWidth = isMobile ? 12 : isTablet ? 10 : itemWidth
+  const responsiveActiveWidth = isMobile ? 50 : isTablet ? 45 : activeWidth
+  const responsiveGap = isMobile ? 0.4 : isTablet ? 0.6 : gap
+  const responsiveItemHeight = isMobile ? 24 : isTablet ? 20 : itemHeight
+  const responsivePerspective = isMobile ? 20 : isTablet ? 28 : perspective
+  const responsiveHoverScale = isMobile ? 6 : isTablet ? 8 : hoverScale
 
   useEffect(() => {
     const updateWidth = () => {
@@ -148,10 +161,19 @@ export default function ThreeDHoverGallery({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [enableKeyboardNavigation, galleryImages.length])
 
+  // Clean up hover timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+      }
+    }
+  }, [])
+
   const vw = containerWidth / 100
-  const itemWidthPx = itemWidth * vw
-  const activeWidthPx = activeWidth * vw
-  const gapPx = gap * 16
+  const itemWidthPx = responsiveItemWidth * vw
+  const activeWidthPx = responsiveActiveWidth * vw
+  const gapPx = responsiveGap * 16
   const totalItems = galleryImages.length
 
   const getItemPosition = (index: number) => {
@@ -172,7 +194,7 @@ export default function ThreeDHoverGallery({
 
     if (shouldExpand) {
       width = activeWidthPx
-      scale = 1 + hoverScale / 100
+      scale = 1 + responsiveHoverScale / 100
       grayscale = 0
       brightness = 1
       z = 20
@@ -237,15 +259,40 @@ export default function ThreeDHoverGallery({
   }
 
   const handleMouseEnter = (index: number) => {
+    // Clear any pending hover timeout
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+      hoverTimeoutRef.current = null
+    }
     setHoveredIndex(index)
     onImageHover?.(index, galleryImages[index])
+  }
+
+  const handleMouseLeave = (index: number) => {
+    // Use a small delay to prevent flickering when moving between items
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredIndex(null)
+      hoverTimeoutRef.current = null
+    }, 50)
   }
 
   const handleTrackMouseLeave = (event: React.MouseEvent) => {
     const related = event.relatedTarget as Node | null
     if (containerRef.current?.contains(related)) return
 
+    // Clear any pending hover timeout
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+      hoverTimeoutRef.current = null
+    }
+
+    // Immediately clear hover state when mouse leaves the track
     setHoveredIndex(null)
+    
+    // Only clear active index if not in autoPlay mode
     if (!autoPlay) {
       setActiveIndex(null)
     }
@@ -269,7 +316,7 @@ export default function ThreeDHoverGallery({
       data-snow-surface="dark"
       style={{
         backgroundColor,
-        perspective: `${perspective}vw`,
+        perspective: `${responsivePerspective}vw`,
         ...style,
       }}
       aria-label="Customer partner gallery"
@@ -279,7 +326,7 @@ export default function ThreeDHoverGallery({
         className="three-d-hover-gallery__track"
         onMouseLeave={handleTrackMouseLeave}
         style={{
-          height: `${itemHeight}vw`,
+          height: `${responsiveItemHeight}vw`,
           width: '100%',
           display: 'flex',
           alignItems: 'center',
@@ -321,6 +368,7 @@ export default function ThreeDHoverGallery({
                 damping: 22,
               }}
               onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={() => handleMouseLeave(index)}
               onClick={() => handleClick(index)}
               onFocus={() => {
                 setHoveredIndex(index)
