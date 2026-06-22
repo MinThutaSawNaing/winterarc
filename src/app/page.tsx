@@ -63,19 +63,20 @@ export default function Home() {
   }
 
   return (
-    <main
-      id="main-content"
-      className="relative isolate min-h-screen overflow-x-hidden bg-[var(--color-bg)] text-[var(--color-ink)]"
-    >
-      <Script
-        id="winter-arc-schema-org"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify([organizationSchema, websiteSchema]),
-        }}
-      />
+    <>
       <Header />
-      <Hero />
+      <main
+        id="main-content"
+        className="relative min-h-screen overflow-x-clip bg-[var(--color-bg)] text-[var(--color-ink)]"
+      >
+        <Script
+          id="winter-arc-schema-org"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([organizationSchema, websiteSchema]),
+          }}
+        />
+        <Hero />
       <Services />
       <About />
       <TeamMembers />
@@ -86,6 +87,7 @@ export default function Home() {
       <Contact />
       <Footer />
       <LoliAssistant />
-    </main>
+      </main>
+    </>
   )
 }

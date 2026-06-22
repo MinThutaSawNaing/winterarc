@@ -1,3 +1,5 @@
+import { PoweredByWinterArc } from '@/components/poweredByWinterArcAnimation'
+
 const footerLinks = [
   { name: 'Home', href: '#home' },
   { name: 'Services', href: '#services' },
@@ -77,13 +79,19 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-white/10 pt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-6 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-400">
             &copy; {new Date().getFullYear()} Winter Arc Myanmar. All rights reserved.
           </p>
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-500 sm:text-right">
             Enterprise digital delivery for Myanmar.
           </p>
+        </div>
+
+        <div className="mt-8 flex justify-center overflow-x-clip border-t border-white/10 px-2 pt-8 sm:px-4">
+          <div className="dark w-full max-w-full sm:w-auto">
+            <PoweredByWinterArc variant="footer" />
+          </div>
         </div>
       </div>
     </footer>
