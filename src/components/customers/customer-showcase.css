@@ -21,6 +21,7 @@
   position: relative;
   transform-style: preserve-3d;
   will-change: transform;
+  overflow: visible;
 }
 
 .three-d-hover-gallery__item {
@@ -181,8 +182,9 @@
 /* ── Responsive: Phones (< 640px) ── */
 @media (max-width: 639px) {
   .three-d-hover-gallery {
-    padding: 2rem 0.5rem 1.25rem;
+    padding: 1.5rem 0.25rem 1.25rem;
     border-radius: 0.75rem;
+    overflow: visible;
   }
 
   .three-d-hover-gallery__hint {
@@ -193,10 +195,12 @@
 
   .three-d-hover-gallery__track {
     min-height: 30vw;
+    padding: 0 1.5rem !important;
+    overflow: visible;
   }
 
   .three-d-hover-gallery__item {
-    min-width: 12vw;
+    min-width: 14vw;
   }
 
   .three-d-hover-gallery__card {

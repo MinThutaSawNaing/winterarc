@@ -95,12 +95,13 @@ export default function ThreeDHoverGallery({
   const isTablet = containerWidth >= 640 && containerWidth < 1024
 
   // Responsive overrides
-  const responsiveItemWidth = isMobile ? 12 : isTablet ? 10 : itemWidth
-  const responsiveActiveWidth = isMobile ? 50 : isTablet ? 45 : activeWidth
-  const responsiveGap = isMobile ? 0.4 : isTablet ? 0.6 : gap
-  const responsiveItemHeight = isMobile ? 24 : isTablet ? 20 : itemHeight
-  const responsivePerspective = isMobile ? 20 : isTablet ? 28 : perspective
-  const responsiveHoverScale = isMobile ? 6 : isTablet ? 8 : hoverScale
+  const responsiveItemWidth = isMobile ? 14 : isTablet ? 10 : itemWidth
+  const responsiveActiveWidth = isMobile ? 55 : isTablet ? 45 : activeWidth
+  const responsiveGap = isMobile ? 0.3 : isTablet ? 0.6 : gap
+  const responsiveItemHeight = isMobile ? 28 : isTablet ? 20 : itemHeight
+  const responsivePerspective = isMobile ? 15 : isTablet ? 28 : perspective
+  const responsiveHoverScale = isMobile ? 5 : isTablet ? 8 : hoverScale
+  const responsiveRotationAngle = isMobile ? 15 : isTablet ? 25 : rotationAngle
 
   useEffect(() => {
     const updateWidth = () => {
@@ -192,6 +193,10 @@ export default function ThreeDHoverGallery({
     let brightness = brightnessLevel
     let opacity = 1
 
+    // Calculate center offset to keep items centered
+    const centerOffset = (totalItems - 1) / 2
+    const position = index - centerOffset
+
     if (shouldExpand) {
       width = activeWidthPx
       scale = 1 + responsiveHoverScale / 100
@@ -199,39 +204,42 @@ export default function ThreeDHoverGallery({
       brightness = 1
       z = 20
 
-      const centerOffset = (totalItems - 1) / 2
-      const position = index - centerOffset
+      // Base position with center alignment
       x = position * (itemWidthPx + gapPx)
 
       const widthDiff = (activeWidthPx - itemWidthPx) / 2
-      if (position < 0) {
-        x -= widthDiff
-      } else if (position > 0) {
-        x += widthDiff
-      }
-
+      
+      // Adjust position based on which side of the active item
       if (isLeft) {
         x -= widthDiff
       } else if (isRight) {
         x += widthDiff
+      } else {
+        // This is the active item itself
+        // Center it properly
+        x = position * (itemWidthPx + gapPx)
+      }
+
+      // For mobile, clamp the position to keep it in viewport
+      if (isMobile) {
+        const maxX = (containerWidth / 2) - (activeWidthPx / 2) - 10
+        const minX = -(containerWidth / 2) + (activeWidthPx / 2) + 10
+        x = Math.max(minX, Math.min(maxX, x))
       }
     } else if (activeIndex !== null) {
       grayscale = grayscaleStrength
       brightness = brightnessLevel
       opacity = 0.5
 
-      const centerOffset = (totalItems - 1) / 2
-      const position = index - centerOffset
-
       if (isLeft) {
         const offset = (activeIndex - index) * (itemWidthPx + gapPx)
-        const rotAmount = Math.min(rotationAngle, offset * 0.5)
+        const rotAmount = Math.min(responsiveRotationAngle, offset * 0.5)
         x = position * (itemWidthPx + gapPx) - offset - (activeWidthPx - itemWidthPx) / 2
         z = (-zDepth * (activeIndex - index)) / 2
         rotation = -rotAmount
       } else if (isRight) {
         const offset = (index - activeIndex) * (itemWidthPx + gapPx)
-        const rotAmount = Math.min(rotationAngle, offset * 0.5)
+        const rotAmount = Math.min(responsiveRotationAngle, offset * 0.5)
         x = position * (itemWidthPx + gapPx) + offset + (activeWidthPx - itemWidthPx) / 2
         z = (-zDepth * (index - activeIndex)) / 2
         rotation = rotAmount
@@ -239,8 +247,6 @@ export default function ThreeDHoverGallery({
         x = position * (itemWidthPx + gapPx)
       }
     } else {
-      const centerOffset = (totalItems - 1) / 2
-      const position = index - centerOffset
       x = position * (itemWidthPx + gapPx)
       width = itemWidthPx
       scale = 1
@@ -332,6 +338,7 @@ export default function ThreeDHoverGallery({
           alignItems: 'center',
           justifyContent: 'center',
           transformStyle: 'preserve-3d',
+          padding: isMobile ? '0 2rem' : '0 1rem',
         }}
       >
         {galleryData.map((item, index) => {
