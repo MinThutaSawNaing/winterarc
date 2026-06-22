@@ -197,11 +197,6 @@ export default function ThreeDHoverGallery({
     const centerOffset = (totalItems - 1) / 2
     const position = index - centerOffset
 
-    // Calculate the viewport boundaries with safety margin
-    const viewportCenter = 0
-    const halfViewport = containerWidth / 2
-    const safetyMargin = isMobile ? 20 : 10
-
     if (shouldExpand) {
       width = activeWidthPx
       scale = 1 + responsiveHoverScale / 100
@@ -221,9 +216,11 @@ export default function ThreeDHoverGallery({
         x += widthDiff
       }
 
-      // For mobile, clamp the position to keep it in viewport
+      // Only clamp on mobile to prevent edge clipping
       if (isMobile) {
+        const halfViewport = containerWidth / 2
         const halfWidth = activeWidthPx / 2
+        const safetyMargin = 10
         const maxX = halfViewport - halfWidth - safetyMargin
         const minX = -halfViewport + halfWidth + safetyMargin
         x = Math.max(minX, Math.min(maxX, x))
@@ -340,7 +337,7 @@ export default function ThreeDHoverGallery({
           alignItems: 'center',
           justifyContent: 'center',
           transformStyle: 'preserve-3d',
-          padding: isMobile ? '0 2.5rem' : '0 1rem',
+          padding: isMobile ? '0 2.5rem' : '0',
         }}
       >
         {galleryData.map((item, index) => {
