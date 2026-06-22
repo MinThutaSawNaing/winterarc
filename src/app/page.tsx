@@ -1,4 +1,4 @@
-﻿import Script from 'next/script'
+import Script from 'next/script'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import Services from '@/components/Services'
@@ -9,6 +9,7 @@ import Customers from '@/components/Customers'
 import Portfolio from '@/components/Portfolio'
 import Testimonials from '@/components/Testimonials'
 import LoliAssistant from '@/components/LoliAssistant'
+import ScrollToTop from '@/components/ScrollToTop'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import {
@@ -88,6 +89,7 @@ export default function Home() {
       <Footer />
       <LoliAssistant />
       </main>
+      <ScrollToTop />
     </>
   )
 }
