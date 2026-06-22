@@ -105,7 +105,7 @@ export default function Header() {
         >
           <div className="relative h-10 w-10 overflow-hidden rounded-lg bg-[var(--color-panel-dark)]">
             <Image
-              src="/icon.png"
+              src="/winterarcicon-dark.svg"
               alt="Winter Arc Myanmar"
               fill
               className="scale-110 object-cover object-center"

@@ -10,14 +10,14 @@ const teamMembers = [
   },
   {
     name: 'Htet Wai Yan',
-    role: 'Co-Founder',
+    role: 'Chief Executive Officer(CEO)',
     image: '/images/TeamMembers/Htet%20Wai%20Yan%20Co-Founder.jpg',
     description:
       'Co-creator of the platform, bringing technical insight and operational excellence to every engagement.',
   },
   {
     name: 'Thurein',
-    role: 'Development Manager',
+    role: 'Chief Technology Officer(CTO)',
     image: '/images/TeamMembers/Thurein%20Development%20Manager.jpg',
     description:
       'Oversees engineering execution, ensuring every project meets rigorous quality, UX, and performance standards.',
