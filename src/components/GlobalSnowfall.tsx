@@ -37,9 +37,9 @@ function buildParticles(count: number): SnowParticleConfig[] {
       left: r * 100,
       size: 14 + r2 * 26 + layer * 4,
       delay: r2 * 14,
-      duration: 7 + (1 - depth) * 8 + r4 * 6,
+      duration: 11 + (1 - depth) * 10 + r4 * 8,
       opacity: 0.28 + depth * 0.42,
-      sway: -48 + r3 * 96,
+      sway: -32 + r3 * 64,
       rotate: 180 + r4 * 720,
       pattern: r4 > 0.5 ? 2 : 1,
       layer,
@@ -48,9 +48,9 @@ function buildParticles(count: number): SnowParticleConfig[] {
 }
 
 function particleCountForWidth(width: number): number {
-  if (width < 640) return 48
-  if (width < 1024) return 72
-  return 96
+  if (width < 640) return 32
+  if (width < 1024) return 52
+  return 68
 }
 
 function isDarkSurfaceAt(x: number, y: number): boolean {
@@ -125,7 +125,7 @@ function SnowParticle({ config }: { config: SnowParticleConfig }) {
 
 export default function GlobalSnowfall() {
   const reduceMotion = useReducedMotion()
-  const [count, setCount] = useState(72)
+  const [count, setCount] = useState(52)
 
   useEffect(() => {
     const updateCount = () => {

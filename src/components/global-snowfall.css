@@ -69,7 +69,7 @@
   display: block;
   will-change: transform, opacity;
   animation-iteration-count: infinite !important;
-  animation-timing-function: cubic-bezier(0.22, 0.04, 0.36, 0.98);
+  animation-timing-function: cubic-bezier(0.28, 0.08, 0.32, 1);
 }
 
 .global-snowfall__flake--pattern-a {
@@ -78,7 +78,7 @@
 
 .global-snowfall__flake--pattern-b {
   animation-name: global-snow-fall-b;
-  animation-timing-function: cubic-bezier(0.18, 0.02, 0.42, 1);
+  animation-timing-function: cubic-bezier(0.25, 0.06, 0.35, 1);
 }
 
 .global-snowfall__icon {
