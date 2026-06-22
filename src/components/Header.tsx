@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { WinterArcLogo3D } from '@/components/poweredByWinterArcAnimation/WinterArcLogo3D'
 import '@/components/poweredByWinterArcAnimation/poweredByWinterArcAnimation.css'
 import { LOLI_OPEN_EVENT } from '@/lib/loli-config'
-import { lockBodyScroll, unlockBodyScroll } from '@/lib/body-scroll-lock'
 import ContactModal from '@/components/ContactModal'
+import MobileNav, { AnimatedMenuIcon } from '@/components/MobileNav'
 
 const navItems = [
   { name: 'Overview', href: '#home' },
@@ -30,14 +30,6 @@ function CalendarIcon() {
         strokeWidth={2}
         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
       />
-    </svg>
-  )
-}
-
-function ChevronIcon() {
-  return (
-    <svg className="h-4 w-4 text-[var(--color-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
     </svg>
   )
 }
@@ -98,36 +90,6 @@ export default function Header() {
 
     return () => observer.disconnect()
   }, [])
-
-  useEffect(() => {
-    if (!mobileMenuOpen) {
-      return
-    }
-
-    lockBodyScroll()
-
-    return () => {
-      unlockBodyScroll()
-    }
-  }, [mobileMenuOpen])
-
-  useEffect(() => {
-    if (!mobileMenuOpen) {
-      return
-    }
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setMobileMenuOpen(false)
-      }
-    }
-
-    window.addEventListener('keydown', handleEscape)
-
-    return () => {
-      window.removeEventListener('keydown', handleEscape)
-    }
-  }, [mobileMenuOpen])
 
   const scrollToSection = (href: string) => {
     if (href === '#loli') {
@@ -216,82 +178,25 @@ export default function Header() {
           className={`header-menu-toggle shrink-0 p-2.5 text-[var(--color-ink)] focus-visible:outline-none lg:hidden ${
             mobileMenuOpen ? 'header-menu-toggle--open' : ''
           }`}
-          aria-label="Toggle menu"
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileMenuOpen}
         >
-          <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {mobileMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+          <AnimatedMenuIcon open={mobileMenuOpen} />
         </button>
       </div>
 
-      {mobileMenuOpen && (
-        <div className="fixed inset-x-0 top-16 z-40 lg:hidden">
-          <button
-            type="button"
-            aria-label="Close navigation menu"
-            onClick={() => setMobileMenuOpen(false)}
-            className="header-mobile-backdrop absolute inset-0 z-0 h-[calc(100dvh-4rem)] w-full cursor-default"
-          />
-          <nav
-            id={mobileNavId}
-            aria-label="Primary"
-            className="header-mobile-panel relative z-10 mx-2 max-h-[calc(100dvh-5.25rem)] overflow-y-auto rounded-2xl p-3 sm:mx-4"
-          >
-            <div className="mb-3 flex items-center justify-between border-b border-[var(--color-line)] px-1 pb-3">
-              <div>
-                <p className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-[var(--color-muted)]">
-                  Menu
-                </p>
-                <p className="mt-0.5 text-sm font-semibold text-[var(--color-ink)]">Navigate the site</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(false)}
-                className="rounded-lg border border-[var(--color-line)] bg-white px-3 py-1.5 text-xs font-semibold text-[var(--color-ink)] transition hover:bg-[var(--color-bg-alt)]"
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="grid gap-2">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    scrollToSection(item.href)
-                  }}
-                  className={`header-mobile-link ${
-                    isActive(item.href) ? 'header-mobile-link--active' : ''
-                  }`}
-                  aria-current={isActive(item.href) ? 'page' : undefined}
-                >
-                  <span>{item.name}</span>
-                  <ChevronIcon />
-                </Link>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                setContactModalOpen(true)
-                setMobileMenuOpen(false)
-              }}
-              className="header-cta mt-3 w-full justify-center py-3 text-sm"
-            >
-              <CalendarIcon />
-              Book a Call
-            </button>
-          </nav>
-        </div>
-      )}
+      <MobileNav
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        navId={mobileNavId}
+        navItems={navItems}
+        activeSection={activeSection}
+        onNavigate={scrollToSection}
+        onBookCall={() => {
+          setContactModalOpen(true)
+          setMobileMenuOpen(false)
+        }}
+      />
 
       <ContactModal open={contactModalOpen} onClose={() => setContactModalOpen(false)} />
     </header>
