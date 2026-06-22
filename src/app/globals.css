@@ -156,9 +156,9 @@ h6 {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
+  *:not(.global-snowfall):not(.global-snowfall *),
+  *:not(.global-snowfall):not(.global-snowfall *)::before,
+  *:not(.global-snowfall):not(.global-snowfall *)::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

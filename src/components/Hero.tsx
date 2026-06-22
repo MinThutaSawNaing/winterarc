@@ -91,7 +91,7 @@ export default function Hero() {
           </div>
 
           <div className="lg:justify-self-end">
-            <div className="panel-card-dark overflow-hidden rounded-2xl p-6 sm:p-7">
+            <div data-snow-surface="dark" className="panel-card-dark overflow-hidden rounded-2xl p-6 sm:p-7">
               <Reveal>
                 <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5">
                   <div>

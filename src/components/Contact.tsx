@@ -71,7 +71,7 @@ export default function Contact() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <div className="panel-card-dark rounded-2xl p-6 sm:p-8">
+          <div data-snow-surface="dark" className="panel-card-dark rounded-2xl p-6 sm:p-8">
             <span className="inline-flex rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-blue-100">
               Contact
             </span>

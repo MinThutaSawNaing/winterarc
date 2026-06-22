@@ -64,7 +64,7 @@ export default function Customers() {
             </div>
           ))}
 
-          <div className="panel-card-dark flex flex-col items-center justify-center rounded-xl p-5 text-center transition hover:-translate-y-1">
+          <div data-snow-surface="dark" className="panel-card-dark flex flex-col items-center justify-center rounded-xl p-5 text-center transition hover:-translate-y-1">
             <span className="text-xl font-bold tracking-[-0.02em] text-white sm:text-2xl">
               50+
             </span>

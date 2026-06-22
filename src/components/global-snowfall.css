@@ -1,0 +1,123 @@
+@keyframes global-snow-fall-a {
+  0% {
+    transform: translate3d(0, -15vh, 0) rotate(0deg) scale(0.75);
+    opacity: 0;
+  }
+  4% {
+    opacity: var(--flake-opacity, 0.45);
+  }
+  25% {
+    transform: translate3d(calc(var(--flake-sway, 0px) * 0.25), 28vh, 0)
+      rotate(calc(var(--flake-rotate, 360deg) * 0.22)) scale(0.9);
+  }
+  50% {
+    transform: translate3d(calc(var(--flake-sway, 0px) * -0.35), 56vh, 0)
+      rotate(calc(var(--flake-rotate, 360deg) * 0.5)) scale(1);
+  }
+  75% {
+    transform: translate3d(calc(var(--flake-sway, 0px) * 0.42), 84vh, 0)
+      rotate(calc(var(--flake-rotate, 360deg) * 0.76)) scale(1.03);
+  }
+  92% {
+    opacity: calc(var(--flake-opacity, 0.45) * 0.65);
+  }
+  100% {
+    transform: translate3d(var(--flake-sway, 0px), 115vh, 0)
+      rotate(var(--flake-rotate, 360deg)) scale(1.06);
+    opacity: 0;
+  }
+}
+
+@keyframes global-snow-fall-b {
+  0% {
+    transform: translate3d(0, -12vh, 0) rotate(0deg) scale(0.78);
+    opacity: 0;
+  }
+  5% {
+    opacity: var(--flake-opacity, 0.45);
+  }
+  30% {
+    transform: translate3d(calc(var(--flake-sway, 0px) * -0.3), 32vh, 0)
+      rotate(calc(var(--flake-rotate, 360deg) * 0.28)) scale(0.92);
+  }
+  55% {
+    transform: translate3d(calc(var(--flake-sway, 0px) * 0.38), 60vh, 0)
+      rotate(calc(var(--flake-rotate, 360deg) * 0.54)) scale(1.01);
+  }
+  80% {
+    transform: translate3d(calc(var(--flake-sway, 0px) * -0.28), 88vh, 0)
+      rotate(calc(var(--flake-rotate, 360deg) * 0.8)) scale(1.04);
+  }
+  100% {
+    transform: translate3d(calc(var(--flake-sway, 0px) * 0.85), 113vh, 0)
+      rotate(var(--flake-rotate, 360deg)) scale(1.06);
+    opacity: 0;
+  }
+}
+
+.global-snowfall {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.global-snowfall__flake {
+  position: absolute;
+  top: -12vh;
+  display: block;
+  will-change: transform, opacity;
+  animation-iteration-count: infinite !important;
+  animation-timing-function: cubic-bezier(0.22, 0.04, 0.36, 0.98);
+}
+
+.global-snowfall__flake--pattern-a {
+  animation-name: global-snow-fall-a;
+}
+
+.global-snowfall__flake--pattern-b {
+  animation-name: global-snow-fall-b;
+  animation-timing-function: cubic-bezier(0.18, 0.02, 0.42, 1);
+}
+
+.global-snowfall__icon {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.global-snowfall__icon--light {
+  opacity: var(--light-opacity, 1);
+}
+
+.global-snowfall__icon--dark {
+  opacity: var(--dark-opacity, 0);
+}
+
+.global-snowfall__flake.is-over-dark {
+  --light-opacity: 0;
+  --dark-opacity: 1;
+}
+
+@media (max-width: 639px) {
+  .global-snowfall__flake {
+    filter: saturate(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .global-snowfall {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .global-snowfall__flake {
+    animation-play-state: running !important;
+  }
+}

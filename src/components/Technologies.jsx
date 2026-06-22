@@ -35,6 +35,7 @@ export default function Technologies() {
   return (
     <section
       id="technologies"
+      data-snow-surface="dark"
       className="section-shell bg-[var(--color-panel-dark)] py-20 text-white md:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

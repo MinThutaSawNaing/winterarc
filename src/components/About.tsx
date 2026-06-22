@@ -58,7 +58,7 @@ export default function About() {
             </div>
           </div>
 
-          <div className="panel-card-dark rounded-2xl p-6 sm:p-8">
+          <div data-snow-surface="dark" className="panel-card-dark rounded-2xl p-6 sm:p-8">
             <div className="rounded-xl border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))] p-6 sm:p-7">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200/70">
                 Why teams choose us
