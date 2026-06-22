@@ -1,6 +1,7 @@
 'use client'
 
 import CustomerHoverGallery from '@/components/customers/CustomerHoverGallery'
+import CustomerLogoStrip from '@/components/customers/CustomerLogoStrip'
 import SpinningGlobe from '@/components/customers/SpinningGlobe'
 import { Reveal, StaggerItem, StaggerReveal } from '@/components/Reveal'
 import { motion } from 'framer-motion'
@@ -49,6 +50,8 @@ export default function Customers() {
             <SpinningGlobe />
           </motion.div>
         </div>
+
+        <CustomerLogoStrip />
 
         <StaggerReveal className="mt-14 grid gap-3 md:grid-cols-3" stagger={0.08}>
           {highlights.map((item) => (

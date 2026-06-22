@@ -362,3 +362,119 @@
     font-size: 0.875rem;
   }
 }
+
+/* ── Client logo strip (restored from original Customers section) ── */
+.customer-logo-strip {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--color-line);
+}
+
+.customer-logo-strip__label {
+  margin: 0 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.customer-logo-strip__label::before {
+  content: '';
+  display: block;
+  width: 3px;
+  height: 1.25rem;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  flex-shrink: 0;
+}
+
+.customer-logo-strip__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .customer-logo-strip__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .customer-logo-strip__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+.customer-logo-strip__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.875rem;
+  padding: 1.25rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.customer-logo-strip__item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.customer-logo-strip__image {
+  height: 3.5rem;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .customer-logo-strip__image {
+    height: 4rem;
+  }
+}
+
+.customer-logo-strip__more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.875rem;
+  padding: 1.25rem;
+  text-align: center;
+  transition: transform 0.25s ease;
+}
+
+.customer-logo-strip__more:hover {
+  transform: translateY(-2px);
+}
+
+.customer-logo-strip__more-count {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+@media (min-width: 640px) {
+  .customer-logo-strip__more-count {
+    font-size: 1.5rem;
+  }
+}
+
+.customer-logo-strip__more-label {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+@media (min-width: 640px) {
+  .customer-logo-strip__more-label {
+    font-size: 0.875rem;
+  }
+}
