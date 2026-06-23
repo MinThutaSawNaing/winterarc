@@ -78,11 +78,11 @@ export default function Home() {
           }}
         />
         <Hero />
+      <Customers />
       <Services />
       <About />
       <TeamMembers />
       <Technologies />
-      <Customers />
       <Portfolio />
       <Testimonials />
       <Contact />

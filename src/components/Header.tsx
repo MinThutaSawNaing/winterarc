@@ -10,11 +10,11 @@ import MobileNav, { AnimatedMenuIcon } from '@/components/MobileNav'
 
 const navItems = [
   { name: 'Overview', href: '#home' },
+  { name: 'Customers', href: '#customers' },
   { name: 'Services', href: '#services' },
   { name: 'About', href: '#about' },
   { name: 'Team', href: '#team' },
   { name: 'Technologies', href: '#technologies' },
-  { name: 'Customers', href: '#customers' },
   { name: 'Portfolio', href: '#portfolio' },
   { name: 'Loli', href: '#loli' },
   { name: 'Contact', href: '#contact' },
