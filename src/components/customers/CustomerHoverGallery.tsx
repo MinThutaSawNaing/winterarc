@@ -107,14 +107,14 @@ export default function ThreeDHoverGallery({
   const responsiveRotationAngle = isMobile ? 15 : isTablet ? 25 : rotationAngle
   const responsiveZDepth = isMobile ? 3 : isTablet ? 6 : zDepth
 
-  // Mobile-optimised transition (ease) vs desktop spring
+  // Mobile-optimised transition – super light, no spring
   const getTransition = useCallback(
     (prop?: string) => {
       if (isMobile) {
-        return {
-          duration: 0.5,
-          ease: 'easeOut',
+        if (prop === 'filter') {
+          return { duration: 0.2, ease: 'easeOut' }
         }
+        return { duration: 0.35, ease: 'easeOut' }
       }
       return {
         type: 'spring',
@@ -394,6 +394,7 @@ export default function ThreeDHoverGallery({
           const shouldExpand = hoveredIndex === index || isActive
           const stackIndex = getStackIndex(index)
           const transition = getTransition()
+          const filterTransition = getTransition('filter')
 
           return (
             <motion.div
@@ -406,6 +407,8 @@ export default function ThreeDHoverGallery({
                 transformStyle: 'preserve-3d',
                 cursor: 'pointer',
                 zIndex: stackIndex,
+                willChange: 'transform, width, filter',
+                contain: 'layout style paint',
               }}
               animate={{
                 x: pos.x,
@@ -418,12 +421,12 @@ export default function ThreeDHoverGallery({
               }}
               transition={{
                 x: transition,
-                z: isMobile ? { duration: 0.3, ease: 'easeOut' } : transition,
-                rotateY: isMobile ? { duration: 0.3, ease: 'easeOut' } : transition,
+                z: transition,
+                rotateY: transition,
                 scale: transition,
                 width: transition,
-                filter: isMobile ? { duration: 0.4, ease: 'easeOut' } : transition,
-                opacity: { duration: 0.3 },
+                filter: filterTransition,
+                opacity: isMobile ? { duration: 0.2 } : transition,
               }}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave(index)}
@@ -432,12 +435,16 @@ export default function ThreeDHoverGallery({
                 setHoveredIndex(index)
                 onImageFocus?.(index, item.src)
               }}
-              onBlur={() => {
-                if (!containerRef.current?.contains(document.activeElement)) {
-                  setHoveredIndex(null)
-                  if (!autoPlay) {
-                    setActiveIndex(null)
-                  }
+              onBlur={(e) => {
+                const currentTarget = e.currentTarget
+                const relatedTarget = e.relatedTarget as Node | null
+                // If focus moves to a child of the same item, don't clear
+                if (relatedTarget && currentTarget.contains(relatedTarget)) {
+                  return
+                }
+                setHoveredIndex(null)
+                if (!autoPlay) {
+                  setActiveIndex(null)
                 }
               }}
               tabIndex={0}
