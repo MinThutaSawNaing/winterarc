@@ -48,8 +48,8 @@ function buildParticles(count: number): SnowParticleConfig[] {
 }
 
 function particleCountForWidth(width: number): number {
-  if (width < 640) return 32
-  if (width < 1024) return 52
+  if (width < 640) return 18
+  if (width < 1024) return 28
   return 68
 }
 
@@ -125,7 +125,7 @@ function SnowParticle({ config }: { config: SnowParticleConfig }) {
 
 export default function GlobalSnowfall() {
   const reduceMotion = useReducedMotion()
-  const [count, setCount] = useState(52)
+  const [count, setCount] = useState(28)
 
   useEffect(() => {
     const updateCount = () => {
