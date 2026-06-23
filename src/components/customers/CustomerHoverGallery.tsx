@@ -1,506 +1,268 @@
 'use client'
 
-import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 import './customer-showcase.css'
 
-const customerPhotos = [
+const defaultCustomerSlides: Slide[] = [
   {
+    id: 'my-dentist',
     src: '/images/customers/my-dentist-partnership.png',
     alt: 'Winter Arc Myanmar partnership with My Dentist Premium Dental Center',
     title: 'My Dentist',
     caption: 'Premium Dental Center',
   },
   {
+    id: 'client-success',
     src: '/images/customers/client-handshake.png',
     alt: 'Client partnership handshake',
     title: 'Client Success',
     caption: 'Trusted delivery partnership',
   },
   {
+    id: 'unity-fitness',
     src: '/images/customers/unity-fitness-certificate.png',
     alt: 'Winter Arc Myanmar certificate presentation with Unity Fitness',
     title: 'Unity Fitness',
     caption: 'Certificate of delivery',
   },
-] as const
+]
 
-interface ThreeDHoverGalleryProps {
-  images?: string[]
-  itemWidth?: number
-  itemHeight?: number
-  gap?: number
-  perspective?: number
-  hoverScale?: number
-  transitionDuration?: number
-  backgroundColor?: string
-  grayscaleStrength?: number
-  brightnessLevel?: number
-  activeWidth?: number
-  rotationAngle?: number
-  zDepth?: number
-  enableKeyboardNavigation?: boolean
-  autoPlay?: boolean
-  autoPlayDelay?: number
-  className?: string
-  style?: React.CSSProperties
-  onImageClick?: (index: number, image: string) => void
-  onImageHover?: (index: number, image: string) => void
-  onImageFocus?: (index: number, image: string) => void
+export interface Slide {
+  id: string | number
+  src: string
+  alt?: string
+  title?: string
+  caption?: string
+  href?: string
 }
 
-export default function ThreeDHoverGallery({
-  images,
-  itemWidth = 8,
-  itemHeight = 16,
-  gap = 0.8,
-  perspective = 35,
-  hoverScale = 10,
-  transitionDuration = 1.25,
-  backgroundColor = '#0f172a',
-  grayscaleStrength = 0.55,
-  brightnessLevel = 0.72,
-  activeWidth = 40,
-  rotationAngle = 35,
-  zDepth = 8.5,
-  enableKeyboardNavigation = true,
-  autoPlay = false,
-  autoPlayDelay = 3000,
+interface ThreeDImageCarouselProps {
+  slides?: Slide[]
+  itemCount?: 3 | 5
+  autoplay?: boolean
+  delay?: number
+  pauseOnHover?: boolean
+  className?: string
+  style?: React.CSSProperties
+  onSlideChange?: (index: number) => void
+}
+
+export function ThreeDImageCarousel({
+  slides = defaultCustomerSlides,
+  itemCount = 5,
+  autoplay = false,
+  delay = 3,
+  pauseOnHover = true,
   className = '',
   style,
-  onImageClick,
-  onImageHover,
-  onImageFocus,
-}: ThreeDHoverGalleryProps) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-  const [containerWidth, setContainerWidth] = useState(0)
+  onSlideChange,
+}: ThreeDImageCarouselProps) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  const galleryImages = images || customerPhotos.map((p) => p.src)
-  const galleryData = images
-    ? galleryImages.map((src, i) => ({
-        src,
-        alt: `Gallery image ${i + 1}`,
-        title: `Image ${i + 1}`,
-        caption: '',
-      }))
-    : customerPhotos
+  const safeSlides = slides ?? defaultCustomerSlides
+  const totalSlides = safeSlides.length
+  const visibleCount = Math.min(itemCount, Math.max(totalSlides, 1))
 
-  // Responsive breakpoints
-  const isMobile = useMemo(() => containerWidth < 640, [containerWidth])
-  const isTablet = useMemo(
-    () => containerWidth >= 640 && containerWidth < 1024,
-    [containerWidth]
-  )
+  const goToNext = useCallback(() => {
+    if (totalSlides === 0) return
+    setActiveIndex((prev) => (prev + 1) % totalSlides)
+  }, [totalSlides])
 
-  // Responsive overrides
-  const responsiveItemWidth = isMobile ? 14 : isTablet ? 10 : itemWidth
-  const responsiveActiveWidth = isMobile ? 55 : isTablet ? 45 : activeWidth
-  const responsiveGap = isMobile ? 0.3 : isTablet ? 0.6 : gap
-  const responsiveItemHeight = isMobile ? 28 : isTablet ? 20 : itemHeight
-  const responsivePerspective = isMobile ? 15 : isTablet ? 28 : perspective
-  const responsiveHoverScale = isMobile ? 5 : isTablet ? 8 : hoverScale
-  const responsiveRotationAngle = isMobile ? 15 : isTablet ? 25 : rotationAngle
-  const responsiveZDepth = isMobile ? 3 : isTablet ? 6 : zDepth
+  const goToPrev = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + totalSlides) % totalSlides)
+  }, [totalSlides])
 
-  // Mobile-optimised transition – super light, no spring
-  const getTransition = useCallback(
-    (prop?: string) => {
-      if (isMobile) {
-        if (prop === 'filter') {
-          return { duration: 0.2, ease: 'easeOut' }
-        }
-        return { duration: 0.35, ease: 'easeOut' }
-      }
-      return {
-        type: 'spring',
-        stiffness: 80,
-        damping: 22,
-        duration: transitionDuration,
-      }
+  const goToSlide = useCallback(
+    (index: number) => {
+      setActiveIndex(((index % totalSlides) + totalSlides) % totalSlides)
     },
-    [isMobile, transitionDuration]
+    [totalSlides]
   )
 
   useEffect(() => {
-    const updateWidth = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth)
-      }
-    }
-    updateWidth()
-    window.addEventListener('resize', updateWidth)
-    return () => window.removeEventListener('resize', updateWidth)
-  }, [])
-
-  useEffect(() => {
-    if (autoPlay && galleryImages.length > 0) {
-      autoPlayRef.current = setInterval(() => {
-        setActiveIndex((prev) => {
-          if (prev === null) return 0
-          return (prev + 1) % galleryImages.length
-        })
-      }, autoPlayDelay)
+    if (autoplay && !isPaused) {
+      autoplayTimerRef.current = setTimeout(goToNext, delay * 1000)
     }
     return () => {
-      if (autoPlayRef.current) {
-        clearInterval(autoPlayRef.current)
+      if (autoplayTimerRef.current) {
+        clearTimeout(autoplayTimerRef.current)
       }
     }
-  }, [autoPlay, autoPlayDelay, galleryImages.length])
+  }, [autoplay, isPaused, goToNext, delay, activeIndex])
+
+  const handleMouseEnter = () => {
+    if (pauseOnHover) setIsPaused(true)
+  }
+
+  const handleMouseLeave = () => {
+    if (pauseOnHover) setIsPaused(false)
+  }
+
+  const getSlideClasses = (index: number, activeIndex: number, total: number, visibleCount: 3 | 5): string => {
+    const diff = index - activeIndex
+    if (diff === 0) return 'now'
+    if (diff === 1 || diff === -total + 1) return 'next'
+    if (visibleCount === 5 && (diff === 2 || diff === -total + 2)) return 'next2'
+    if (diff === -1 || diff === total - 1) return 'prev'
+    if (visibleCount === 5 && (diff === -2 || diff === total - 2)) return 'prev2'
+    return ''
+  }
 
   useEffect(() => {
-    if (!enableKeyboardNavigation) return
+    onSlideChange?.(activeIndex)
+  }, [activeIndex, onSlideChange])
 
-    const container = containerRef.current
-    if (!container) return
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!container.contains(document.activeElement)) return
-
-      if (e.key === 'ArrowRight') {
-        e.preventDefault()
-        setActiveIndex((prev) => {
-          if (prev === null) return 0
-          return (prev + 1) % galleryImages.length
-        })
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault()
-        setActiveIndex((prev) => {
-          if (prev === null) return galleryImages.length - 1
-          return (prev - 1 + galleryImages.length) % galleryImages.length
-        })
-      } else if (e.key === 'Escape') {
-        e.preventDefault()
-        setActiveIndex(null)
-        setHoveredIndex(null)
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [enableKeyboardNavigation, galleryImages.length])
-
-  useEffect(() => {
-    return () => {
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current)
-      }
-    }
-  }, [])
-
-  const vw = containerWidth / 100
-  const itemWidthPx = responsiveItemWidth * vw
-  const activeWidthPx = responsiveActiveWidth * vw
-  const gapPx = responsiveGap * 16
-  const totalItems = galleryImages.length
-
-  const getItemPosition = useCallback(
-    (index: number) => {
-      const isHovered = hoveredIndex === index
-      const isActive = activeIndex === index
-      const shouldExpand = isHovered || isActive
-      const isLeft = activeIndex !== null && index < activeIndex
-      const isRight = activeIndex !== null && index > activeIndex
-
-      let x = 0
-      let z = 0
-      let rotation = 0
-      let scale = 1
-      let width = itemWidthPx
-      let grayscale = grayscaleStrength
-      let brightness = brightnessLevel
-      let opacity = 1
-
-      const centerOffset = (totalItems - 1) / 2
-      const position = index - centerOffset
-
-      if (shouldExpand) {
-        width = activeWidthPx
-        scale = 1 + responsiveHoverScale / 100
-        grayscale = 0
-        brightness = 1
-        z = 20
-
-        x = position * (itemWidthPx + gapPx)
-
-        const widthDiff = (activeWidthPx - itemWidthPx) / 2
-
-        if (isLeft) {
-          x -= widthDiff
-        } else if (isRight) {
-          x += widthDiff
-        }
-
-        if (isMobile) {
-          const halfViewport = containerWidth / 2
-          const halfWidth = activeWidthPx / 2
-          const safetyMargin = 10
-          const maxX = halfViewport - halfWidth - safetyMargin
-          const minX = -halfViewport + halfWidth + safetyMargin
-          x = Math.max(minX, Math.min(maxX, x))
-        }
-      } else if (activeIndex !== null) {
-        grayscale = grayscaleStrength
-        brightness = brightnessLevel
-        opacity = 0.5
-
-        if (isLeft) {
-          const offset = (activeIndex - index) * (itemWidthPx + gapPx)
-          const rotAmount = Math.min(responsiveRotationAngle, offset * 0.5)
-          x =
-            position * (itemWidthPx + gapPx) -
-            offset -
-            (activeWidthPx - itemWidthPx) / 2
-          z = (-responsiveZDepth * (activeIndex - index)) / 2
-          rotation = -rotAmount
-        } else if (isRight) {
-          const offset = (index - activeIndex) * (itemWidthPx + gapPx)
-          const rotAmount = Math.min(responsiveRotationAngle, offset * 0.5)
-          x =
-            position * (itemWidthPx + gapPx) +
-            offset +
-            (activeWidthPx - itemWidthPx) / 2
-          z = (-responsiveZDepth * (index - activeIndex)) / 2
-          rotation = rotAmount
-        } else {
-          x = position * (itemWidthPx + gapPx)
-        }
-      } else {
-        x = position * (itemWidthPx + gapPx)
-        width = itemWidthPx
-        scale = 1
-      }
-
-      return { x, z, rotation, scale, width, grayscale, brightness, opacity }
-    },
-    [
-      activeIndex,
-      hoveredIndex,
-      itemWidthPx,
-      activeWidthPx,
-      gapPx,
-      totalItems,
-      responsiveHoverScale,
-      responsiveRotationAngle,
-      responsiveZDepth,
-      grayscaleStrength,
-      brightnessLevel,
-      isMobile,
-      containerWidth,
-    ]
-  )
-
-  const getStackIndex = useCallback(
-    (index: number) => {
-      const isSelected = hoveredIndex === index || activeIndex === index
-      if (isSelected) return 30
-      if (hoveredIndex === null && activeIndex === null && index === Math.floor(totalItems / 2)) {
-        return 20
-      }
-      return 10 + index
-    },
-    [activeIndex, hoveredIndex, totalItems]
-  )
-
-  const handleMouseEnter = useCallback(
-    (index: number) => {
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current)
-        hoverTimeoutRef.current = null
-      }
-      setHoveredIndex(index)
-      onImageHover?.(index, galleryImages[index])
-    },
-    [galleryImages, onImageHover]
-  )
-
-  const handleMouseLeave = useCallback((index: number) => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-    }
-    hoverTimeoutRef.current = setTimeout(() => {
-      setHoveredIndex(null)
-      hoverTimeoutRef.current = null
-    }, 50)
-  }, [])
-
-  const handleTrackMouseLeave = useCallback(
-    (event: React.MouseEvent) => {
-      const related = event.relatedTarget as Node | null
-      if (containerRef.current?.contains(related)) return
-
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current)
-        hoverTimeoutRef.current = null
-      }
-
-      setHoveredIndex(null)
-
-      if (!autoPlay) {
-        setActiveIndex(null)
-      }
-    },
-    [autoPlay]
-  )
-
-  const handleClick = useCallback(
-    (index: number) => {
-      onImageClick?.(index, galleryImages[index])
-      if (activeIndex === index) {
-        setActiveIndex(null)
-      } else {
-        setActiveIndex(index)
-      }
-    },
-    [activeIndex, galleryImages, onImageClick]
-  )
-
-  const selectedIndex = hoveredIndex ?? activeIndex
+  if (totalSlides === 0) {
+    return null
+  }
 
   return (
     <div
       ref={containerRef}
-      className={`three-d-hover-gallery ${className}`}
-      data-snow-surface="dark"
+      className={`cascade-slider_container ${className}`}
       style={{
-        backgroundColor,
-        perspective: `${responsivePerspective}vw`,
+        backgroundColor: '#0f172a',
+        borderRadius: '1rem',
+        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.28)',
+        border: '1px solid rgba(255, 255, 255, 0.06)',
+        padding: '2rem 1rem 1.5rem',
         ...style,
       }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      role="region"
       aria-label="Customer partner gallery"
+      tabIndex={0}
     >
-      <p className="three-d-hover-gallery__hint">Hover or tap a partner to explore</p>
-      <div
-        className="three-d-hover-gallery__track"
-        onMouseLeave={handleTrackMouseLeave}
-        style={{
-          height: `${responsiveItemHeight}vw`,
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          transformStyle: 'preserve-3d',
-          padding: isMobile ? '0 2.5rem' : '0',
-        }}
-      >
-        {galleryData.map((item, index) => {
-          const pos = getItemPosition(index)
-          const isActive = activeIndex === index
-          const shouldExpand = hoveredIndex === index || isActive
-          const stackIndex = getStackIndex(index)
-          const transition = getTransition()
-          const filterTransition = getTransition('filter')
+      <div className="cascade-slider_slides">
+        {safeSlides.map((slide, index) => {
+          const slideClass = getSlideClasses(index, activeIndex, totalSlides, visibleCount as 3 | 5)
+          if (!slideClass) return null
+
+          const isCenter = slideClass === 'now'
 
           return (
-            <motion.div
-              key={item.src}
-              className="three-d-hover-gallery__item"
-              style={{
-                position: 'absolute',
-                height: '100%',
-                width: pos.width,
-                transformStyle: 'preserve-3d',
-                cursor: 'pointer',
-                zIndex: stackIndex,
-                willChange: 'transform, width, filter',
-                contain: 'layout style paint',
-              }}
-              animate={{
-                x: pos.x,
-                z: pos.z,
-                rotateY: pos.rotation,
-                scale: pos.scale,
-                width: pos.width,
-                filter: `grayscale(${pos.grayscale}) brightness(${pos.brightness})`,
-                opacity: pos.opacity,
-              }}
-              transition={{
-                x: transition,
-                z: transition,
-                rotateY: transition,
-                scale: transition,
-                width: transition,
-                filter: filterTransition,
-                opacity: isMobile ? { duration: 0.2 } : transition,
-              }}
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={() => handleMouseLeave(index)}
-              onClick={() => handleClick(index)}
-              onFocus={() => {
-                setHoveredIndex(index)
-                onImageFocus?.(index, item.src)
-              }}
-              onBlur={(e) => {
-                const currentTarget = e.currentTarget
-                const relatedTarget = e.relatedTarget as Node | null
-                // If focus moves to a child of the same item, don't clear
-                if (relatedTarget && currentTarget.contains(relatedTarget)) {
-                  return
-                }
-                setHoveredIndex(null)
-                if (!autoPlay) {
-                  setActiveIndex(null)
-                }
-              }}
-              tabIndex={0}
-              role="button"
-              aria-pressed={isActive}
-              aria-label={`${item.title}${item.caption ? `, ${item.caption}` : ''}`}
+            <div
+              key={slide.id}
+              className={`cascade-slider_item ${slideClass}`}
+              data-slide-number={index}
             >
-              <div
-                className={`three-d-hover-gallery__card ${
-                  shouldExpand ? 'three-d-hover-gallery__card--expanded' : ''
-                }`}
-              >
-                <div className="three-d-hover-gallery__image-wrapper">
+              <div className="cascade-slider_image-wrapper">
+                {slide.href ? (
+                  <a href={slide.href}>
+                    <Image
+                      src={slide.src}
+                      alt={slide.alt || `Slide ${index + 1}`}
+                      fill
+                      className="cascade-slider_image"
+                      priority={isCenter}
+                      loading={isCenter ? 'eager' : 'lazy'}
+                      sizes="(max-width: 480px) 140px, (max-width: 767px) 180px, 240px"
+                      onError={(e) => {
+                        const target = e.currentTarget as HTMLImageElement
+                        target.onerror = null
+                        target.src = `https://placehold.co/350x200/4F46E5/ffffff?text=Slide%20${index + 1}`
+                      }}
+                    />
+                  </a>
+                ) : (
                   <Image
-                    src={item.src}
-                    alt={item.alt}
+                    src={slide.src}
+                    alt={slide.alt || `Slide ${index + 1}`}
                     fill
-                    className="three-d-hover-gallery__image"
-                    sizes={`${pos.width}px`}
-                    priority={index < 3}
-                    loading={index < 3 ? 'eager' : 'lazy'}
+                    className="cascade-slider_image"
+                    priority={isCenter}
+                    loading={isCenter ? 'eager' : 'lazy'}
+                    sizes="(max-width: 480px) 140px, (max-width: 767px) 180px, 240px"
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLImageElement
+                      target.onerror = null
+                      target.src = `https://placehold.co/350x200/4F46E5/ffffff?text=Slide%20${index + 1}`
+                    }}
                   />
-                </div>
-                {(item.title || item.caption) && (
-                  <div className="three-d-hover-gallery__info">
-                    {item.title && (
-                      <h3 className="three-d-hover-gallery__title">{item.title}</h3>
-                    )}
-                    {item.caption && (
-                      <p className="three-d-hover-gallery__caption">{item.caption}</p>
-                    )}
-                  </div>
                 )}
               </div>
-            </motion.div>
+              {(slide.title || slide.caption) && isCenter && (
+                <div className="cascade-slider_info">
+                  {slide.title && <h3 className="cascade-slider_title">{slide.title}</h3>}
+                  {slide.caption && <p className="cascade-slider_caption">{slide.caption}</p>}
+                </div>
+              )}
+            </div>
           )
         })}
       </div>
 
-      {galleryImages.length > 1 && (
-        <div className="three-d-hover-gallery__dots" role="tablist" aria-label="Partner slides">
-          {galleryImages.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              role="tab"
-              aria-selected={selectedIndex === index}
-              className={`three-d-hover-gallery__dot ${
-                selectedIndex === index ? 'three-d-hover-gallery__dot--active' : ''
-              }`}
-              onClick={() => handleClick(index)}
-              aria-label={`Show ${galleryData[index]?.title ?? `partner ${index + 1}`}`}
-            />
-          ))}
-        </div>
+      {totalSlides > 1 && (
+        <>
+          <button
+            className="cascade-slider_arrow cascade-slider_arrow-left"
+            onClick={(e) => { e.stopPropagation(); goToPrev() }}
+            aria-label="Previous slide"
+            type="button"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            className="cascade-slider_arrow cascade-slider_arrow-right"
+            onClick={(e) => { e.stopPropagation(); goToNext() }}
+            aria-label="Next slide"
+            type="button"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </>
       )}
+
+      <div className="cascade-slider_dots" role="tablist">
+        {safeSlides.map((_, idx) => (
+          <button
+            key={idx}
+            type="button"
+            role="tab"
+            aria-selected={activeIndex === idx}
+            className={`cascade-slider_dot ${
+              activeIndex === idx ? 'cascade-slider_dot--active' : ''
+            }`}
+            onClick={() => goToSlide(idx)}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
+      </div>
     </div>
+  )
+}
+
+type CustomerHoverGalleryProps = Omit<ThreeDImageCarouselProps, 'slides'> & {
+  slides?: Slide[]
+}
+
+export default function CustomerHoverGallery({
+  slides,
+  itemCount = 3,
+  className = '',
+  style,
+  ...rest
+}: CustomerHoverGalleryProps) {
+  if ((slides ?? defaultCustomerSlides).length === 0) {
+    return null
+  }
+
+  return (
+    <ThreeDImageCarousel
+      slides={slides ?? defaultCustomerSlides}
+      itemCount={itemCount}
+      className={className}
+      style={style}
+      {...rest}
+    />
   )
 }
