@@ -29,6 +29,8 @@
   backface-visibility: hidden;
   will-change: transform, filter, opacity;
   outline: none;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .three-d-hover-gallery__item:focus-visible .three-d-hover-gallery__card {
@@ -232,7 +234,6 @@
     text-overflow: ellipsis;
   }
 
-  /* When expanded on mobile, show more text */
   .three-d-hover-gallery__card--expanded .three-d-hover-gallery__info {
     padding: 0.8rem 0.7rem;
   }
@@ -265,7 +266,6 @@
     width: 1rem;
   }
 
-  /* On phones, always show info overlay for better touch UX */
   .three-d-hover-gallery__item:hover .three-d-hover-gallery__info,
   .three-d-hover-gallery__card--expanded .three-d-hover-gallery__info {
     transform: translateY(0);
@@ -285,7 +285,7 @@
   }
 }
 
-/* ── Customer Globe styles (kept from original) ── */
+/* ── Customer Globe styles ── */
 .customer-globe-shell {
   display: flex;
   flex-direction: column;
@@ -363,7 +363,7 @@
   }
 }
 
-/* ── Client logo strip (restored from original Customers section) ── */
+/* ── Client logo strip ── */
 .customer-logo-strip {
   margin-top: 3rem;
   padding-top: 2.5rem;

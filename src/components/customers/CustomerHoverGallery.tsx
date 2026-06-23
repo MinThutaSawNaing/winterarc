@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import './customer-showcase.css'
@@ -91,8 +91,11 @@ export default function ThreeDHoverGallery({
     : customerPhotos
 
   // Responsive breakpoints
-  const isMobile = containerWidth < 640
-  const isTablet = containerWidth >= 640 && containerWidth < 1024
+  const isMobile = useMemo(() => containerWidth < 640, [containerWidth])
+  const isTablet = useMemo(
+    () => containerWidth >= 640 && containerWidth < 1024,
+    [containerWidth]
+  )
 
   // Responsive overrides
   const responsiveItemWidth = isMobile ? 14 : isTablet ? 10 : itemWidth
@@ -102,6 +105,26 @@ export default function ThreeDHoverGallery({
   const responsivePerspective = isMobile ? 15 : isTablet ? 28 : perspective
   const responsiveHoverScale = isMobile ? 5 : isTablet ? 8 : hoverScale
   const responsiveRotationAngle = isMobile ? 15 : isTablet ? 25 : rotationAngle
+  const responsiveZDepth = isMobile ? 3 : isTablet ? 6 : zDepth
+
+  // Mobile-optimised transition (ease) vs desktop spring
+  const getTransition = useCallback(
+    (prop?: string) => {
+      if (isMobile) {
+        return {
+          duration: 0.5,
+          ease: 'easeOut',
+        }
+      }
+      return {
+        type: 'spring',
+        stiffness: 80,
+        damping: 22,
+        duration: transitionDuration,
+      }
+    },
+    [isMobile, transitionDuration]
+  )
 
   useEffect(() => {
     const updateWidth = () => {
@@ -162,7 +185,6 @@ export default function ThreeDHoverGallery({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [enableKeyboardNavigation, galleryImages.length])
 
-  // Clean up hover timeout on unmount
   useEffect(() => {
     return () => {
       if (hoverTimeoutRef.current) {
@@ -177,104 +199,127 @@ export default function ThreeDHoverGallery({
   const gapPx = responsiveGap * 16
   const totalItems = galleryImages.length
 
-  const getItemPosition = (index: number) => {
-    const isHovered = hoveredIndex === index
-    const isActive = activeIndex === index
-    const shouldExpand = isHovered || isActive
-    const isLeft = activeIndex !== null && index < activeIndex
-    const isRight = activeIndex !== null && index > activeIndex
+  const getItemPosition = useCallback(
+    (index: number) => {
+      const isHovered = hoveredIndex === index
+      const isActive = activeIndex === index
+      const shouldExpand = isHovered || isActive
+      const isLeft = activeIndex !== null && index < activeIndex
+      const isRight = activeIndex !== null && index > activeIndex
 
-    let x = 0
-    let z = 0
-    let rotation = 0
-    let scale = 1
-    let width = itemWidthPx
-    let grayscale = grayscaleStrength
-    let brightness = brightnessLevel
-    let opacity = 1
+      let x = 0
+      let z = 0
+      let rotation = 0
+      let scale = 1
+      let width = itemWidthPx
+      let grayscale = grayscaleStrength
+      let brightness = brightnessLevel
+      let opacity = 1
 
-    // Calculate center offset to keep items centered
-    const centerOffset = (totalItems - 1) / 2
-    const position = index - centerOffset
+      const centerOffset = (totalItems - 1) / 2
+      const position = index - centerOffset
 
-    if (shouldExpand) {
-      width = activeWidthPx
-      scale = 1 + responsiveHoverScale / 100
-      grayscale = 0
-      brightness = 1
-      z = 20
+      if (shouldExpand) {
+        width = activeWidthPx
+        scale = 1 + responsiveHoverScale / 100
+        grayscale = 0
+        brightness = 1
+        z = 20
 
-      // Base position with center alignment
-      x = position * (itemWidthPx + gapPx)
+        x = position * (itemWidthPx + gapPx)
 
-      const widthDiff = (activeWidthPx - itemWidthPx) / 2
-      
-      // Adjust position based on which side of the active item
-      if (isLeft) {
-        x -= widthDiff
-      } else if (isRight) {
-        x += widthDiff
-      }
+        const widthDiff = (activeWidthPx - itemWidthPx) / 2
 
-      // Only clamp on mobile to prevent edge clipping
-      if (isMobile) {
-        const halfViewport = containerWidth / 2
-        const halfWidth = activeWidthPx / 2
-        const safetyMargin = 10
-        const maxX = halfViewport - halfWidth - safetyMargin
-        const minX = -halfViewport + halfWidth + safetyMargin
-        x = Math.max(minX, Math.min(maxX, x))
-      }
-    } else if (activeIndex !== null) {
-      grayscale = grayscaleStrength
-      brightness = brightnessLevel
-      opacity = 0.5
+        if (isLeft) {
+          x -= widthDiff
+        } else if (isRight) {
+          x += widthDiff
+        }
 
-      if (isLeft) {
-        const offset = (activeIndex - index) * (itemWidthPx + gapPx)
-        const rotAmount = Math.min(responsiveRotationAngle, offset * 0.5)
-        x = position * (itemWidthPx + gapPx) - offset - (activeWidthPx - itemWidthPx) / 2
-        z = (-zDepth * (activeIndex - index)) / 2
-        rotation = -rotAmount
-      } else if (isRight) {
-        const offset = (index - activeIndex) * (itemWidthPx + gapPx)
-        const rotAmount = Math.min(responsiveRotationAngle, offset * 0.5)
-        x = position * (itemWidthPx + gapPx) + offset + (activeWidthPx - itemWidthPx) / 2
-        z = (-zDepth * (index - activeIndex)) / 2
-        rotation = rotAmount
+        if (isMobile) {
+          const halfViewport = containerWidth / 2
+          const halfWidth = activeWidthPx / 2
+          const safetyMargin = 10
+          const maxX = halfViewport - halfWidth - safetyMargin
+          const minX = -halfViewport + halfWidth + safetyMargin
+          x = Math.max(minX, Math.min(maxX, x))
+        }
+      } else if (activeIndex !== null) {
+        grayscale = grayscaleStrength
+        brightness = brightnessLevel
+        opacity = 0.5
+
+        if (isLeft) {
+          const offset = (activeIndex - index) * (itemWidthPx + gapPx)
+          const rotAmount = Math.min(responsiveRotationAngle, offset * 0.5)
+          x =
+            position * (itemWidthPx + gapPx) -
+            offset -
+            (activeWidthPx - itemWidthPx) / 2
+          z = (-responsiveZDepth * (activeIndex - index)) / 2
+          rotation = -rotAmount
+        } else if (isRight) {
+          const offset = (index - activeIndex) * (itemWidthPx + gapPx)
+          const rotAmount = Math.min(responsiveRotationAngle, offset * 0.5)
+          x =
+            position * (itemWidthPx + gapPx) +
+            offset +
+            (activeWidthPx - itemWidthPx) / 2
+          z = (-responsiveZDepth * (index - activeIndex)) / 2
+          rotation = rotAmount
+        } else {
+          x = position * (itemWidthPx + gapPx)
+        }
       } else {
         x = position * (itemWidthPx + gapPx)
+        width = itemWidthPx
+        scale = 1
       }
-    } else {
-      x = position * (itemWidthPx + gapPx)
-      width = itemWidthPx
-      scale = 1
-    }
 
-    return { x, z, rotation, scale, width, grayscale, brightness, opacity }
-  }
+      return { x, z, rotation, scale, width, grayscale, brightness, opacity }
+    },
+    [
+      activeIndex,
+      hoveredIndex,
+      itemWidthPx,
+      activeWidthPx,
+      gapPx,
+      totalItems,
+      responsiveHoverScale,
+      responsiveRotationAngle,
+      responsiveZDepth,
+      grayscaleStrength,
+      brightnessLevel,
+      isMobile,
+      containerWidth,
+    ]
+  )
 
-  const getStackIndex = (index: number) => {
-    const isSelected = hoveredIndex === index || activeIndex === index
-    if (isSelected) return 30
-    if (hoveredIndex === null && activeIndex === null && index === Math.floor(totalItems / 2)) {
-      return 20
-    }
-    return 10 + index
-  }
+  const getStackIndex = useCallback(
+    (index: number) => {
+      const isSelected = hoveredIndex === index || activeIndex === index
+      if (isSelected) return 30
+      if (hoveredIndex === null && activeIndex === null && index === Math.floor(totalItems / 2)) {
+        return 20
+      }
+      return 10 + index
+    },
+    [activeIndex, hoveredIndex, totalItems]
+  )
 
-  const handleMouseEnter = (index: number) => {
-    // Clear any pending hover timeout
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-      hoverTimeoutRef.current = null
-    }
-    setHoveredIndex(index)
-    onImageHover?.(index, galleryImages[index])
-  }
+  const handleMouseEnter = useCallback(
+    (index: number) => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+        hoverTimeoutRef.current = null
+      }
+      setHoveredIndex(index)
+      onImageHover?.(index, galleryImages[index])
+    },
+    [galleryImages, onImageHover]
+  )
 
-  const handleMouseLeave = (index: number) => {
-    // Use a small delay to prevent flickering when moving between items
+  const handleMouseLeave = useCallback((index: number) => {
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current)
     }
@@ -282,35 +327,38 @@ export default function ThreeDHoverGallery({
       setHoveredIndex(null)
       hoverTimeoutRef.current = null
     }, 50)
-  }
+  }, [])
 
-  const handleTrackMouseLeave = (event: React.MouseEvent) => {
-    const related = event.relatedTarget as Node | null
-    if (containerRef.current?.contains(related)) return
+  const handleTrackMouseLeave = useCallback(
+    (event: React.MouseEvent) => {
+      const related = event.relatedTarget as Node | null
+      if (containerRef.current?.contains(related)) return
 
-    // Clear any pending hover timeout
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-      hoverTimeoutRef.current = null
-    }
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+        hoverTimeoutRef.current = null
+      }
 
-    // Immediately clear hover state when mouse leaves the track
-    setHoveredIndex(null)
-    
-    // Only clear active index if not in autoPlay mode
-    if (!autoPlay) {
-      setActiveIndex(null)
-    }
-  }
+      setHoveredIndex(null)
 
-  const handleClick = (index: number) => {
-    onImageClick?.(index, galleryImages[index])
-    if (activeIndex === index) {
-      setActiveIndex(null)
-    } else {
-      setActiveIndex(index)
-    }
-  }
+      if (!autoPlay) {
+        setActiveIndex(null)
+      }
+    },
+    [autoPlay]
+  )
+
+  const handleClick = useCallback(
+    (index: number) => {
+      onImageClick?.(index, galleryImages[index])
+      if (activeIndex === index) {
+        setActiveIndex(null)
+      } else {
+        setActiveIndex(index)
+      }
+    },
+    [activeIndex, galleryImages, onImageClick]
+  )
 
   const selectedIndex = hoveredIndex ?? activeIndex
 
@@ -345,6 +393,7 @@ export default function ThreeDHoverGallery({
           const isActive = activeIndex === index
           const shouldExpand = hoveredIndex === index || isActive
           const stackIndex = getStackIndex(index)
+          const transition = getTransition()
 
           return (
             <motion.div
@@ -368,10 +417,13 @@ export default function ThreeDHoverGallery({
                 opacity: pos.opacity,
               }}
               transition={{
-                duration: transitionDuration,
-                type: 'spring',
-                stiffness: 80,
-                damping: 22,
+                x: transition,
+                z: isMobile ? { duration: 0.3, ease: 'easeOut' } : transition,
+                rotateY: isMobile ? { duration: 0.3, ease: 'easeOut' } : transition,
+                scale: transition,
+                width: transition,
+                filter: isMobile ? { duration: 0.4, ease: 'easeOut' } : transition,
+                opacity: { duration: 0.3 },
               }}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave(index)}
@@ -394,7 +446,9 @@ export default function ThreeDHoverGallery({
               aria-label={`${item.title}${item.caption ? `, ${item.caption}` : ''}`}
             >
               <div
-                className={`three-d-hover-gallery__card ${shouldExpand ? 'three-d-hover-gallery__card--expanded' : ''}`}
+                className={`three-d-hover-gallery__card ${
+                  shouldExpand ? 'three-d-hover-gallery__card--expanded' : ''
+                }`}
               >
                 <div className="three-d-hover-gallery__image-wrapper">
                   <Image
@@ -404,6 +458,7 @@ export default function ThreeDHoverGallery({
                     className="three-d-hover-gallery__image"
                     sizes={`${pos.width}px`}
                     priority={index < 3}
+                    loading={index < 3 ? 'eager' : 'lazy'}
                   />
                 </div>
                 {(item.title || item.caption) && (
