@@ -161,7 +161,7 @@ export function ThreeDImageCarousel({
                       className="cascade-slider_image"
                       priority={isCenter}
                       loading={isCenter ? 'eager' : 'lazy'}
-                      sizes="(max-width: 480px) 200px, (max-width: 767px) 240px, 340px"
+                      sizes="(max-width: 480px) 290px, (max-width: 767px) 300px, 340px"
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement
                         target.onerror = null
