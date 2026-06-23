@@ -161,7 +161,7 @@ export function ThreeDImageCarousel({
                       className="cascade-slider_image"
                       priority={isCenter}
                       loading={isCenter ? 'eager' : 'lazy'}
-                      sizes="(max-width: 480px) 140px, (max-width: 767px) 180px, 240px"
+                      sizes="(max-width: 480px) 200px, (max-width: 767px) 240px, 340px"
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement
                         target.onerror = null
@@ -177,7 +177,7 @@ export function ThreeDImageCarousel({
                     className="cascade-slider_image"
                     priority={isCenter}
                     loading={isCenter ? 'eager' : 'lazy'}
-                    sizes="(max-width: 480px) 140px, (max-width: 767px) 180px, 240px"
+                    sizes="(max-width: 480px) 200px, (max-width: 767px) 240px, 340px"
                     onError={(e) => {
                       const target = e.currentTarget as HTMLImageElement
                       target.onerror = null
