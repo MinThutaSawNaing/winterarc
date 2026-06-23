@@ -27,8 +27,7 @@
 .three-d-hover-gallery__item {
   transform-style: preserve-3d;
   backface-visibility: hidden;
-  will-change: transform, width, filter;
-  contain: layout style paint;
+  will-change: transform, filter, opacity;
   outline: none;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);

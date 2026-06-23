@@ -107,18 +107,15 @@ export default function ThreeDHoverGallery({
   const responsiveRotationAngle = isMobile ? 15 : isTablet ? 25 : rotationAngle
   const responsiveZDepth = isMobile ? 3 : isTablet ? 6 : zDepth
 
-  // Mobile-optimised transition – super light, no spring
+  // Mobile-optimised transition (ease) vs desktop spring
   const getTransition = useCallback(
     (prop?: string) => {
       if (isMobile) {
-        // For filter we want it to snap quickly
-        if (prop === 'filter') {
-          return { duration: 0.2, ease: 'easeOut' }
+        return {
+          duration: 0.5,
+          ease: 'easeOut',
         }
-        // For transform properties, use a quick ease
-        return { duration: 0.35, ease: 'easeOut' }
       }
-      // Desktop: spring
       return {
         type: 'spring',
         stiffness: 80,
@@ -397,7 +394,6 @@ export default function ThreeDHoverGallery({
           const shouldExpand = hoveredIndex === index || isActive
           const stackIndex = getStackIndex(index)
           const transition = getTransition()
-          const filterTransition = getTransition('filter')
 
           return (
             <motion.div
@@ -410,8 +406,6 @@ export default function ThreeDHoverGallery({
                 transformStyle: 'preserve-3d',
                 cursor: 'pointer',
                 zIndex: stackIndex,
-                willChange: 'transform, width, filter',
-                contain: 'layout style paint',
               }}
               animate={{
                 x: pos.x,
@@ -424,12 +418,12 @@ export default function ThreeDHoverGallery({
               }}
               transition={{
                 x: transition,
-                z: transition,
-                rotateY: transition,
+                z: isMobile ? { duration: 0.3, ease: 'easeOut' } : transition,
+                rotateY: isMobile ? { duration: 0.3, ease: 'easeOut' } : transition,
                 scale: transition,
                 width: transition,
-                filter: filterTransition,
-                opacity: isMobile ? { duration: 0.2 } : transition,
+                filter: isMobile ? { duration: 0.4, ease: 'easeOut' } : transition,
+                opacity: { duration: 0.3 },
               }}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave(index)}
