@@ -104,7 +104,7 @@ export default function RootLayout({
         className={`${bodyFont.variable} ${displayFont.variable} bg-[var(--color-bg)] text-[var(--color-ink)] antialiased`}
       >
         <GlobalSnowfall />
-        <div className="relative z-[2]">
+        <div className="relative">
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--color-ink)] focus:shadow-[0_18px_40px_rgba(15,23,42,0.16)]"

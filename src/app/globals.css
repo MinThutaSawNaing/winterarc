@@ -109,6 +109,13 @@ h6 {
   position: relative;
 }
 
+/* Keep page content above the snowfall while leaving each section's background behind it. */
+.section-shell > :not(.enterprise-grid),
+main > footer > * {
+  position: relative;
+  z-index: 2;
+}
+
 .section-shell::before {
   content: "";
   position: absolute;

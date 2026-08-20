@@ -58,7 +58,7 @@
 .global-snowfall {
   position: fixed;
   inset: 0;
-  z-index: 30;
+  z-index: 1;
   overflow: hidden;
   pointer-events: none;
 }
