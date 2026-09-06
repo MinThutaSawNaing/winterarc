@@ -10,7 +10,9 @@ import {
   siteUrl,
 } from '@/lib/site'
 import './globals.css'
+import Script from 'next/script'
 import GlobalSnowfall from '@/components/GlobalSnowfall'
+import BrandIntro from '@/components/BrandIntro'
 
 const bodyFont = Manrope({
   subsets: ['latin'],
@@ -103,6 +105,18 @@ export default function RootLayout({
       <body
         className={`${bodyFont.variable} ${displayFont.variable} bg-[var(--color-bg)] text-[var(--color-ink)] antialiased`}
       >
+        <Script
+          id="brand-intro-bootstrap"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(localStorage.getItem('winter-arc-intro-seen')==='1'||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){document.documentElement.classList.add('wia-intro-seen');}}catch(e){}})();`,
+          }}
+        />
+        {/* No-JS fallback: never block the site behind the intro when scripts are off. */}
+        <noscript>
+          <style>{`.brand-intro{display:none !important;}`}</style>
+        </noscript>
+        <BrandIntro />
         <GlobalSnowfall />
         <div className="relative">
           <a

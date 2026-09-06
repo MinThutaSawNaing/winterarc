@@ -11,7 +11,7 @@ export interface WinterArcLogo3DProps {
   className?: string;
   /** `dark` matches winterarcicon-dark.svg — ideal on dark panels (e.g. header). */
   iconVariant?: "default" | "dark";
-  /** Clip animation inside a square box (e.g. header logo tile). */
+  /** Render a clean, static mark clipped inside a square box (e.g. header logo tile). */
   contained?: boolean;
 }
 
@@ -64,7 +64,7 @@ export function WinterArcLogo3D({
   const SnowIcon =
     iconVariant === "dark" ? WinterArcDarkSnowflakeIcon : WinterArcSnowflakeIcon;
 
-  if (reduceMotion) {
+  if (reduceMotion || contained) {
     return (
       <div
         className={cn("relative flex items-center justify-center", className)}
