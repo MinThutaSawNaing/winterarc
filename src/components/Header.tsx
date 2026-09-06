@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { WinterArcLogo3D } from '@/components/poweredByWinterArcAnimation/WinterArcLogo3D'
 import '@/components/poweredByWinterArcAnimation/poweredByWinterArcAnimation.css'
 import { LOLI_OPEN_EVENT } from '@/lib/loli-config'
 import ContactModal from '@/components/ContactModal'
@@ -127,13 +126,6 @@ export default function Header() {
             scrollToSection('#home')
           }}
         >
-          <div
-            className="header-logo-tile relative h-10 w-10 shrink-0 overflow-hidden rounded-[0.7rem] bg-[var(--color-panel-dark)]"
-            aria-hidden
-          >
-            <WinterArcLogo3D size={40} iconVariant="dark" contained />
-          </div>
-
           <div className="flex min-w-0 flex-col">
             <span className="header-brand-name truncate text-[0.82rem] font-bold leading-tight tracking-[-0.02em] sm:text-[0.9rem]">
               Winter Arc Myanmar

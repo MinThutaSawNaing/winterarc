@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 /** localStorage key — a visitor sees the intro only once (their very first visit). */
 const INTRO_KEY = 'winter-arc-intro-seen'
 
-/** The SVG reveal plays out to ~5.1s; hold the final frame briefly, then fade out. */
+/** The SVG reveal plays out to ~5.1s; hold briefly, then glitch-fade out over ~6s. */
 const PLAY_MS = 5600
-const FADE_MS = 700
+const FADE_MS = 6000
 
 /**
  * Inline animation styles from the authored SVG (WinterArc_6s_Logo_Reveal.svg).
@@ -130,8 +130,8 @@ export default function BrandIntro() {
     } catch {
       // ignore storage errors
     }
-    setClosing(true)
-    window.setTimeout(() => setVisible(false), FADE_MS)
+    // Skip dismisses instantly — the glitch fade is only for the automatic playout.
+    setVisible(false)
   }
 
   if (!visible) return null

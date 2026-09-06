@@ -182,7 +182,6 @@ main > footer > * {
   justify-content: center;
   background: #000;
   opacity: 1;
-  transition: opacity 0.7s ease;
 }
 
 /* Added pre-paint by the inline script in layout.tsx: returning visitors and
@@ -191,15 +190,99 @@ html.wia-intro-seen .brand-intro {
   display: none;
 }
 
+/* Glitch fade-out — plays for ~6s once .brand-intro--closing is applied. */
 .brand-intro--closing {
-  opacity: 0;
+  opacity: 1;
   pointer-events: none;
+}
+
+.brand-intro--closing .brand-intro__svg {
+  animation: wia-glitch-fade 6s steps(1, end) forwards;
+}
+
+.brand-intro--closing::before,
+.brand-intro--closing::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.brand-intro--closing::before {
+  top: 0;
+  height: 10px;
+  background: rgba(255, 0, 96, 0.4);
+  mix-blend-mode: screen;
+  animation: wia-glitch-slice-a 6s steps(1, end) forwards;
+}
+
+.brand-intro--closing::after {
+  top: 100%;
+  height: 14px;
+  background: rgba(0, 200, 255, 0.4);
+  mix-blend-mode: screen;
+  animation: wia-glitch-slice-b 6s steps(1, end) forwards;
 }
 
 .brand-intro__svg {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+@keyframes wia-glitch-fade {
+  0%   { opacity: 1; transform: translate(0, 0) skewX(0deg); }
+  4%   { opacity: 0.55; transform: translate(-12px, 3px) skewX(-6deg); }
+  8%   { opacity: 1; transform: translate(10px, -5px) skewX(7deg); }
+  12%  { opacity: 0.35; transform: translate(-8px, 2px) skewX(0deg); }
+  16%  { opacity: 0.9; transform: translate(6px, 4px) skewX(-8deg); }
+  20%  { opacity: 0.45; transform: translate(0, -3px) skewX(0deg); }
+  26%  { opacity: 1; transform: translate(-14px, 3px) skewX(9deg); }
+  30%  { opacity: 0.5; transform: translate(0, 0) skewX(0deg); }
+  38%  { opacity: 0.9; transform: translate(8px, -3px) skewX(-6deg); }
+  46%  { opacity: 0.2; transform: translate(0, 0) skewX(0deg); }
+  54%  { opacity: 0.8; transform: translate(-7px, 2px) skewX(5deg); }
+  62%  { opacity: 0.35; transform: translate(0, 0) skewX(0deg); }
+  72%  { opacity: 0.6; transform: translate(5px, -2px) skewX(-3deg); }
+  82%  { opacity: 0.15; transform: translate(0, 0) skewX(0deg); }
+  90%  { opacity: 0.4; transform: translate(-3px, 1px) skewX(2deg); }
+  100% { opacity: 0; transform: translate(0, 0) skewX(0deg); }
+}
+
+@keyframes wia-glitch-slice-a {
+  0%, 100% { opacity: 0; top: 0; }
+  3%  { opacity: 1; top: 8%; }
+  7%  { opacity: 0; top: 12%; }
+  11% { opacity: 1; top: 28%; }
+  15% { opacity: 0; top: 40%; }
+  22% { opacity: 1; top: 18%; }
+  29% { opacity: 0; top: 55%; }
+  37% { opacity: 1; top: 70%; }
+  45% { opacity: 0; top: 33%; }
+  55% { opacity: 0.85; top: 88%; }
+  63% { opacity: 0; top: 22%; }
+  73% { opacity: 0.6; top: 62%; }
+  82% { opacity: 0; top: 10%; }
+  92% { opacity: 0.5; top: 78%; }
+}
+
+@keyframes wia-glitch-slice-b {
+  0%, 100% { opacity: 0; top: 100%; }
+  3%  { opacity: 0.9; top: 84%; }
+  7%  { opacity: 0; top: 70%; }
+  12% { opacity: 0.8; top: 52%; }
+  18% { opacity: 0; top: 30%; }
+  25% { opacity: 1; top: 66%; }
+  33% { opacity: 0; top: 10%; }
+  42% { opacity: 0.7; top: 46%; }
+  50% { opacity: 0; top: 82%; }
+  60% { opacity: 0.6; top: 24%; }
+  70% { opacity: 0; top: 60%; }
+  80% { opacity: 0.5; top: 12%; }
+  90% { opacity: 0; top: 92%; }
 }
 
 .brand-intro__skip {
