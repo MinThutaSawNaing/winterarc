@@ -832,11 +832,11 @@
 
 @media (max-width: 639px) {
   .header-brand-name {
-    font-size: 0.82rem;
+    font-size: 0.95rem;
   }
 
   .header-brand-tagline {
-    font-size: 0.52rem;
+    font-size: 0.62rem;
     letter-spacing: 0.18em;
   }
 

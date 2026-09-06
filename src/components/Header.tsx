@@ -127,10 +127,10 @@ export default function Header() {
           }}
         >
           <div className="flex min-w-0 flex-col">
-            <span className="header-brand-name truncate text-[0.82rem] font-bold leading-tight tracking-[-0.02em] sm:text-[0.9rem]">
+            <span className="header-brand-name truncate text-[0.95rem] font-bold leading-tight tracking-[-0.02em] sm:text-[1.05rem]">
               Winter Arc Myanmar
             </span>
-            <span className="header-brand-tagline mt-0.5 hidden truncate text-[0.52rem] font-semibold uppercase tracking-[0.2em] min-[420px]:block sm:text-[0.58rem] md:text-[0.62rem]">
+            <span className="header-brand-tagline mt-0.5 hidden truncate text-[0.62rem] font-semibold uppercase tracking-[0.2em] min-[420px]:block sm:text-[0.7rem] md:text-[0.75rem]">
               Digital Delivery
             </span>
           </div>

@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 /** localStorage key — a visitor sees the intro only once (their very first visit). */
 const INTRO_KEY = 'winter-arc-intro-seen'
 
-/** The SVG reveal plays out to ~5.1s; hold briefly, then glitch-fade out over ~6s. */
+/** The SVG reveal plays out to ~5.1s; hold briefly, then glitch-fade out over ~1.5s. */
 const PLAY_MS = 5600
-const FADE_MS = 6000
+const FADE_MS = 1500
 
 /**
  * Inline animation styles from the authored SVG (WinterArc_6s_Logo_Reveal.svg).

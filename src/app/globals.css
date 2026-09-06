@@ -190,14 +190,14 @@ html.wia-intro-seen .brand-intro {
   display: none;
 }
 
-/* Glitch fade-out — plays for ~6s once .brand-intro--closing is applied. */
+/* Glitch fade-out — plays for ~1.5s once .brand-intro--closing is applied. */
 .brand-intro--closing {
   opacity: 1;
   pointer-events: none;
 }
 
 .brand-intro--closing .brand-intro__svg {
-  animation: wia-glitch-fade 6s steps(1, end) forwards;
+  animation: wia-glitch-fade 1.5s steps(1, end) forwards;
 }
 
 .brand-intro--closing::before,
@@ -216,7 +216,7 @@ html.wia-intro-seen .brand-intro {
   height: 10px;
   background: rgba(255, 0, 96, 0.4);
   mix-blend-mode: screen;
-  animation: wia-glitch-slice-a 6s steps(1, end) forwards;
+  animation: wia-glitch-slice-a 1.5s steps(1, end) forwards;
 }
 
 .brand-intro--closing::after {
@@ -224,7 +224,7 @@ html.wia-intro-seen .brand-intro {
   height: 14px;
   background: rgba(0, 200, 255, 0.4);
   mix-blend-mode: screen;
-  animation: wia-glitch-slice-b 6s steps(1, end) forwards;
+  animation: wia-glitch-slice-b 1.5s steps(1, end) forwards;
 }
 
 .brand-intro__svg {
