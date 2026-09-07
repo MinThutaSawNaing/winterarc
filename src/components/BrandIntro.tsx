@@ -1,9 +1,16 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import {
+  isIntroDue,
+  markIntroSeen,
+  readLastIntroSeen,
+} from '@/lib/brand-intro'
 
-/** localStorage key — a visitor sees the intro only once (their very first visit). */
-const INTRO_KEY = 'winter-arc-intro-seen'
+/**
+ * The cinematic replays on the first visit of every rolling 2-hour window
+ * (see src/lib/brand-intro.ts), not only once per browser.
+ */
 
 /** The SVG reveal plays out to ~5.1s; hold briefly, then glitch-fade out over ~1.5s. */
 const PLAY_MS = 5600
@@ -84,34 +91,31 @@ const INTRO_CSS = `
 export default function BrandIntro() {
   const [visible, setVisible] = useState(true)
   const [closing, setClosing] = useState(false)
+  // Remembers the <html> overflow value that existed before the intro locked
+  // it, so we can restore the exact same value when the intro is dismissed.
+  const overflowBeforeIntro = useRef('')
 
   useEffect(() => {
     const prefersReducedMotion =
       window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
 
-    let seen = false
-    try {
-      seen = window.localStorage.getItem(INTRO_KEY) === '1'
-    } catch {
-      seen = false
-    }
-
-    // Returning visitors and reduced-motion users get the site immediately.
-    if (prefersReducedMotion || seen) {
+    // Visitors who have already seen it within the rolling 2-hour window —
+    // and reduced-motion users — get the site immediately. Everyone else
+    // (brand-new visitors or those whose last show was > 2h ago) gets the
+    // cinematic again.
+    const lastSeen = readLastIntroSeen()
+    if (prefersReducedMotion || !isIntroDue(lastSeen)) {
       setVisible(false)
       return
     }
 
-    // First visit — remember it so we never play the intro again.
-    try {
-      window.localStorage.setItem(INTRO_KEY, '1')
-    } catch {
-      // ignore storage errors (e.g. private mode)
-    }
+    // Record that the intro is showing now, so further visits inside this
+    // 2-hour window skip straight to the site.
+    markIntroSeen()
 
     // Lock body scroll while the cinematic plays.
     const root = document.documentElement
-    const prevOverflow = root.style.overflow
+    overflowBeforeIntro.current = root.style.overflow
     root.style.overflow = 'hidden'
 
     const fadeTimer = window.setTimeout(() => setClosing(true), PLAY_MS)
@@ -120,16 +124,25 @@ export default function BrandIntro() {
     return () => {
       window.clearTimeout(fadeTimer)
       window.clearTimeout(removeTimer)
-      root.style.overflow = prevOverflow
+      // Safety net for a real unmount; the effect below normally releases the lock.
+      root.style.overflow = overflowBeforeIntro.current
     }
   }, [])
 
-  const handleSkip = () => {
-    try {
-      window.localStorage.setItem(INTRO_KEY, '1')
-    } catch {
-      // ignore storage errors
+  // Release the scroll lock as soon as the intro is hidden — whether that is
+  // the automatic playout finishing or the user clicking Skip. (The component
+  // stays mounted while rendering null, so the effect above's cleanup alone
+  // would never run and would leave <html> permanently overflow:hidden.)
+  useEffect(() => {
+    if (!visible) {
+      document.documentElement.style.overflow = overflowBeforeIntro.current
     }
+  }, [visible])
+
+  const handleSkip = () => {
+    // Skipping also starts a fresh window, so a dismissed intro is not
+    // replayed on the very next visit.
+    markIntroSeen()
     // Skip dismisses instantly — the glitch fade is only for the automatic playout.
     setVisible(false)
   }

@@ -13,6 +13,7 @@ import './globals.css'
 import Script from 'next/script'
 import GlobalSnowfall from '@/components/GlobalSnowfall'
 import BrandIntro from '@/components/BrandIntro'
+import { INTRO_INTERVAL_MS, INTRO_KEY } from '@/lib/brand-intro'
 
 const bodyFont = Manrope({
   subsets: ['latin'],
@@ -109,7 +110,9 @@ export default function RootLayout({
           id="brand-intro-bootstrap"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{if(localStorage.getItem('winter-arc-intro-seen')==='1'||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){document.documentElement.classList.add('wia-intro-seen');}}catch(e){}})();`,
+            __html: `(function(){try{var raw=null;try{raw=window.localStorage.getItem(${JSON.stringify(
+              INTRO_KEY
+            )});}catch(e){}var last=raw===null?null:Number(raw);var withinWindow=raw!==null&&Number.isFinite(last)&&(Date.now()-last<${INTRO_INTERVAL_MS});if(withinWindow||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){document.documentElement.classList.add('wia-intro-seen');}}catch(e){}})();`,
           }}
         />
         {/* No-JS fallback: never block the site behind the intro when scripts are off. */}
