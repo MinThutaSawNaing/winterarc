@@ -1,6 +1,7 @@
 import Script from 'next/script'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
+import DeliveryModel from '@/components/DeliveryModel'
 import Services from '@/components/Services'
 import About from '@/components/About'
 // import TeamMembers from '@/components/TeamMembers'
@@ -78,16 +79,17 @@ export default function Home() {
           }}
         />
         <Hero />
-      <Customers />
-      <Services />
-      <About />
-      {/* <TeamMembers /> */}
-      <Technologies />
-      <Portfolio />
-      <Testimonials />
-      <Contact />
-      <Footer />
-      <LoliAssistant />
+        <Customers />
+        <DeliveryModel />
+        <Services />
+        <About />
+        {/* <TeamMembers /> */}
+        <Technologies />
+        <Portfolio />
+        <Testimonials />
+        <Contact />
+        <Footer />
+        <LoliAssistant />
       </main>
       <ScrollToTop />
     </>

@@ -1,6 +1,5 @@
 'use client'
 
-import CustomerHoverGallery from '@/components/customers/CustomerHoverGallery'
 import CustomerLogoStrip from '@/components/customers/CustomerLogoStrip'
 import SpinningGlobe from '@/components/customers/SpinningGlobe'
 import { Reveal, StaggerItem, StaggerReveal } from '@/components/Reveal'
@@ -12,6 +11,11 @@ const highlights = [
   'Long-term support beyond launch day',
 ]
 
+/**
+ * Partner proof that used to sit next to the client photo gallery. The photo
+ * showcase itself now lives in the hero's right column (see Hero.tsx), so this
+ * section pairs the globe with the partnership highlights and logo strip.
+ */
 export default function Customers() {
   return (
     <section
@@ -36,10 +40,7 @@ export default function Customers() {
           </Reveal>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-12 xl:gap-14">
-          <Reveal className="min-w-0">
-            <CustomerHoverGallery />
-          </Reveal>
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,26rem)_1fr] lg:gap-16">
           <motion.div
             className="min-w-0"
             initial={{ opacity: 0 }}
@@ -49,22 +50,23 @@ export default function Customers() {
           >
             <SpinningGlobe />
           </motion.div>
+
+          <StaggerReveal className="min-w-0 grid gap-3" stagger={0.08}>
+            {highlights.map((item) => (
+              <StaggerItem
+                key={item}
+                className="panel-card rounded-xl px-6 py-5 text-sm font-semibold leading-6 text-[var(--color-ink)]"
+              >
+                <div className="mb-3 h-1 w-10 rounded-full bg-[var(--color-brand)]" />
+                {item}
+              </StaggerItem>
+            ))}
+          </StaggerReveal>
         </div>
 
         <CustomerLogoStrip />
-
-        <StaggerReveal className="mt-14 grid gap-3 md:grid-cols-3" stagger={0.08}>
-          {highlights.map((item) => (
-            <StaggerItem
-              key={item}
-              className="panel-card rounded-xl px-5 py-5 text-sm font-semibold leading-6 text-[var(--color-ink)]"
-            >
-              <div className="mb-3 h-1 w-10 rounded-full bg-[var(--color-brand)]" />
-              {item}
-            </StaggerItem>
-          ))}
-        </StaggerReveal>
       </div>
     </section>
   )
 }
+

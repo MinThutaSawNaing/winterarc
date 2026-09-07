@@ -1,4 +1,5 @@
 import TypewriterText from '@/components/TypewriterText'
+import CustomerHoverGallery from '@/components/customers/CustomerHoverGallery'
 import { Reveal, StaggerItem, StaggerReveal } from '@/components/Reveal'
 
 const highlights = [
@@ -14,21 +15,6 @@ const metrics = [
   { value: 'Myanmar-based', label: 'Local presence, global standards' },
 ]
 
-const deliveryTracks = [
-  {
-    name: 'Discovery',
-    description: 'Align goals, user journeys, and scope before execution begins.',
-  },
-  {
-    name: 'Experience Design',
-    description: 'Clear interfaces, reusable patterns, and stakeholder-ready polish.',
-  },
-  {
-    name: 'Engineering',
-    description: 'Reliable implementation, cloud architecture, and launch readiness.',
-  },
-]
-
 export default function Hero() {
   return (
     <section
@@ -38,7 +24,7 @@ export default function Hero() {
       <div className="absolute inset-0 enterprise-grid opacity-60" />
 
       <div className="relative mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-28">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+        <div className="grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-start">
           <div className="max-w-3xl">
             <Reveal>
               <span className="section-label">
@@ -90,65 +76,21 @@ export default function Hero() {
             </StaggerReveal>
           </div>
 
-          <div className="lg:justify-self-end">
-            <div data-snow-surface="dark" className="panel-card-dark overflow-hidden rounded-2xl p-6 sm:p-7">
-              <Reveal>
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-200">
-                      Delivery model
-                    </p>
-                    <p className="mt-2 text-lg font-semibold tracking-[-0.02em] text-white">
-                      Strategy, UX, and engineering in one integrated workflow.
-                    </p>
-                  </div>
-                  <span className="rounded-lg border border-emerald-400/30 bg-emerald-500/12 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-200">
-                    Available
-                  </span>
-                </div>
-              </Reveal>
+          <div className="min-w-0 lg:justify-self-end">
+            <Reveal>
+              <div className="mb-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-brand)]">
+                  Our Customers
+                </p>
+                <p className="mt-2 text-base font-semibold leading-6 tracking-[-0.01em] text-[var(--color-ink)] sm:text-lg">
+                  Real partnerships across clinics, fitness, and enterprise teams.
+                </p>
+              </div>
+            </Reveal>
 
-              <StaggerReveal className="mt-6 grid gap-3" stagger={0.08}>
-                  {deliveryTracks.map((track, index) => (
-                    <StaggerItem
-                      key={track.name}
-                      className="rounded-xl border border-white/8 bg-white/[0.04] p-4"
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.06] text-xs font-semibold text-blue-200">
-                          0{index + 1}
-                        </span>
-                        <div>
-                          <h2 className="text-sm font-semibold text-white">
-                            {track.name}
-                          </h2>
-                          <p className="mt-1.5 text-sm leading-6 text-slate-300">
-                            {track.description}
-                          </p>
-                        </div>
-                      </div>
-                    </StaggerItem>
-                  ))}
-                </StaggerReveal>
-
-              <Reveal delay={0.12}>
-                <div className="mt-5 rounded-xl border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-4">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-200/70">
-                        Focus areas
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-white">
-                        Websites, business systems, SaaS platforms, and digital modernization.
-                      </p>
-                    </div>
-                    <div className="rounded-lg border border-white/8 bg-white/[0.04] px-3 py-2.5 text-sm text-slate-200 sm:max-w-[12rem]">
-                      Scoped with business context, not just feature lists.
-                    </div>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
+            <Reveal delay={0.06} className="min-w-0">
+              <CustomerHoverGallery />
+            </Reveal>
           </div>
         </div>
 
