@@ -480,19 +480,25 @@
     justify-content: center;
     border-radius: 0.875rem;
     padding: 1.25rem;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   
   .customer-logo-strip__item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-soft);
+    border-color: rgba(37, 99, 235, 0.42);
+    box-shadow: 0 18px 34px -18px rgba(37, 99, 235, 0.42), var(--shadow-soft);
   }
   
   .customer-logo-strip__image {
+    position: relative;
+    z-index: 1;
     height: 3.5rem;
     width: auto;
     max-width: 100%;
     object-fit: contain;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .customer-logo-strip__tile:hover .customer-logo-strip__image {
+    transform: scale(1.06);
   }
   
   @media (min-width: 640px) {
@@ -509,11 +515,10 @@
     border-radius: 0.875rem;
     padding: 1.25rem;
     text-align: center;
-    transition: transform 0.25s ease;
   }
   
   .customer-logo-strip__more:hover {
-    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -18px rgba(15, 23, 42, 0.6), var(--shadow-elevated);
   }
   
   .customer-logo-strip__more-count {
@@ -539,5 +544,167 @@
   @media (min-width: 640px) {
     .customer-logo-strip__more-label {
       font-size: 0.875rem;
+    }
+  }
+  
+  /* ============================================
+     INTERACTIVE LOGO WALL
+     CustomerLogoStrip.tsx writes --proximity / --spot-x / --spot-y /
+     --tilt-x / --tilt-y onto every tile while the cursor crosses the
+     wall. Each value has a resting default, so the strip still reads
+     correctly without JS, on touch devices and under reduced motion.
+     ============================================ */
+  .customer-logo-strip__tile {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    transform:
+      perspective(760px)
+      rotateX(var(--tilt-x, 0deg))
+      rotateY(var(--tilt-y, 0deg))
+      translateY(calc(var(--proximity, 0) * -7px))
+      scale(calc(1 + var(--proximity, 0) * 0.045));
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.4s ease,
+      border-color 0.4s ease,
+      opacity 0.4s ease;
+    will-change: transform;
+  }
+  
+  /* Spotlight that travels with the cursor. */
+  .customer-logo-strip__tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      140px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgba(37, 99, 235, 0.2),
+      rgba(37, 99, 235, 0) 70%
+    );
+    opacity: calc(var(--proximity, 0) * 0.95);
+    pointer-events: none;
+  }
+  
+  /* Gloss band: a slow wave on its own, a fast swipe under the cursor. */
+  .customer-logo-strip__tile::after {
+    content: '';
+    position: absolute;
+    inset: -35% -70%;
+    z-index: 0;
+    background: linear-gradient(
+      100deg,
+      rgba(37, 99, 235, 0) 40%,
+      rgba(37, 99, 235, 0.16) 50%,
+      rgba(37, 99, 235, 0) 60%
+    );
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .customer-logo-strip__tile::after {
+      animation: logo-wall-sheen-wave 9s linear infinite;
+      animation-delay: calc(var(--tile-order, 0) * 0.16s);
+    }
+    
+    .customer-logo-strip__tile:hover::after {
+      animation: logo-wall-sheen-swipe 0.9s cubic-bezier(0.22, 1, 0.36, 1) 1 both;
+    }
+  }
+  
+  /* Tiles far from the cursor recede, so the one under it leads. */
+  @media (hover: hover) and (pointer: fine) {
+    .customer-logo-strip.is-pointer-active .customer-logo-strip__tile {
+      opacity: calc(0.6 + var(--proximity, 0) * 0.4);
+    }
+  }
+  
+  .customer-logo-strip__more::before {
+    background: radial-gradient(
+      150px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgba(96, 165, 250, 0.42),
+      rgba(96, 165, 250, 0) 72%
+    );
+  }
+  
+  .customer-logo-strip__more::after {
+    background: linear-gradient(
+      100deg,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0.24) 50%,
+      rgba(255, 255, 255, 0) 60%
+    );
+  }
+  
+  .customer-logo-strip__more-count,
+  .customer-logo-strip__more-label {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .customer-logo-strip__more:hover .customer-logo-strip__more-count {
+    transform: scale(1.09);
+  }
+  
+  .customer-logo-strip__more:hover .customer-logo-strip__more-label {
+    transform: translateY(-1px);
+  }
+  
+  @keyframes logo-wall-sheen-wave {
+    0% {
+      transform: translate3d(-130%, 0, 0);
+      opacity: 0;
+    }
+    3% {
+      opacity: 1;
+    }
+    16% {
+      transform: translate3d(130%, 0, 0);
+      opacity: 0;
+    }
+    100% {
+      transform: translate3d(130%, 0, 0);
+      opacity: 0;
+    }
+  }
+  
+  @keyframes logo-wall-sheen-swipe {
+    0% {
+      transform: translate3d(-130%, 0, 0);
+      opacity: 0;
+    }
+    12% {
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(130%, 0, 0);
+      opacity: 0;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .customer-logo-strip__tile {
+      transform: none !important;
+      opacity: 1 !important;
+      transition: none !important;
+      will-change: auto;
+    }
+    
+    .customer-logo-strip__tile::before,
+    .customer-logo-strip__tile::after {
+      animation: none !important;
+      opacity: 0 !important;
+      transition: none !important;
+    }
+    
+    .customer-logo-strip__tile .customer-logo-strip__image,
+    .customer-logo-strip__more .customer-logo-strip__more-count,
+    .customer-logo-strip__more .customer-logo-strip__more-label {
+      transform: none !important;
+      transition: none !important;
     }
   }
