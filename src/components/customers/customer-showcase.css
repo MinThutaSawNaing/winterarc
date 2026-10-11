@@ -85,6 +85,17 @@
     opacity: 1;
   }
   
+  /* Parking state for slides outside the visible cascade (collections with more
+     photos than slots). They wait stacked directly behind the active card so they
+     fan out from under it instead of popping in from the middle of the stage. */
+  .cascade-slider_item.stacked {
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%) scale(0.78);
+    opacity: 1;
+    z-index: 0;
+  }
+  
   /* Image wrapper – fills the slide container */
   .cascade-slider_image-wrapper {
     position: relative;
@@ -451,14 +462,15 @@
   
   @media (min-width: 640px) {
     .customer-logo-strip__grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 1rem;
     }
   }
   
-  @media (min-width: 1024px) {
+  /* Eight tiles (seven logos + the "more clients" card) fill the row on wide screens. */
+  @media (min-width: 1280px) {
     .customer-logo-strip__grid {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(8, minmax(0, 1fr));
     }
   }
   

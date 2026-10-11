@@ -33,6 +33,18 @@ const clients = [
     width: 1600,
     height: 1600,
   },
+  {
+    name: 'Leox Group',
+    src: '/images/clients/leox-group.png',
+    width: 341,
+    height: 325,
+  },
+  {
+    name: 'K&K Dental Care',
+    src: '/images/clients/kk-dental-care.png',
+    width: 442,
+    height: 574,
+  },
 ] as const
 
 export default function CustomerLogoStrip() {
@@ -49,7 +61,7 @@ export default function CustomerLogoStrip() {
                 width={client.width}
                 height={client.height}
                 className="customer-logo-strip__image"
-                sizes="(max-width: 640px) 40vw, (max-width: 1024px) 28vw, 140px"
+                sizes="(max-width: 640px) 48vw, (max-width: 1280px) 25vw, 152px"
               />
             </div>
           ))}

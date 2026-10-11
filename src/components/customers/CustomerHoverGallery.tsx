@@ -26,6 +26,20 @@ const defaultCustomerSlides: Slide[] = [
     title: 'Unity Fitness',
     caption: 'Certificate of delivery',
   },
+  {
+    id: 'leox-group',
+    src: '/images/customers/leox-group-partnership.jpg',
+    alt: 'Winter Arc Myanmar partnership handshake at the Leox Group of Companies office',
+    title: 'Leox Group',
+    caption: 'Partnership handshake',
+  },
+  {
+    id: 'act-dental-center',
+    src: '/images/customers/act-dental-center-visit.jpg',
+    alt: 'Winter Arc Myanmar partnership visit at the ACT Dental Center clinic',
+    title: 'ACT Dental Center',
+    caption: 'Clinic partnership visit',
+  },
 ]
 
 export interface Slide {
@@ -102,14 +116,33 @@ export function ThreeDImageCarousel({
     if (pauseOnHover) setIsPaused(false)
   }
 
-  const getSlideClasses = (index: number, activeIndex: number, total: number, visibleCount: 3 | 5): string => {
-    const diff = index - activeIndex
+  /**
+   * Positions every slide on the stage from its shortest signed distance to the
+   * active slide around the loop, so the carousel keeps its cascade layout with
+   * any number of slides (4, 5, 6+, not just 3).
+   *
+   * Slides outside the visible window stay mounted in the `stacked` state, parked
+   * directly behind the active card. Previously they were unmounted (`return ''`
+   * -> `return null`), which made them pop in and out mid-rotation instead of
+   * animating.
+   */
+  const getSlideClasses = (
+    index: number,
+    activeIndex: number,
+    total: number,
+    visibleCount: 3 | 5
+  ): 'now' | 'next' | 'next2' | 'prev' | 'prev2' | 'stacked' => {
+    // +1 is the slide right after the active one, -1 the one right before it.
+    let diff = index - activeIndex
+    if (diff > total / 2) diff -= total
+    else if (diff < -total / 2) diff += total
+
     if (diff === 0) return 'now'
-    if (diff === 1 || diff === -total + 1) return 'next'
-    if (visibleCount === 5 && (diff === 2 || diff === -total + 2)) return 'next2'
-    if (diff === -1 || diff === total - 1) return 'prev'
-    if (visibleCount === 5 && (diff === -2 || diff === total - 2)) return 'prev2'
-    return ''
+    if (diff === 1) return 'next'
+    if (diff === -1) return 'prev'
+    if (visibleCount === 5 && diff === 2) return 'next2'
+    if (visibleCount === 5 && diff === -2) return 'prev2'
+    return 'stacked'
   }
 
   useEffect(() => {
@@ -141,8 +174,6 @@ export function ThreeDImageCarousel({
       <div className="cascade-slider_slides">
         {safeSlides.map((slide, index) => {
           const slideClass = getSlideClasses(index, activeIndex, totalSlides, visibleCount as 3 | 5)
-          if (!slideClass) return null
-
           const isCenter = slideClass === 'now'
 
           return (
