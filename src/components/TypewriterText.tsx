@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 
 interface TypewriterTextProps {
   text: string
@@ -15,23 +15,27 @@ export default function TypewriterText({
 }: TypewriterTextProps) {
   const [displayText, setDisplayText] = useState('')
   const [cursorVisible, setCursorVisible] = useState(true)
-  const indexRef = useRef(0)
 
   useEffect(() => {
-    setDisplayText('')
-    indexRef.current = 0
-    setCursorVisible(true)
+    let index = 0
+    const reset = window.requestAnimationFrame(() => {
+      setDisplayText('')
+      setCursorVisible(true)
+    })
 
     const interval = setInterval(() => {
-      if (indexRef.current < text.length) {
-        indexRef.current++
-        setDisplayText(text.slice(0, indexRef.current))
+      if (index < text.length) {
+        index++
+        setDisplayText(text.slice(0, index))
       } else {
         clearInterval(interval)
       }
     }, speed)
 
-    return () => clearInterval(interval)
+    return () => {
+      window.cancelAnimationFrame(reset)
+      clearInterval(interval)
+    }
   }, [text, speed])
 
   useEffect(() => {

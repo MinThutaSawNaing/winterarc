@@ -31,82 +31,11 @@ function isAllowedOrigin(request: NextRequest) {
     return true
   }
 
-  const originHost = normalizeHost(origin)
-
-  if (!originHost) {
-    return false
-  }
-
-  if (
-    fetchSite === 'same-origin' ||
-    fetchSite === 'same-site' ||
-    fetchSite === 'none'
-  ) {
-    return true
-  }
-
-  return getAllowedHosts(request).has(originHost)
-}
-
-function getAllowedHosts(request: NextRequest) {
-  const allowedHosts = new Set<string>()
-  const directHost = normalizeHost(request.headers.get('host'))
-  const forwardedHost = normalizeForwardedHost(request.headers.get('x-forwarded-host'))
-
-  if (directHost) {
-    allowedHosts.add(directHost)
-  }
-
-  if (forwardedHost) {
-    allowedHosts.add(forwardedHost)
-  }
-
-  for (const value of [
-    process.env.URL,
-    process.env.DEPLOY_URL,
-    process.env.DEPLOY_PRIME_URL,
-    process.env.SITE_URL,
-    process.env.NEXT_PUBLIC_SITE_URL,
-  ]) {
-    const normalized = normalizeHost(value)
-
-    if (normalized) {
-      allowedHosts.add(normalized)
-    }
-  }
-
-  return allowedHosts
-}
-
-function normalizeForwardedHost(value: string | null) {
-  if (!value) {
-    return ''
-  }
-
-  const firstValue = value.split(',')[0]?.trim()
-
-  return normalizeHost(firstValue)
-}
-
-function normalizeHost(value: string | null | undefined) {
-  if (!value) {
-    return ''
-  }
-
-  const trimmedValue = value.trim()
-
-  if (!trimmedValue) {
-    return ''
-  }
-
+  if (fetchSite === 'cross-site') return false
   try {
-    const url = new URL(
-      trimmedValue.includes('://') ? trimmedValue : `https://${trimmedValue}`
-    )
-
-    return url.hostname.toLowerCase()
+    return new URL(origin).origin === request.nextUrl.origin
   } catch {
-    return ''
+    return false
   }
 }
 
@@ -125,19 +54,6 @@ export async function POST(request: NextRequest) {
         message: 'Cross-site requests are blocked for this assistant.',
       },
       403
-    )
-  }
-
-  const apiKey = process.env.APIFREE_API_KEY?.trim()
-  const model = process.env.LOLI_MODEL?.trim()
-
-  if (!apiKey || !model) {
-    return jsonResponse(
-      {
-        message:
-          'Loli is not configured yet. Add APIFREE_API_KEY and LOLI_MODEL on the server.',
-      },
-      500
     )
   }
 
@@ -160,8 +76,26 @@ export async function POST(request: NextRequest) {
 
   let payload: unknown
 
+  if (!request.headers.get('content-type')?.toLowerCase().startsWith('application/json')) {
+    return jsonResponse({ message: 'Please send JSON.' }, 415)
+  }
+
   try {
-    payload = await request.json()
+    const reader = request.body?.getReader()
+    if (!reader) return jsonResponse({ message: 'A request body is required.' }, 400)
+    const chunks: Uint8Array[] = []
+    let length = 0
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      length += value.byteLength
+      if (length > 32768) {
+        await reader.cancel()
+        return jsonResponse({ message: 'The message is too large.' }, 413)
+      }
+      chunks.push(value)
+    }
+    payload = JSON.parse(Buffer.concat(chunks).toString('utf8'))
   } catch {
     return jsonResponse(
       {
@@ -169,6 +103,16 @@ export async function POST(request: NextRequest) {
       },
       400
     )
+  }
+
+  if (!payload || typeof payload !== 'object' || !('privacyAcknowledged' in payload) || payload.privacyAcknowledged !== true) {
+    return jsonResponse({ message: 'Please review the AI privacy notice and choose whether to use AI chat before sending.' }, 400)
+  }
+
+  const apiKey = process.env.APIFREE_API_KEY?.trim()
+  const model = process.env.LOLI_MODEL?.trim()
+  if (!apiKey || !model) {
+    return jsonResponse({ message: 'The AI assistant is unavailable. Please contact our team directly.' }, 503)
   }
 
   const messages = sanitizeChatMessages(
@@ -229,20 +173,9 @@ export async function POST(request: NextRequest) {
   }
 
   if (!upstreamResponse.ok) {
-    const upstreamMessage =
-      upstreamData &&
-      typeof upstreamData === 'object' &&
-      'error' in upstreamData &&
-      upstreamData.error &&
-      typeof upstreamData.error === 'object' &&
-      'message' in upstreamData.error &&
-      typeof upstreamData.error.message === 'string'
-        ? upstreamData.error.message
-        : 'The upstream provider returned an error.'
-
     return jsonResponse(
       {
-        message: `APIFree.ai request failed: ${upstreamMessage}`,
+        message: 'The AI provider is unavailable. Please try again later or contact our team directly.',
       },
       502
     )

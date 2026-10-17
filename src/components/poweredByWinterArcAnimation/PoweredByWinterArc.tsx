@@ -76,7 +76,7 @@ export function PoweredByWinterArc({
       aria-label="Powered by Winter Arc Myanmar — visit winterarc.asia"
     >
       <div className="flex max-w-full items-end justify-center overflow-visible">
-        <WinterArcLogo3D size={logoSize} />
+        <WinterArcLogo3D size={logoSize} contained />
       </div>
       <span
         className={cn(

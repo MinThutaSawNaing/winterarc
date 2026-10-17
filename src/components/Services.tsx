@@ -9,6 +9,7 @@ import {
 const services = [
   {
     title: 'Web Platforms',
+    slug: 'web-development',
     description:
       'Marketing sites, portals, dashboards, and custom web applications designed for clarity, performance, and maintainability.',
     outcome: 'Ideal for brand refreshes, service launches, and operational visibility.',
@@ -16,6 +17,7 @@ const services = [
   },
   {
     title: 'Mobile Products',
+    slug: 'mobile-app-development',
     description:
       'Cross-platform mobile experiences with polished interaction design, practical architecture, and a release plan built around real users.',
     outcome: 'Best for teams launching customer experiences or field operations tools.',
@@ -23,6 +25,7 @@ const services = [
   },
   {
     title: 'Cloud Delivery',
+    slug: 'cloud-solutions',
     description:
       'Infrastructure planning, deployment pipelines, and scalable hosting patterns that support reliable launches and healthy growth.',
     outcome: 'Useful when uptime, deployment confidence, and future scale matter early.',
@@ -30,6 +33,7 @@ const services = [
   },
   {
     title: 'Custom Systems',
+    slug: 'custom-software',
     description:
       'Internal business software shaped around workflows, reporting needs, integrations, and the way your team already operates.',
     outcome: 'A strong fit for digitizing manual processes without adding unnecessary complexity.',
@@ -86,6 +90,9 @@ export default function Services() {
               <p className="mt-4 text-sm font-medium leading-7 text-[var(--color-ink)]">
                 {service.outcome}
               </p>
+              <a href={`/services/${service.slug}`} className="mt-5 inline-flex min-h-11 items-center gap-2 rounded font-semibold text-[var(--color-brand-deep)] underline underline-offset-4">
+                Explore {service.title.toLowerCase()} <span aria-hidden="true">→</span>
+              </a>
             </article>
           ))}
         </div>

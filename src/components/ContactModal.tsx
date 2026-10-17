@@ -72,6 +72,7 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
       ref={dialogRef}
       onClick={handleBackdropClick}
       onClose={onClose}
+      aria-labelledby="contact-dialog-title"
       className="fixed inset-0 z-[60] m-auto w-full max-w-md rounded-2xl border border-white/8 bg-[var(--color-panel-dark)] p-0 shadow-[var(--shadow-elevated)] backdrop:bg-[rgba(15,23,42,0.48)] backdrop:backdrop-blur-[2px]"
     >
       <div className="relative p-6 sm:p-8">
@@ -88,7 +89,7 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
           Let&apos;s Talk
         </span>
 
-        <h2 className="mt-4 text-xl font-bold tracking-[-0.03em] text-white sm:text-2xl">
+        <h2 id="contact-dialog-title" className="mt-4 text-xl font-bold tracking-[-0.03em] text-white sm:text-2xl">
           Choose how you&apos;d like to reach us
         </h2>
 

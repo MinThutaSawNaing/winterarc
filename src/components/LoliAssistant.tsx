@@ -45,11 +45,14 @@ export default function LoliAssistant() {
   const [input, setInput] = useState('')
   const [usage, setUsage] = useState<UsageState>(fallbackUsage)
   const [isLoading, setIsLoading] = useState(false)
+  const [privacyAcknowledged, setPrivacyAcknowledged] = useState(false)
   const [statusMessage, setStatusMessage] = useState(
     'AI concierge. Available in one tap.'
   )
   const bottomRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLTextAreaElement | null>(null)
+  const dialogRef = useRef<HTMLElement | null>(null)
+  const launcherRef = useRef<HTMLButtonElement | null>(null)
 
   const openAssistant = (question?: string) => {
     setIsOpen(true)
@@ -142,9 +145,25 @@ export default function LoliAssistant() {
       return
     }
 
+    const launcher = launcherRef.current
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         closeAssistant()
+      }
+      if (event.key === 'Tab') {
+        const elements = dialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not(:disabled), textarea:not(:disabled), input:not(:disabled), [tabindex="0"]'
+        )
+        const first = elements?.[0]
+        const last = elements?.[elements.length - 1]
+        if (!first || !last) return
+        if (event.shiftKey && (document.activeElement === first || !dialogRef.current?.contains(document.activeElement))) {
+          event.preventDefault()
+          last.focus()
+        } else if (!event.shiftKey && (document.activeElement === last || !dialogRef.current?.contains(document.activeElement))) {
+          event.preventDefault()
+          first.focus()
+        }
       }
     }
 
@@ -159,6 +178,7 @@ export default function LoliAssistant() {
       window.removeEventListener('keydown', handleEscape)
       window.clearTimeout(focusTimer)
       unlockBodyScroll()
+      launcher?.focus()
     }
   }, [isOpen])
 
@@ -171,7 +191,7 @@ export default function LoliAssistant() {
 
     const question = input.trim()
 
-    if (!question || isLoading || usage.locked) {
+    if (!question || isLoading || usage.locked || !privacyAcknowledged) {
       return
     }
 
@@ -193,6 +213,7 @@ export default function LoliAssistant() {
         },
         body: JSON.stringify({
           messages: nextMessages.slice(-6),
+          privacyAcknowledged,
         }),
       })
 
@@ -266,6 +287,7 @@ export default function LoliAssistant() {
   return (
     <>
       <button
+        ref={launcherRef}
         type="button"
         onClick={() => openAssistant()}
         className="fixed bottom-4 right-4 z-40 flex items-center gap-3 rounded-xl border border-[var(--color-line)] bg-white px-4 py-3 text-left text-[var(--color-ink)] shadow-[var(--shadow-elevated)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(37,99,235,0.12)] sm:bottom-6 sm:right-6"
@@ -300,6 +322,7 @@ export default function LoliAssistant() {
 
           <div className="relative z-10 flex h-full items-end justify-center sm:items-center sm:p-4">
             <section
+              ref={dialogRef}
               role="dialog"
               aria-modal="true"
               aria-labelledby="loli-dialog-title"
@@ -376,6 +399,16 @@ export default function LoliAssistant() {
               </div>
 
               <footer className="border-t border-[var(--color-line)] bg-[var(--color-bg-alt)]/80 px-3.5 py-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] backdrop-blur-sm sm:px-5 sm:pb-4">
+                <div id="loli-privacy-notice" className="mb-3 text-xs leading-5 text-[var(--color-muted)]">
+                  AI-generated answers may be inaccurate; confirm project details with our team.
+                  Sending shares your question and recent conversation with APIFree.ai and the configured AI provider.
+                  Please don&apos;t include personal, confidential or sensitive information.{' '}
+                  <a href="/privacy#ai-assistant" className="font-semibold text-[var(--color-brand-deep)] underline underline-offset-2">AI privacy details</a>
+                </div>
+                <label className="mb-3 flex min-h-11 cursor-pointer items-start gap-3 text-xs leading-5 text-[var(--color-ink)]">
+                  <input type="checkbox" checked={privacyAcknowledged} onChange={(event) => setPrivacyAcknowledged(event.target.checked)} disabled={isLoading} className="mt-1 h-4 w-4 shrink-0 accent-blue-600" />
+                  <span>I choose to use AI chat and agree to sending my messages to these providers and using the 365-day usage-limit cookie. I can uncheck this to stop future sending or contact the team instead. <a href="/cookies" className="underline underline-offset-2">Cookie details</a>.</span>
+                </label>
                 <div className="mb-2.5 flex gap-2 overflow-x-auto pb-1">
                   {suggestedQuestions.map((question) => (
                     <button
@@ -408,12 +441,13 @@ export default function LoliAssistant() {
                       disabled={isBlocked || isLoading}
                       rows={2}
                       maxLength={1200}
+                      aria-describedby="loli-privacy-notice"
                       className="min-h-[5rem] flex-1 resize-none rounded-xl border border-[var(--color-line)] bg-white px-3 py-2.5 text-sm text-[var(--color-ink)] shadow-[var(--shadow-card)] outline-none transition placeholder:text-slate-400 focus:border-[rgba(37,99,235,0.3)] focus:ring-4 focus:ring-[rgba(37,99,235,0.1)] disabled:cursor-not-allowed disabled:bg-slate-50"
                     />
 
                     <button
                       type="submit"
-                      disabled={!input.trim() || isBlocked || isLoading}
+                      disabled={!input.trim() || isBlocked || isLoading || !privacyAcknowledged}
                       className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--color-brand)] px-4 text-xs font-semibold text-white shadow-[0_1px_3px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(37,99,235,0.12)] disabled:cursor-not-allowed disabled:bg-slate-400 disabled:shadow-none"
                     >
                       {isLoading ? 'Sending...' : 'Send'}

@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import './global-snowfall.css'
@@ -107,15 +108,19 @@ function SnowParticle({ config }: { config: SnowParticleConfig }) {
       }}
       aria-hidden
     >
-      <img
+      <Image
         src="/winterarcicon.svg"
         alt=""
+        width={40}
+        height={40}
         className="global-snowfall__icon global-snowfall__icon--light"
         draggable={false}
       />
-      <img
+      <Image
         src="/winterarcicon-dark.svg"
         alt=""
+        width={40}
+        height={40}
         className="global-snowfall__icon global-snowfall__icon--dark"
         draggable={false}
       />

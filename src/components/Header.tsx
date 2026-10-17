@@ -8,13 +8,11 @@ import ContactModal from '@/components/ContactModal'
 import MobileNav, { AnimatedMenuIcon } from '@/components/MobileNav'
 
 const navItems = [
-  { name: 'Overview', href: '#home' },
-  { name: 'Customers', href: '#customers' },
+  { name: 'Home', href: '#home' },
   { name: 'Services', href: '#services' },
   { name: 'About', href: '#about' },
   // { name: 'Team', href: '#team' },
-  { name: 'Technologies', href: '#technologies' },
-  { name: 'Portfolio', href: '#portfolio' },
+  { name: 'Our Approach', href: '#delivery' },
   { name: 'Loli', href: '#loli' },
   { name: 'Contact', href: '#contact' },
 ] as const
@@ -103,7 +101,7 @@ export default function Header() {
     const element = document.getElementById(targetId)
 
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      element.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' })
       window.history.replaceState(null, '', href)
       setActiveSection(targetId)
     }
@@ -158,8 +156,7 @@ export default function Header() {
 
           <button type="button" onClick={() => setContactModalOpen(true)} className="header-cta shrink-0">
             <CalendarIcon />
-            <span className="hidden xl:inline">Book a Call</span>
-            <span className="xl:hidden">Book</span>
+            <span>Let&apos;s Talk</span>
           </button>
         </div>
 

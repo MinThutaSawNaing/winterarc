@@ -1,12 +1,13 @@
 import { PoweredByWinterArc } from '@/components/poweredByWinterArcAnimation'
+import { contactDetails } from '@/lib/site'
 
 const footerLinks = [
-  { name: 'Home', href: '#home' },
-  { name: 'Services', href: '#services' },
-  { name: 'About', href: '#about' },
-  { name: 'Technologies', href: '#technologies' },
-  { name: 'Portfolio', href: '#portfolio' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Home', href: '/' },
+  { name: 'Services', href: '/services' },
+  { name: 'About', href: '/#about' },
+  { name: 'Our Approach', href: '/#delivery' },
+  { name: 'Solution Examples', href: '/#portfolio' },
+  { name: 'Contact', href: '/#contact' },
 ]
 
 export default function Footer() {
@@ -67,12 +68,12 @@ export default function Footer() {
                 Contact
               </p>
               <div className="mt-4 flex flex-col gap-2.5 text-sm text-slate-300">
-                <p>Insein, Yangon, Myanmar</p>
-                <a href="mailto:winterarcmyanmar@yahoo.com" className="transition hover:text-white">
-                  winterarcmyanmar@yahoo.com
+                <p>{contactDetails.location}</p>
+                <a href={`mailto:${contactDetails.email}`} className="break-all transition hover:text-white">
+                  {contactDetails.email}
                 </a>
-                <a href="tel:+959977144320" className="transition hover:text-white">
-                  +95 9 977 144 320
+                <a href={`tel:${contactDetails.phone.replace(/\s/g, '')}`} className="transition hover:text-white">
+                  {contactDetails.phone}
                 </a>
               </div>
             </div>
@@ -83,9 +84,11 @@ export default function Footer() {
           <p className="text-sm text-slate-400">
             &copy; {new Date().getFullYear()} Winter Arc Myanmar. All rights reserved.
           </p>
-          <p className="text-sm text-slate-500 sm:text-right">
-            Enterprise digital delivery for Myanmar.
-          </p>
+          <nav aria-label="Policies" className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-300">
+            <a href="/privacy" className="inline-flex min-h-11 items-center hover:text-white">Privacy Policy</a>
+            <a href="/terms" className="inline-flex min-h-11 items-center hover:text-white">Terms of Use</a>
+            <a href="/cookies" className="inline-flex min-h-11 items-center hover:text-white">Cookie Information</a>
+          </nav>
         </div>
 
         <div className="mt-8 flex justify-center overflow-x-clip border-t border-white/10 px-2 pt-8 sm:px-4">

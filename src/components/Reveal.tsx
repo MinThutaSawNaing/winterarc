@@ -39,7 +39,7 @@ export function Reveal({ children, className, delay = 0 }: RevealProps) {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 24, scale: 0.985 }}
+      initial={false}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, amount: 0.18, margin: '0px 0px -48px 0px' }}
       transition={{ duration: 0.55, delay, ease: EASE }}
@@ -82,7 +82,7 @@ export function StaggerReveal({
   return (
     <motion.div
       className={className}
-      initial="hidden"
+      initial={false}
       whileInView="show"
       viewport={{ once: true, amount: 0.12, margin: '0px 0px -40px 0px' }}
       variants={{

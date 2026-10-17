@@ -10,10 +10,6 @@ import {
   siteUrl,
 } from '@/lib/site'
 import './globals.css'
-import Script from 'next/script'
-import GlobalSnowfall from '@/components/GlobalSnowfall'
-import BrandIntro from '@/components/BrandIntro'
-import { INTRO_INTERVAL_MS, INTRO_KEY } from '@/lib/brand-intro'
 
 const bodyFont = Manrope({
   subsets: ['latin'],
@@ -67,8 +63,10 @@ export const metadata: Metadata = {
     images: siteUrl
       ? [
           {
-            url: `${siteUrl}/logo.jpg`,
-            alt: `${siteName} logo`,
+            url: `${siteUrl}/opengraph-image`,
+            width: 1200,
+            height: 630,
+            alt: `${siteName} — web, mobile and custom software development`,
           },
         ]
       : undefined,
@@ -77,7 +75,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: siteUrl ? [`${siteUrl}/logo.jpg`] : undefined,
+    images: siteUrl ? [`${siteUrl}/opengraph-image`] : undefined,
   },
   manifest: '/site.webmanifest',
   verification: googleSiteVerification
@@ -106,21 +104,6 @@ export default function RootLayout({
       <body
         className={`${bodyFont.variable} ${displayFont.variable} bg-[var(--color-bg)] text-[var(--color-ink)] antialiased`}
       >
-        <Script
-          id="brand-intro-bootstrap"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var raw=null;try{raw=window.localStorage.getItem(${JSON.stringify(
-              INTRO_KEY
-            )});}catch(e){}var last=raw===null?null:Number(raw);var withinWindow=raw!==null&&Number.isFinite(last)&&(Date.now()-last<${INTRO_INTERVAL_MS});if(withinWindow||(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){document.documentElement.classList.add('wia-intro-seen');}}catch(e){}})();`,
-          }}
-        />
-        {/* No-JS fallback: never block the site behind the intro when scripts are off. */}
-        <noscript>
-          <style>{`.brand-intro{display:none !important;}`}</style>
-        </noscript>
-        <BrandIntro />
-        <GlobalSnowfall />
         <div className="relative">
           <a
             href="#main-content"

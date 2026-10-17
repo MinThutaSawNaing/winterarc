@@ -1,8 +1,8 @@
 const stats = [
-  { value: '4+', label: 'Years of experience' },
-  { value: '10+', label: 'Products and launches' },
-  { value: '50+', label: 'Client partnerships' },
-  { value: '24/7 mindset', label: 'Responsive collaboration' },
+  { value: 'Discovery', label: 'Understand the problem before choosing the solution' },
+  { value: 'Design', label: 'Make key user journeys clear and practical' },
+  { value: 'Development', label: 'Build around the agreed requirements' },
+  { value: 'Handover', label: 'Plan documentation, access and ongoing support' },
 ]
 
 const principles = [

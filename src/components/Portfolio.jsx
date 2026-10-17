@@ -38,14 +38,13 @@ export default function Portfolio() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-5 md:max-w-3xl">
-          <span className="section-label">Selected Work</span>
+          <span className="section-label">Solution Examples</span>
           <h2 className="text-2xl font-bold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl lg:text-4xl">
             Digital products shaped around business clarity, not just feature delivery.
           </h2>
           <p className="text-sm leading-7 text-[var(--color-muted)] md:text-base">
-            These portfolio snapshots reflect the kinds of platforms and solutions
-            we help teams bring to market with stronger interface quality and more
-            dependable technical structure.
+            Illustrative solution areas, not published client case studies. Talk to us
+            about relevant demonstrations and the work we can share with permission.
           </p>
         </div>
 

@@ -1,4 +1,3 @@
-import Script from 'next/script'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import DeliveryModel from '@/components/DeliveryModel'
@@ -8,7 +7,7 @@ import About from '@/components/About'
 import Technologies from '@/components/Technologies'
 import Customers from '@/components/Customers'
 import Portfolio from '@/components/Portfolio'
-import Testimonials from '@/components/Testimonials'
+import ProjectFaq from '@/components/ProjectFaq'
 import LoliAssistant from '@/components/LoliAssistant'
 import ScrollToTop from '@/components/ScrollToTop'
 import Contact from '@/components/Contact'
@@ -24,6 +23,7 @@ export default function Home() {
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
+    '@id': `${siteUrl}/#organization`,
     name: siteName,
     description: siteDescription,
     areaServed: 'Myanmar',
@@ -40,7 +40,8 @@ export default function Home() {
       '@type': 'PostalAddress',
       addressLocality: 'Yangon',
       addressCountry: 'MM',
-      streetAddress: contactDetails.location,
+      addressRegion: 'Yangon Region',
+      postalCode: '11011',
     },
     contactPoint: [
       {
@@ -58,6 +59,8 @@ export default function Home() {
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${siteUrl}/#website`,
+    publisher: { '@id': `${siteUrl}/#organization` },
     name: siteName,
     description: siteDescription,
     url: siteUrl || undefined,
@@ -71,11 +74,11 @@ export default function Home() {
         id="main-content"
         className="relative min-h-screen overflow-x-clip bg-[var(--color-bg)] text-[var(--color-ink)]"
       >
-        <Script
+        <script
           id="winter-arc-schema-org"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify([organizationSchema, websiteSchema]),
+            __html: JSON.stringify([organizationSchema, websiteSchema]).replace(/</g, '\\u003c'),
           }}
         />
         <Hero />
@@ -86,11 +89,11 @@ export default function Home() {
         {/* <TeamMembers /> */}
         <Technologies />
         <Portfolio />
-        <Testimonials />
+        <ProjectFaq />
         <Contact />
-        <Footer />
         <LoliAssistant />
       </main>
+      <Footer />
       <ScrollToTop />
     </>
   )

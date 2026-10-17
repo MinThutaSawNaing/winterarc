@@ -1,10 +1,10 @@
 export const siteName = 'Winter Arc Myanmar'
 
 export const siteTitle =
-  'Freelance Software Services in Myanmar | Winter Arc Myanmar'
+  'Web & Software Development in Myanmar | Winter Arc Myanmar'
 
 export const siteDescription =
-  'Winter Arc Myanmar offers freelance software services in Myanmar, including web development, mobile apps, cloud systems, UI/UX design, and custom business software.'
+  'Web development, mobile apps, cloud solutions and custom business software from Winter Arc Myanmar in Yangon. Explore our services and discuss your project.'
 
 export const siteKeywords = [
   'freelancer Myanmar',

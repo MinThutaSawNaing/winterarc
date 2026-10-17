@@ -1,25 +1,24 @@
-import TypewriterText from '@/components/TypewriterText'
 import CustomerHoverGallery from '@/components/customers/CustomerHoverGallery'
 import { Reveal, StaggerItem, StaggerReveal } from '@/components/Reveal'
 
 const highlights = [
-  'Executive-ready product strategy',
-  'Design systems that scale across teams',
-  'Reliable delivery with launch support',
+  'Websites built around your customers',
+  'Software that fits your workflows',
+  'A clear path from idea to launch',
 ]
 
 const metrics = [
-  { value: '30+', label: 'Projects delivered' },
-  { value: '4+', label: 'Years of experience' },
-  { value: 'End-to-end', label: 'Strategy, UX, engineering' },
-  { value: 'Myanmar-based', label: 'Local presence, global standards' },
+  { value: 'Web & mobile', label: 'Customer-facing digital experiences' },
+  { value: 'Custom software', label: 'Tools for day-to-day operations' },
+  { value: 'Design to delivery', label: 'UX, engineering and launch planning' },
+  { value: 'Yangon, Myanmar', label: 'Talk directly with our team' },
 ]
 
 export default function Hero() {
   return (
     <section
       id="home"
-      className="section-shell relative overflow-hidden bg-white pt-24"
+      className="section-shell relative overflow-hidden bg-white pt-28 sm:pt-32"
     >
       <div className="absolute inset-0 enterprise-grid opacity-60" />
 
@@ -28,21 +27,21 @@ export default function Hero() {
           <div className="max-w-3xl">
             <Reveal>
               <span className="section-label">
-                Enterprise digital delivery for ambitious teams
+                Web & software development · Yangon, Myanmar
               </span>
             </Reveal>
 
             <Reveal delay={0.06}>
-              <h1 className="mt-6 max-w-4xl text-3xl font-bold leading-[1.12] tracking-[-0.03em] text-[var(--color-ink)] sm:text-4xl lg:text-5xl">
-                <TypewriterText text="Build software that earns trust in the boardroom and works beautifully in the real world." />
+              <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.12] tracking-[-0.04em] text-[var(--color-ink)] sm:text-5xl lg:text-6xl">
+                Software that makes <span className="text-[var(--color-brand)]">business simpler.</span>
               </h1>
             </Reveal>
 
             <Reveal delay={0.1}>
               <p className="mt-5 max-w-2xl text-sm leading-7 text-[var(--color-muted)] sm:text-base">
-                Winter Arc Myanmar partners with businesses to shape modern websites,
-                internal tools, mobile products, and cloud platforms with the rigor,
-                clarity, and UX standards expected from mature digital teams.
+                We design and develop websites, mobile apps and custom software for
+                businesses in Myanmar. Turn a new idea or a time-consuming workflow
+                into a digital experience your team and customers can use with confidence.
               </p>
             </Reveal>
 
@@ -52,7 +51,7 @@ export default function Hero() {
                   href="#contact"
                   className="inline-flex items-center justify-center rounded-lg bg-[var(--color-brand)] px-6 py-3 text-sm font-semibold text-white shadow-[0_1px_3px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)] hover:shadow-[0_4px_6px_rgba(37,99,235,0.18)]"
                 >
-                  Start a Conversation
+                  Discuss Your Project
                 </a>
                 <a
                   href="#portfolio"
@@ -61,6 +60,9 @@ export default function Hero() {
                   View Our Work
                 </a>
               </div>
+              <p className="mt-4 text-xs leading-6 text-[var(--color-muted)]">
+                Tell us what you need. Scope, timeline and pricing are agreed before project work begins.
+              </p>
             </Reveal>
 
             <StaggerReveal

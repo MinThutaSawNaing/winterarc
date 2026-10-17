@@ -8,49 +8,42 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faFacebook,
-  faFacebookMessenger,
   faWhatsapp,
 } from '@fortawesome/free-brands-svg-icons'
+import { contactDetails } from '@/lib/site'
 
 const contactMethods = [
   {
     label: 'WhatsApp',
-    value: '+95 9 977 144 320',
-    href: 'https://wa.me/959977144320',
+    value: contactDetails.phone,
+    href: contactDetails.whatsapp,
     icon: faWhatsapp,
     iconClass: 'text-emerald-600',
   },
   {
     label: 'Email',
-    value: 'winterarcmyanmar@yahoo.com',
-    href: 'mailto:winterarcmyanmar@yahoo.com?subject=Inquiry%20from%20Website&body=Hello%20Winter%20Arc%20Myanmar,',
+    value: contactDetails.email,
+    href: `mailto:${contactDetails.email}?subject=Project%20inquiry`,
     icon: faEnvelope,
     iconClass: 'text-blue-600',
   },
   {
     label: 'Phone',
-    value: '+95 9 977 144 320',
-    href: 'tel:+959977144320',
+    value: contactDetails.phone,
+    href: `tel:${contactDetails.phone.replace(/\s/g, '')}`,
     icon: faPhone,
     iconClass: 'text-[var(--color-brand)]',
   },
   {
     label: 'Facebook',
     value: 'Winter Arc Myanmar',
-    href: 'https://www.facebook.com/share/1Hjr6iVb7q/',
+    href: contactDetails.facebook,
     icon: faFacebook,
     iconClass: 'text-blue-600',
   },
   {
-    label: 'Messenger',
-    value: 'Chat with our team',
-    href: 'https://www.facebook.com/share/1Hjr6iVb7q/',
-    icon: faFacebookMessenger,
-    iconClass: 'text-indigo-600',
-  },
-  {
     label: 'Location',
-    value: 'Insein, Yangon, Myanmar 11011',
+    value: contactDetails.location,
     href: 'https://maps.google.com/?q=Insein,Yangon,Myanmar',
     icon: faLocationDot,
     iconClass: 'text-amber-600',
@@ -77,7 +70,7 @@ export default function Contact() {
             </span>
 
             <h2 className="mt-4 text-2xl font-bold tracking-[-0.03em] text-white md:text-3xl lg:text-4xl">
-              Start the conversation with a team that takes both business goals and UX seriously.
+              Tell us what you want to build.
             </h2>
 
             <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
@@ -92,7 +85,7 @@ export default function Contact() {
                   <FontAwesomeIcon icon={faBuilding} />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-300">Company</p>
+                  <p className="text-sm text-slate-300">Your project contact</p>
                   <p className="mt-1 text-base font-bold text-white">
                     Winter Arc Myanmar
                   </p>
@@ -101,7 +94,7 @@ export default function Contact() {
                       icon={faClock}
                       className="mt-1 text-blue-200"
                     />
-                    <span>Monday - Friday, 9:00 AM - 6:00 PM</span>
+                    <span>Monday - Friday, 9:00 AM - 6:00 PM (Myanmar Time)</span>
                   </div>
                 </div>
               </div>
@@ -141,13 +134,19 @@ export default function Contact() {
                 <p className="mt-4 text-sm font-medium text-[var(--color-muted)]">
                   {item.label}
                 </p>
-                <p className="mt-1 text-sm font-bold leading-6 text-[var(--color-ink)] md:text-base">
+                <p className="mt-1 break-words text-sm font-bold leading-6 text-[var(--color-ink)] md:text-base">
                   {item.value}
                 </p>
               </a>
             ))}
           </div>
         </div>
+        <p className="mt-8 max-w-3xl text-sm leading-7 text-[var(--color-muted)]">
+          To get started, share your goals, the features you need and your preferred timeline.
+          Please don&apos;t send passwords, financial details or patient records.
+          External contact services have their own privacy practices. Read our{' '}
+          <a href="/privacy" className="font-semibold text-[var(--color-brand-deep)] underline underline-offset-4">Privacy Policy</a>.
+        </p>
       </div>
     </section>
   )

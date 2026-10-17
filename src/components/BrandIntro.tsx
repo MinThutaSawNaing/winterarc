@@ -105,8 +105,8 @@ export default function BrandIntro() {
     // cinematic again.
     const lastSeen = readLastIntroSeen()
     if (prefersReducedMotion || !isIntroDue(lastSeen)) {
-      setVisible(false)
-      return
+      const frame = window.requestAnimationFrame(() => setVisible(false))
+      return () => window.cancelAnimationFrame(frame)
     }
 
     // Record that the intro is showing now, so further visits inside this

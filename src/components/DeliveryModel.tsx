@@ -23,7 +23,7 @@ const deliveryTracks = [
 export default function DeliveryModel() {
   return (
     <section
-      id="delivery-model"
+      id="delivery"
       data-snow-surface="dark"
       className="section-shell bg-[var(--color-panel-dark)] py-20 text-white md:py-28"
     >
