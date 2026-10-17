@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import createGlobe from 'cobe'
 import { useReducedMotion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import type { Locale } from '@/lib/i18n'
 import './customer-showcase.css'
 
 type Rgb = [number, number, number]
@@ -31,6 +32,7 @@ function hexToRgbNormalized(hex: string): Rgb {
 }
 
 interface SpinningGlobeProps {
+  locale?: Locale
   className?: string
   theta?: number
   scale?: number
@@ -48,6 +50,7 @@ const MYANMAR_MARKER = {
 }
 
 export default function SpinningGlobe({
+  locale = 'en',
   className,
   theta = 0.25,
   scale = 1.1,
@@ -212,9 +215,9 @@ export default function SpinningGlobe({
     <div
       className={cn('customer-globe-shell', className)}
       role="group"
-      aria-label="Interactive globe showing Winter Arc Myanmar global reach"
+      aria-label={locale === 'my' ? 'Winter Arc Myanmar ၏ နိုင်ငံတကာချိတ်ဆက်မှုကို ပြသသည့် လှည့်ကြည့်နိုင်သော ကမ္ဘာလုံး' : 'Interactive globe showing Winter Arc Myanmar global reach'}
     >
-      <p className="customer-globe__hint">Drag to explore</p>
+      <p className="customer-globe__hint">{locale === 'my' ? 'ဆွဲရွှေ့၍ လေ့လာကြည့်ပါ' : 'Drag to explore'}</p>
 
       <div
         ref={shellRef}
@@ -223,14 +226,14 @@ export default function SpinningGlobe({
         <canvas
           ref={canvasRef}
           className="customer-globe__canvas"
-          aria-label="Rotating globe with Myanmar highlighted"
+          aria-label={locale === 'my' ? 'မြန်မာနိုင်ငံကို အမှတ်အသားပြထားသော လှည့်ပတ်နေသည့် ကမ္ဘာလုံး' : 'Rotating globe with Myanmar highlighted'}
         />
       </div>
 
       <div className="customer-globe__info">
-        <p className="customer-globe__eyebrow">Global Network</p>
+        <p className="customer-globe__eyebrow">{locale === 'my' ? 'နိုင်ငံတကာ ကွန်ရက်' : 'Global Network'}</p>
         <p className="customer-globe__title">
-          Myanmar-based teams serving partners worldwide
+          {locale === 'my' ? 'ကမ္ဘာတစ်ဝန်းရှိ မိတ်ဖက်များကို ဝန်ဆောင်မှုပေးသည့် မြန်မာနိုင်ငံအခြေစိုက်အဖွဲ့များ' : 'Myanmar-based teams serving partners worldwide'}
         </p>
       </div>
     </div>

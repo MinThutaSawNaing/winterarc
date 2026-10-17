@@ -11,6 +11,7 @@ import {
   faWhatsapp,
 } from '@fortawesome/free-brands-svg-icons'
 import { contactDetails } from '@/lib/site'
+import type { Locale } from '@/lib/i18n'
 
 const contactMethods = [
   {
@@ -56,7 +57,21 @@ const conversationPoints = [
   'The most practical path from idea to launch',
 ]
 
-export default function Contact() {
+export default function Contact({ locale = 'en' }: { locale?: Locale }) {
+  const my = locale === 'my'
+  const methods = contactMethods.map((method) => ({
+    ...method,
+    label: my ? ({ Email: 'အီးမေးလ်', Phone: 'ဖုန်း', Location: 'တည်နေရာ' }[method.label] ?? method.label) : method.label,
+    value: my && method.label === 'Location' ? 'အင်းစိန်၊ ရန်ကုန်၊ မြန်မာ 11011' : method.value,
+    href: my && method.label === 'Email'
+      ? `mailto:${contactDetails.email}?subject=${encodeURIComponent('ပရောဂျက်အကြောင်း စုံစမ်းမေးမြန်းခြင်း')}`
+      : method.href,
+  }))
+  const points = my ? [
+    'သင့်လုပ်ငန်းရည်မှန်းချက်များနှင့် အသုံးပြုသူလိုအပ်ချက်များ',
+    'အချိန်ဇယား၊ လုပ်ငန်းအတိုင်းအတာနှင့် အကောင်အထည်ဖော်မှုဆိုင်ရာ အန္တရာယ်များ',
+    'စိတ်ကူးမှ လက်တွေ့စတင်အသုံးပြုနိုင်သည်အထိ လက်တွေ့အကျဆုံးနည်းလမ်း',
+  ] : conversationPoints
   return (
     <section
       id="contact"
@@ -66,17 +81,15 @@ export default function Contact() {
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div data-snow-surface="dark" className="panel-card-dark rounded-2xl p-6 sm:p-8">
             <span className="inline-flex rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-blue-100">
-              Contact
+              {my ? 'ဆက်သွယ်ရန်' : 'Contact'}
             </span>
 
             <h2 className="mt-4 text-2xl font-bold tracking-[-0.03em] text-white md:text-3xl lg:text-4xl">
-              Tell us what you want to build.
+              {my ? 'သင်ဖန်တီးလိုသည့်အရာကို ပြောပြပါ။' : 'Tell us what you want to build.'}
             </h2>
 
             <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
-              Reach out for project inquiries, product planning, redesign work,
-              or support discussions. We aim to make the next step feel clear,
-              practical, and easy to act on.
+              {my ? 'ပရောဂျက်စုံစမ်းမေးမြန်းမှု၊ ထုတ်ကုန်စီမံကိန်းရေးဆွဲမှု၊ ဒီဇိုင်းပြန်လည်ရေးဆွဲမှု သို့မဟုတ် နည်းပညာပံ့ပိုးမှုတို့အတွက် ဆက်သွယ်နိုင်ပါသည်။ နောက်တစ်ဆင့်တွင် လုပ်ဆောင်ရမည့်အရာများ ရှင်းလင်းပြီး လက်တွေ့လုပ်ဆောင်ရလွယ်ကူစေရန် ကျွန်ုပ်တို့ ကူညီပေးပါမည်။' : 'Reach out for project inquiries, product planning, redesign work, or support discussions. We aim to make the next step feel clear, practical, and easy to act on.'}
             </p>
 
             <div className="mt-8 rounded-xl border border-white/8 bg-white/[0.04] p-6">
@@ -85,7 +98,7 @@ export default function Contact() {
                   <FontAwesomeIcon icon={faBuilding} />
                 </div>
                 <div>
-                  <p className="text-sm text-slate-300">Your project contact</p>
+                  <p className="text-sm text-slate-300">{my ? 'သင့်ပရောဂျက်အတွက် ဆက်သွယ်ရန်' : 'Your project contact'}</p>
                   <p className="mt-1 text-base font-bold text-white">
                     Winter Arc Myanmar
                   </p>
@@ -94,7 +107,7 @@ export default function Contact() {
                       icon={faClock}
                       className="mt-1 text-blue-200"
                     />
-                    <span>Monday - Friday, 9:00 AM - 6:00 PM (Myanmar Time)</span>
+                    <span>{my ? 'တနင်္လာ - သောကြာ၊ နံနက် ၉:၀၀ - ညနေ ၆:၀၀ (မြန်မာစံတော်ချိန်)' : 'Monday - Friday, 9:00 AM - 6:00 PM (Myanmar Time)'}</span>
                   </div>
                 </div>
               </div>
@@ -102,10 +115,10 @@ export default function Contact() {
 
             <div className="mt-6">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-200/70">
-                A good first conversation covers
+                {my ? 'ပထမဆုံး ဆွေးနွေးသင့်သည့်အကြောင်းအရာများ' : 'A good first conversation covers'}
               </p>
               <div className="mt-4 grid gap-3">
-                {conversationPoints.map((item) => (
+                {points.map((item) => (
                   <div
                     key={item}
                     className="rounded-lg border border-white/8 bg-white/[0.04] px-4 py-3 text-sm font-medium text-slate-100"
@@ -118,7 +131,7 @@ export default function Contact() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            {contactMethods.map((item) => (
+            {methods.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
@@ -142,10 +155,8 @@ export default function Contact() {
           </div>
         </div>
         <p className="mt-8 max-w-3xl text-sm leading-7 text-[var(--color-muted)]">
-          To get started, share your goals, the features you need and your preferred timeline.
-          Please don&apos;t send passwords, financial details or patient records.
-          External contact services have their own privacy practices. Read our{' '}
-          <a href="/privacy" className="font-semibold text-[var(--color-brand-deep)] underline underline-offset-4">Privacy Policy</a>.
+          {my ? 'စတင်ရန် သင့်ရည်မှန်းချက်များ၊ လိုအပ်သည့်လုပ်ဆောင်ချက်များနှင့် မျှော်မှန်းအချိန်ဇယားကို မျှဝေပါ။ စကားဝှက်များ၊ ငွေကြေးအချက်အလက်များ သို့မဟုတ် လူနာမှတ်တမ်းများ မပို့ပါနှင့်။ ပြင်ပဆက်သွယ်ရေးဝန်ဆောင်မှုများတွင် သီးခြား ကိုယ်ရေးအချက်အလက်ဆိုင်ရာ လုပ်ထုံးလုပ်နည်းများ ရှိပါသည်။ ကျွန်ုပ်တို့၏ ' : "To get started, share your goals, the features you need and your preferred timeline. Please don't send passwords, financial details or patient records. External contact services have their own privacy practices. Read our "}
+          <a href={`/${locale}/privacy`} className="font-semibold text-[var(--color-brand-deep)] underline underline-offset-4">{my ? 'ကိုယ်ရေးအချက်အလက်မူဝါဒ' : 'Privacy Policy'}</a>{my ? 'ကို ဖတ်ရှုပါ။' : '.'}
         </p>
       </div>
     </section>

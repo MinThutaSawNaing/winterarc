@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { localizedPath, type Locale } from '@/lib/i18n'
 import {
   faCloud,
   faGear,
@@ -41,7 +42,15 @@ const services = [
   },
 ]
 
-export default function Services() {
+export default function Services({ locale = 'en' }: { locale?: Locale }) {
+  const my = locale === 'my'
+  const translations = [
+    { title: 'ဝက်ဘ်ပလက်ဖောင်းများ', description: 'လုပ်ငန်းမိတ်ဆက်ဝက်ဘ်ဆိုက်များ၊ ပေါ်တယ်များ၊ စီမံခန့်ခွဲမှုမျက်နှာပြင်များနှင့် စိတ်ကြိုက်ဝက်ဘ်အက်ပ်များကို ရှင်းလင်းမှု၊ မြန်ဆန်မှုနှင့် ထိန်းသိမ်းရလွယ်ကူမှုအတွက် ဒီဇိုင်းရေးဆွဲပေးပါသည်။', outcome: 'အမှတ်တံဆိပ်ပုံရိပ်သစ် ဖန်တီးခြင်း၊ ဝန်ဆောင်မှုအသစ် မိတ်ဆက်ခြင်းနှင့် လုပ်ငန်းအခြေအနေကို ရှင်းလင်းစွာ မြင်တွေ့နိုင်ရေးအတွက် သင့်လျော်ပါသည်။' },
+    { title: 'မိုဘိုင်းအက်ပ်များ', description: 'လက်တွေ့အသုံးပြုသူများ၏ လိုအပ်ချက်ကို အခြေခံသည့် ဖြန့်ချိရေးအစီအစဉ်၊ လက်တွေ့ကျသော နည်းပညာဖွဲ့စည်းပုံနှင့် သပ်ရပ်သော အပြန်အလှန်အသုံးပြုမှုဒီဇိုင်းတို့ ပါဝင်သည့် မိုဘိုင်းစနစ်မျိုးစုံတွင် အသုံးပြုနိုင်သော အက်ပ်များ။', outcome: 'ဖောက်သည်ဝန်ဆောင်မှုအသစ် သို့မဟုတ် ကွင်းဆင်းလုပ်ငန်းသုံး ကိရိယာများ စတင်မည့်အဖွဲ့များအတွက် သင့်လျော်ပါသည်။' },
+    { title: 'ကလောက်စနစ် အကောင်အထည်ဖော်ရေး', description: 'ယုံကြည်စိတ်ချရသော စတင်အသုံးပြုမှုနှင့် ရေရှည်တိုးတက်မှုကို ပံ့ပိုးပေးသည့် အခြေခံစနစ် စီမံခြင်း၊ ဆော့ဖ်ဝဲဖြန့်ချိရေး လုပ်ငန်းစဉ်များနှင့် လိုအပ်သလို တိုးချဲ့နိုင်သော ဆာဗာဝန်ဆောင်မှုပုံစံများ။', outcome: 'စနစ်မပြတ်တောက်ရေး၊ ယုံကြည်စိတ်ချစွာ ဖြန့်ချိနိုင်ရေးနှင့် နောင်တိုးချဲ့နိုင်ရေးကို အစောပိုင်းကတည်းက ဦးစားပေးလိုသည့်အခါ အသုံးဝင်ပါသည်။' },
+    { title: 'စိတ်ကြိုက်လုပ်ငန်းစနစ်များ', description: 'သင့်လုပ်ငန်းစဉ်များ၊ အစီရင်ခံစာလိုအပ်ချက်များ၊ အခြားစနစ်များနှင့် ချိတ်ဆက်မှု၊ အဖွဲ့၏ လက်ရှိလုပ်ကိုင်ပုံတို့နှင့် ကိုက်ညီအောင် ဖန်တီးထားသော လုပ်ငန်းတွင်းသုံးဆော့ဖ်ဝဲ။', outcome: 'မလိုအပ်သော ရှုပ်ထွေးမှုများ မတိုးစေဘဲ လက်ဖြင့်လုပ်ဆောင်နေရသည့် လုပ်ငန်းစဉ်များကို ဒစ်ဂျစ်တယ်စနစ်သို့ ပြောင်းလဲရန် သင့်လျော်ပါသည်။' },
+  ]
+  const localizedServices = services.map((service, index) => my ? { ...service, ...translations[index] } : service)
   return (
     <section
       id="services"
@@ -50,26 +59,26 @@ export default function Services() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
           <div>
-            <span className="section-label">Services</span>
+            <span className="section-label">{my ? 'ဝန်ဆောင်မှုများ' : 'Services'}</span>
             <h2 className="mt-4 text-2xl font-bold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl lg:text-4xl">
-              Capabilities that deliver sharper UX and more dependable execution.
+              {my ? 'ပိုမိုကောင်းမွန်သော အသုံးပြုမှုအတွေ့အကြုံနှင့် ယုံကြည်စိတ်ချရသော အကောင်အထည်ဖော်မှုကို ပေးစွမ်းနိုင်သည့် စွမ်းရည်များ။' : 'Capabilities that deliver sharper UX and more dependable execution.'}
             </h2>
           </div>
 
           <div className="panel-card rounded-xl p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-brand-deep)]">
-              Engagement approach
+              {my ? 'ပူးပေါင်းဆောင်ရွက်ပုံ' : 'Engagement approach'}
             </p>
             <p className="mt-3 text-sm leading-7 text-[var(--color-muted)] md:text-base">
-              We help teams move from fragmented requirements and unclear interfaces
+              {my ? 'ပြန့်ကျဲနေသော လိုအပ်ချက်များနှင့် မရှင်းလင်းသော အသုံးပြုသူမျက်နှာပြင်များမှ သေချာစီစဉ်ထားပြီး တိုးချဲ့နိုင်ကာ လုပ်ငန်းကို ကောင်းစွာကိုယ်စားပြုနိုင်သော ဆော့ဖ်ဝဲဆီသို့ ကူးပြောင်းနိုင်ရန် အဖွဲ့များကို ကူညီပေးပါသည်။' : <>We help teams move from fragmented requirements and unclear interfaces
               toward software that feels deliberate, scalable, and ready to represent
-              the business well.
+              the business well.</>}
             </p>
           </div>
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {services.map((service) => (
+          {localizedServices.map((service) => (
             <article
               key={service.title}
               className="panel-card group rounded-xl p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-elevated)]"
@@ -90,8 +99,8 @@ export default function Services() {
               <p className="mt-4 text-sm font-medium leading-7 text-[var(--color-ink)]">
                 {service.outcome}
               </p>
-              <a href={`/services/${service.slug}`} className="mt-5 inline-flex min-h-11 items-center gap-2 rounded font-semibold text-[var(--color-brand-deep)] underline underline-offset-4">
-                Explore {service.title.toLowerCase()} <span aria-hidden="true">→</span>
+              <a href={localizedPath(locale, `/services/${service.slug}`)} className="mt-5 inline-flex min-h-11 items-center gap-2 rounded font-semibold text-[var(--color-brand-deep)] underline underline-offset-4">
+                {my ? `${service.title} အကြောင်း လေ့လာရန်` : `Explore ${service.title.toLowerCase()}`} <span aria-hidden="true">→</span>
               </a>
             </article>
           ))}

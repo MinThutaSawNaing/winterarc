@@ -5,10 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faPhone, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { contactDetails } from '@/lib/site'
+import type { Locale } from '@/lib/i18n'
 
 interface ContactModalProps {
   open: boolean
   onClose: () => void
+  locale?: Locale
 }
 
 const contactOptions = [
@@ -38,7 +40,20 @@ const contactOptions = [
   },
 ]
 
-export default function ContactModal({ open, onClose }: ContactModalProps) {
+export default function ContactModal({ open, onClose, locale = 'en' }: ContactModalProps) {
+  const my = locale === 'my'
+  const options = contactOptions.map((option) => ({
+    ...option,
+    label: my ? ({ Call: 'ဖုန်းခေါ်ရန်', Email: 'အီးမေးလ်' }[option.label] ?? option.label) : option.label,
+    description: my ? ({
+      Call: 'ကျွန်ုပ်တို့အဖွဲ့နှင့် တိုက်ရိုက်ပြောဆိုပါ',
+      Email: 'အသေးစိတ်အချက်အလက်များကို စာဖြင့် ပို့ပါ',
+      WhatsApp: 'ချက်ချင်း စကားပြောရန် ဆက်သွယ်ပါ',
+    }[option.label] ?? option.description) : option.description,
+    href: my && option.label === 'Email'
+      ? `mailto:${contactDetails.email}?subject=${encodeURIComponent('ဝက်ဘ်ဆိုက်မှ စုံစမ်းမေးမြန်းခြင်း')}&body=${encodeURIComponent('မင်္ဂလာပါ Winter Arc Myanmar၊')}`
+      : option.href,
+  }))
   const dialogRef = useRef<HTMLDialogElement>(null)
 
   useEffect(() => {
@@ -79,26 +94,26 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close contact dialog"
+          aria-label={my ? 'ဆက်သွယ်ရန်ဝင်းဒိုးကို ပိတ်ရန်' : 'Close contact dialog'}
           className="absolute right-4 top-4 rounded-lg border border-white/10 bg-white/[0.06] p-2 text-slate-300 transition-colors hover:bg-white/[0.12] hover:text-white"
         >
           <FontAwesomeIcon icon={faXmark} className="text-sm" />
         </button>
 
         <span className="inline-flex rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-blue-100">
-          Let&apos;s Talk
+          {my ? 'ဆွေးနွေးကြရအောင်' : "Let's Talk"}
         </span>
 
         <h2 id="contact-dialog-title" className="mt-4 text-xl font-bold tracking-[-0.03em] text-white sm:text-2xl">
-          Choose how you&apos;d like to reach us
+          {my ? 'ဆက်သွယ်လိုသည့်နည်းလမ်းကို ရွေးချယ်ပါ' : "Choose how you'd like to reach us"}
         </h2>
 
         <p className="mt-2 text-sm leading-7 text-slate-300">
-          Select a contact method below and we&apos;ll get back to you promptly.
+          {my ? 'အောက်ပါဆက်သွယ်ရန်နည်းလမ်းတစ်ခုကို ရွေးချယ်ပါ။ ကျွန်ုပ်တို့ အမြန်ဆုံး ပြန်လည်ဆက်သွယ်ပါမည်။' : "Select a contact method below and we'll get back to you promptly."}
         </p>
 
         <div className="mt-6 grid gap-3">
-          {contactOptions.map((option) => (
+          {options.map((option) => (
             <a
               key={option.label}
               href={option.href}
@@ -149,7 +164,7 @@ export default function ContactModal({ open, onClose }: ContactModalProps) {
         </div>
 
         <p className="mt-5 text-center text-xs text-slate-400">
-          Available Monday - Friday, 9:00 AM - 6:00 PM (Myanmar Time)
+          {my ? 'တနင်္လာ - သောကြာ၊ နံနက် ၉:၀၀ - ညနေ ၆:၀၀ (မြန်မာစံတော်ချိန်) အတွင်း ဆက်သွယ်နိုင်ပါသည်' : 'Available Monday - Friday, 9:00 AM - 6:00 PM (Myanmar Time)'}
         </p>
       </div>
     </dialog>

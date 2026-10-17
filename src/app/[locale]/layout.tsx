@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
-import { Manrope, Space_Grotesk } from 'next/font/google'
+import { Manrope, Padauk, Space_Grotesk } from 'next/font/google'
+import { notFound } from 'next/navigation'
+import { isLocale, locales, localizedSite, languageAlternates, localizedPath } from '@/lib/i18n'
 import '@/lib/fontawesome'
 import {
   googleSiteVerification,
@@ -9,7 +11,9 @@ import {
   siteTitle,
   siteUrl,
 } from '@/lib/site'
-import './globals.css'
+import '../globals.css'
+
+const burmeseFont = Padauk({ weight: ['400', '700'], subsets: ['myanmar'], variable: '--font-myanmar', display: 'swap' })
 
 const bodyFont = Manrope({
   subsets: ['latin'],
@@ -21,7 +25,7 @@ const displayFont = Space_Grotesk({
   variable: '--font-display',
 })
 
-export const metadata: Metadata = {
+const baseMetadata: Metadata = {
   metadataBase: siteUrl ? new URL(siteUrl) : undefined,
   title: siteTitle,
   description: siteDescription,
@@ -94,22 +98,44 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params
+  if (!isLocale(locale)) return {}
+  const text = localizedSite[locale]
+  return {
+    ...baseMetadata,
+    title: text.title,
+    description: text.description,
+    alternates: { canonical: `${siteUrl}${localizedPath(locale)}`, languages: languageAlternates() },
+    openGraph: { ...baseMetadata.openGraph, title: text.title, description: text.description, url: `${siteUrl}/${locale}`, locale: locale === 'my' ? 'my_MM' : 'en_US', alternateLocale: locale === 'my' ? ['en_US'] : ['my_MM'] },
+    twitter: { ...baseMetadata.twitter, title: text.title, description: text.description },
+  }
+}
+
+export default async function RootLayout({
   children,
+  params,
 }: {
   children: React.ReactNode
+  params: Promise<{ locale: string }>
 }) {
+  const { locale } = await params
+  if (!isLocale(locale)) notFound()
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
-        className={`${bodyFont.variable} ${displayFont.variable} bg-[var(--color-bg)] text-[var(--color-ink)] antialiased`}
+        className={`${bodyFont.variable} ${displayFont.variable} ${burmeseFont.variable} bg-[var(--color-bg)] text-[var(--color-ink)] antialiased`}
       >
         <div className="relative">
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--color-ink)] focus:shadow-[0_18px_40px_rgba(15,23,42,0.16)]"
           >
-            Skip to content
+            {locale === 'my' ? 'အကြောင်းအရာသို့ သွားရန်' : 'Skip to content'}
           </a>
           {children}
         </div>

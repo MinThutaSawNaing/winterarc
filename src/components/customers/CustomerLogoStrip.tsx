@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useCallback, useRef, type PointerEvent as ReactPointerEvent } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { Reveal, StaggerItem, StaggerReveal } from '@/components/Reveal'
+import type { Locale } from '@/lib/i18n'
 import './customer-showcase.css'
 
 const clients = [
@@ -59,7 +60,7 @@ const TILT_LIMIT = 7
 const FINE_POINTER = '(hover: hover) and (pointer: fine)'
 const TILE_SELECTOR = '.customer-logo-strip__tile'
 
-export default function CustomerLogoStrip() {
+export default function CustomerLogoStrip({ locale = 'en' }: { locale?: Locale }) {
   const wallRef = useRef<HTMLDivElement>(null)
   const finePointer = useRef<boolean | null>(null)
   const reduceMotion = useReducedMotion()
@@ -128,7 +129,7 @@ export default function CustomerLogoStrip() {
       onPointerCancel={releaseWall}
     >
       <Reveal>
-        <p className="customer-logo-strip__label">Trusted by</p>
+        <p className="customer-logo-strip__label">{locale === 'my' ? 'ကျွန်ုပ်တို့ကို ယုံကြည်သည့် လုပ်ငန်းများ' : 'Trusted by'}</p>
       </Reveal>
 
       <StaggerReveal
@@ -144,7 +145,7 @@ export default function CustomerLogoStrip() {
             >
               <Image
                 src={client.src}
-                alt={`${client.name} logo`}
+                alt={locale === 'my' ? `${client.name === 'Partner brand' ? 'မိတ်ဖက်အမှတ်တံဆိပ်' : client.name} လိုဂို` : `${client.name} logo`}
                 width={client.width}
                 height={client.height}
                 className="customer-logo-strip__image"
@@ -160,7 +161,7 @@ export default function CustomerLogoStrip() {
             style={{ ['--tile-order' as string]: clients.length }}
           >
             <span className="customer-logo-strip__more-count">50+</span>
-            <span className="customer-logo-strip__more-label">more clients</span>
+            <span className="customer-logo-strip__more-label">{locale === 'my' ? 'အခြားဖောက်သည်များ' : 'more clients'}</span>
           </div>
         </StaggerItem>
       </StaggerReveal>

@@ -31,7 +31,8 @@ const technologies = [
   { name: 'Laravel', icon: <SiLaravel size="1em" className="inline-block" />, color: 'text-rose-300' },
 ]
 
-export default function Technologies() {
+export default function Technologies({ locale = 'en' }) {
+  const my = locale === 'my'
   return (
     <section
       id="technologies"
@@ -43,16 +44,16 @@ export default function Technologies() {
           <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <span className="inline-flex items-center rounded-lg border border-white/[0.1] bg-white/[0.06] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-blue-100">
-                Technologies
+                {my ? 'အသုံးပြုသည့် နည်းပညာများ' : 'Technologies'}
               </span>
               <h2 className="mt-4 max-w-3xl text-2xl font-bold tracking-[-0.03em] text-white md:text-3xl">
-                Modern tools selected for stability, maintainability, and long-term growth.
+                {my ? 'တည်ငြိမ်မှု၊ ထိန်းသိမ်းရလွယ်ကူမှုနှင့် ရေရှည်တိုးတက်မှုအတွက် ရွေးချယ်ထားသည့် ခေတ်မီနည်းပညာများ။' : 'Modern tools selected for stability, maintainability, and long-term growth.'}
               </h2>
             </div>
 
             <p className="max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
-              Our stack supports fast interfaces, dependable backend workflows,
-              and cloud-ready delivery while staying pragmatic about complexity.
+              {my ? 'မလိုအပ်သော ရှုပ်ထွေးမှုများကို ရှောင်ရှားလျက် မြန်ဆန်သော အသုံးပြုသူမျက်နှာပြင်များ၊ ယုံကြည်စိတ်ချရသော နောက်ကွယ်လုပ်ငန်းစဉ်များနှင့် ကလောက်ပေါ်တွင် အသုံးပြုရန် အသင့်ဖြစ်မှုကို ကျွန်ုပ်တို့ အသုံးပြုသည့် နည်းပညာများက ပံ့ပိုးပေးပါသည်။' : <>Our stack supports fast interfaces, dependable backend workflows,
+              and cloud-ready delivery while staying pragmatic about complexity.</>}
             </p>
           </div>
 

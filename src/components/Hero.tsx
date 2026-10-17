@@ -1,5 +1,6 @@
 import CustomerHoverGallery from '@/components/customers/CustomerHoverGallery'
 import { Reveal, StaggerItem, StaggerReveal } from '@/components/Reveal'
+import type { Locale } from '@/lib/i18n'
 
 const highlights = [
   'Websites built around your customers',
@@ -14,7 +15,19 @@ const metrics = [
   { value: 'Yangon, Myanmar', label: 'Talk directly with our team' },
 ]
 
-export default function Hero() {
+export default function Hero({ locale = 'en' }: { locale?: Locale }) {
+  const my = locale === 'my'
+  const localizedHighlights = my ? [
+    'သင့်ဖောက်သည်များကို အဓိကထား တည်ဆောက်သည့် ဝက်ဘ်ဆိုက်များ',
+    'သင့်လုပ်ငန်းစဉ်နှင့် ကိုက်ညီသည့် ဆော့ဖ်ဝဲ',
+    'စိတ်ကူးမှ စတင်အသုံးပြုနိုင်သည်အထိ ရှင်းလင်းသော လမ်းကြောင်း',
+  ] : highlights
+  const localizedMetrics = my ? [
+    { value: 'ဝက်ဘ်နှင့် မိုဘိုင်း', label: 'ဖောက်သည်များအတွက် ဒစ်ဂျစ်တယ် အတွေ့အကြုံများ' },
+    { value: 'စိတ်ကြိုက်ဆော့ဖ်ဝဲ', label: 'နေ့စဉ်လုပ်ငန်းများအတွက် ကိရိယာများ' },
+    { value: 'ဒီဇိုင်းမှ လွှဲပြောင်းအပ်နှံမှုအထိ', label: 'အသုံးပြုမှုဒီဇိုင်း၊ နည်းပညာနှင့် စတင်အသုံးပြုရေး အစီအစဉ်' },
+    { value: 'ရန်ကုန်၊ မြန်မာ', label: 'ကျွန်ုပ်တို့အဖွဲ့နှင့် တိုက်ရိုက်ဆွေးနွေးပါ' },
+  ] : metrics
   return (
     <section
       id="home"
@@ -27,21 +40,21 @@ export default function Hero() {
           <div className="max-w-3xl">
             <Reveal>
               <span className="section-label">
-                Web & software development · Yangon, Myanmar
+                {my ? 'ဝက်ဘ်နှင့် ဆော့ဖ်ဝဲ ဖန်တီးရေး · ရန်ကုန်၊ မြန်မာ' : 'Web & software development · Yangon, Myanmar'}
               </span>
             </Reveal>
 
             <Reveal delay={0.06}>
               <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-[1.12] tracking-[-0.04em] text-[var(--color-ink)] sm:text-5xl lg:text-6xl">
-                Software that makes <span className="text-[var(--color-brand)]">business simpler.</span>
+                {my ? 'သင့်လုပ်ငန်းလည်ပတ်မှုကို ' : 'Software that makes '}<span className="text-[var(--color-brand)]">{my ? 'ပိုမိုလွယ်ကူစေသည့် ဆော့ဖ်ဝဲ။' : 'business simpler.'}</span>
               </h1>
             </Reveal>
 
             <Reveal delay={0.1}>
               <p className="mt-5 max-w-2xl text-sm leading-7 text-[var(--color-muted)] sm:text-base">
-                We design and develop websites, mobile apps and custom software for
+                {my ? 'မြန်မာနိုင်ငံရှိ လုပ်ငန်းများအတွက် ဝက်ဘ်ဆိုက်၊ မိုဘိုင်းအက်ပ်နှင့် စိတ်ကြိုက်ဆော့ဖ်ဝဲများကို ဒီဇိုင်းရေးဆွဲ တည်ဆောက်ပေးပါသည်။ စိတ်ကူးအသစ် သို့မဟုတ် အချိန်ကုန်စေသော လုပ်ငန်းစဉ်တစ်ခုကို သင့်အဖွဲ့နှင့် ဖောက်သည်များ ယုံကြည်စိတ်ချစွာ အသုံးပြုနိုင်သည့် ဒစ်ဂျစ်တယ်အတွေ့အကြုံအဖြစ် ပြောင်းလဲလိုက်ပါ။' : <>We design and develop websites, mobile apps and custom software for
                 businesses in Myanmar. Turn a new idea or a time-consuming workflow
-                into a digital experience your team and customers can use with confidence.
+                into a digital experience your team and customers can use with confidence.</>}
               </p>
             </Reveal>
 
@@ -51,17 +64,17 @@ export default function Hero() {
                   href="#contact"
                   className="inline-flex items-center justify-center rounded-lg bg-[var(--color-brand)] px-6 py-3 text-sm font-semibold text-white shadow-[0_1px_3px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:bg-[var(--color-brand-deep)] hover:shadow-[0_4px_6px_rgba(37,99,235,0.18)]"
                 >
-                  Discuss Your Project
+                  {my ? 'သင့်ပရောဂျက်အကြောင်း ဆွေးနွေးပါ' : 'Discuss Your Project'}
                 </a>
                 <a
                   href="#portfolio"
                   className="inline-flex items-center justify-center rounded-lg border border-[var(--color-line)] bg-white px-6 py-3 text-sm font-semibold text-[var(--color-ink)] shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:bg-[var(--color-bg-alt)]"
                 >
-                  View Our Work
+                  {my ? 'ကျွန်ုပ်တို့၏ လုပ်ဆောင်မှုများကို ကြည့်ပါ' : 'View Our Work'}
                 </a>
               </div>
               <p className="mt-4 text-xs leading-6 text-[var(--color-muted)]">
-                Tell us what you need. Scope, timeline and pricing are agreed before project work begins.
+                {my ? 'သင့်လိုအပ်ချက်ကို ပြောပြပါ။ လုပ်ငန်းမစတင်မီ လုပ်ဆောင်မည့်အတိုင်းအတာ၊ အချိန်ဇယားနှင့် ကုန်ကျစရိတ်ကို သဘောတူညီထားမည်ဖြစ်သည်။' : 'Tell us what you need. Scope, timeline and pricing are agreed before project work begins.'}
               </p>
             </Reveal>
 
@@ -69,7 +82,7 @@ export default function Hero() {
               className="mt-10 grid gap-3 text-sm text-[var(--color-ink)] sm:grid-cols-3"
               stagger={0.09}
             >
-              {highlights.map((item) => (
+              {localizedHighlights.map((item) => (
                 <StaggerItem key={item} className="panel-card rounded-xl px-5 py-5">
                   <div className="mb-3 h-1 w-10 rounded-full bg-[var(--color-brand)]" />
                   <span className="font-semibold leading-6">{item}</span>
@@ -82,16 +95,16 @@ export default function Hero() {
             <Reveal>
               <div className="mb-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-brand)]">
-                  Our Customers
+                  {my ? 'ကျွန်ုပ်တို့၏ ဖောက်သည်များ' : 'Our Customers'}
                 </p>
                 <p className="mt-2 text-base font-semibold leading-6 tracking-[-0.01em] text-[var(--color-ink)] sm:text-lg">
-                  Real partnerships across clinics, fitness, and enterprise teams.
+                  {my ? 'ဆေးခန်းများ၊ ကိုယ်ကာယလေ့ကျင့်ရေးလုပ်ငန်းများ၊ စီးပွားရေးအဖွဲ့များတို့နှင့် လက်တွေ့ပူးပေါင်းဆောင်ရွက်မှုများ။' : 'Real partnerships across clinics, fitness, and enterprise teams.'}
                 </p>
               </div>
             </Reveal>
 
             <Reveal delay={0.06} className="min-w-0">
-              <CustomerHoverGallery />
+              <CustomerHoverGallery locale={locale} />
             </Reveal>
           </div>
         </div>
@@ -101,7 +114,7 @@ export default function Hero() {
           stagger={0.08}
           delayChildren={0.06}
         >
-          {metrics.map((item) => (
+          {localizedMetrics.map((item) => (
             <StaggerItem key={item.label} className="panel-card rounded-xl px-5 py-5">
               <div className="text-lg font-bold tracking-[-0.02em] text-[var(--color-brand)] sm:text-2xl">
                 {item.value}

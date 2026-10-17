@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import { lockBodyScroll, unlockBodyScroll } from '@/lib/body-scroll-lock'
 import { useEffect } from 'react'
+import type { Locale } from '@/lib/i18n'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -73,6 +74,7 @@ interface NavItem {
 }
 
 interface MobileNavProps {
+  locale?: Locale
   open: boolean
   onClose: () => void
   navId: string
@@ -129,6 +131,7 @@ export function AnimatedMenuIcon({ open }: { open: boolean }) {
 }
 
 export default function MobileNav({
+  locale = 'en',
   open,
   onClose,
   navId,
@@ -165,7 +168,7 @@ export default function MobileNav({
       {open && (
         <motion.div
           key="mobile-nav-shell"
-          className="header-mobile-shell fixed inset-x-0 top-16 z-40 flex flex-col lg:hidden"
+          className="header-mobile-shell fixed inset-x-0 top-16 z-40 flex flex-col xl:hidden"
           style={{
             height: 'calc(100dvh - 4rem)',
             paddingBottom: 'env(safe-area-inset-bottom, 0px)',
@@ -177,7 +180,7 @@ export default function MobileNav({
         >
           <motion.button
             type="button"
-            aria-label="Close navigation menu"
+            aria-label={locale === 'my' ? 'မီနူးပိတ်ရန်' : 'Close navigation menu'}
             onClick={onClose}
             className="header-mobile-backdrop absolute inset-0 z-0"
             initial={reduceMotion ? false : 'hidden'}
@@ -188,7 +191,7 @@ export default function MobileNav({
 
           <motion.nav
             id={navId}
-            aria-label="Primary"
+            aria-label={locale === 'my' ? 'အဓိက မီနူး' : 'Primary'}
             role="dialog"
             aria-modal="true"
             className="header-mobile-panel relative z-10 mx-2 mb-2 flex min-h-0 flex-1 flex-col overflow-hidden sm:mx-3"
@@ -200,7 +203,7 @@ export default function MobileNav({
             <div className="header-mobile-panel__header flex items-center justify-between border-b border-[var(--color-line)] px-4 py-3.5">
               <div>
                 <p className="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-[var(--color-muted)]">
-                  Navigation
+                  {locale === 'my' ? 'မီနူး' : 'Navigation'}
                 </p>
                 <p className="mt-0.5 text-sm font-semibold text-[var(--color-ink)]">
                   Winter Arc Myanmar
@@ -211,7 +214,7 @@ export default function MobileNav({
                 onClick={onClose}
                 className="header-mobile-close inline-flex items-center gap-1.5 rounded-lg border border-[var(--color-line)] bg-white/80 px-3 py-2 text-xs font-semibold text-[var(--color-ink)] transition hover:bg-[var(--color-bg-alt)]"
               >
-                Close
+                {locale === 'my' ? 'ပိတ်ရန်' : 'Close'}
               </button>
             </div>
 
@@ -249,7 +252,7 @@ export default function MobileNav({
                             </span>
                             {isActive && (
                               <span className="mt-0.5 block text-[0.68rem] font-medium text-[var(--color-brand)]">
-                                Current section
+                                {locale === 'my' ? 'ယခုကြည့်နေသော အပိုင်း' : 'Current section'}
                               </span>
                             )}
                           </span>
@@ -283,7 +286,7 @@ export default function MobileNav({
               variants={footerVariants}
             >
               <p className="mb-3 text-center text-[0.68rem] font-medium uppercase tracking-[0.16em] text-[var(--color-muted)]">
-                Ready to start a project?
+                {locale === 'my' ? 'ပရောဂျက် စတင်ဖို့ အဆင်သင့်ဖြစ်ပြီလား။' : 'Ready to start a project?'}
               </p>
               <button
                 type="button"
@@ -291,7 +294,7 @@ export default function MobileNav({
                 className="header-cta w-full justify-center py-3.5 text-sm"
               >
                 <CalendarIcon />
-                Book a Call
+                {locale === 'my' ? 'ဖုန်းပြောရန် အချိန်ညှိမယ်' : 'Book a Call'}
               </button>
             </motion.div>
           </motion.nav>

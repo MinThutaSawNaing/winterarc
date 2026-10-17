@@ -11,6 +11,7 @@ import {
 } from '@/lib/loli'
 import { LOLI_COOKIE_MAX_AGE_SECONDS, LOLI_LIMIT } from '@/lib/loli-config'
 import { contactDetails } from '@/lib/site'
+import { isLocale } from '@/lib/i18n'
 
 export const runtime = 'nodejs'
 
@@ -105,14 +106,19 @@ export async function POST(request: NextRequest) {
     )
   }
 
+  const locale = payload && typeof payload === 'object' && 'locale' in payload && isLocale(payload.locale)
+    ? payload.locale
+    : 'en'
+  const my = locale === 'my'
+
   if (!payload || typeof payload !== 'object' || !('privacyAcknowledged' in payload) || payload.privacyAcknowledged !== true) {
-    return jsonResponse({ message: 'Please review the AI privacy notice and choose whether to use AI chat before sending.' }, 400)
+    return jsonResponse({ message: my ? 'စာမပို့မီ AI ဆိုင်ရာ ကိုယ်ရေးအချက်အလက်အသိပေးချက်ကို ဖတ်ရှုပြီး AI စကားပြောစနစ်ကို အသုံးပြုမည်၊ မပြုမည်ကို ရွေးချယ်ပါ။' : 'Please review the AI privacy notice and choose whether to use AI chat before sending.' }, 400)
   }
 
   const apiKey = process.env.APIFREE_API_KEY?.trim()
   const model = process.env.LOLI_MODEL?.trim()
   if (!apiKey || !model) {
-    return jsonResponse({ message: 'The AI assistant is unavailable. Please contact our team directly.' }, 503)
+    return jsonResponse({ message: my ? 'AI အကူအညီပေးစနစ်ကို အသုံးမပြုနိုင်ပါ။ ကျွန်ုပ်တို့အဖွဲ့ထံ တိုက်ရိုက်ဆက်သွယ်ပါ။' : 'The AI assistant is unavailable. Please contact our team directly.' }, 503)
   }
 
   const messages = sanitizeChatMessages(
@@ -124,7 +130,7 @@ export async function POST(request: NextRequest) {
   if (!messages.length || messages.at(-1)?.role !== 'user') {
     return jsonResponse(
       {
-        message: 'Please send at least one valid user message.',
+        message: my ? 'မှန်ကန်သောပုံစံဖြင့် အသုံးပြုသူမက်ဆေ့ချ် အနည်းဆုံးတစ်ခု ပို့ပါ။' : 'Please send at least one valid user message.',
       },
       400
     )
@@ -150,7 +156,7 @@ export async function POST(request: NextRequest) {
         messages: [
           {
             role: 'system',
-            content: buildLoliSystemPrompt(),
+            content: buildLoliSystemPrompt(locale),
           },
           ...messages,
         ],
@@ -164,7 +170,7 @@ export async function POST(request: NextRequest) {
     return jsonResponse(
       {
         message:
-          'Loli could not reach the APIFree.ai service right now. Please try again in a moment or contact us directly.',
+          my ? 'လောလောဆယ် Loli သည် APIFree.ai ဝန်ဆောင်မှုသို့ ချိတ်ဆက်မရပါ။ ခဏကြာလျှင် ပြန်ကြိုးစားပါ သို့မဟုတ် ကျွန်ုပ်တို့ထံ တိုက်ရိုက်ဆက်သွယ်ပါ။' : 'Loli could not reach the APIFree.ai service right now. Please try again in a moment or contact us directly.',
       },
       502
     )
@@ -175,7 +181,7 @@ export async function POST(request: NextRequest) {
   if (!upstreamResponse.ok) {
     return jsonResponse(
       {
-        message: 'The AI provider is unavailable. Please try again later or contact our team directly.',
+        message: my ? 'AI ဝန်ဆောင်မှုပေးသူထံ ချိတ်ဆက်မရပါ။ နောက်မှ ပြန်ကြိုးစားပါ သို့မဟုတ် ကျွန်ုပ်တို့အဖွဲ့ထံ တိုက်ရိုက်ဆက်သွယ်ပါ။' : 'The AI provider is unavailable. Please try again later or contact our team directly.',
       },
       502
     )
@@ -186,7 +192,7 @@ export async function POST(request: NextRequest) {
   if (!answer) {
     return jsonResponse(
       {
-        message: 'Loli did not return a readable response. Please try again.',
+        message: my ? 'Loli ထံမှ ဖတ်ရှုနိုင်သည့်အဖြေ မရရှိခဲ့ပါ။ ပြန်ကြိုးစားပါ။' : 'Loli did not return a readable response. Please try again.',
       },
       502
     )

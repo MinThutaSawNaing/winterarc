@@ -57,6 +57,10 @@ This is an operator verification checklist, not evidence that these checks have 
 
 ## Release evidence
 
+- [ ] Review both `/my` and `/en` with a fluent Burmese reviewer, including service scope, policy meaning, Burmese Unicode rendering, keyboard navigation, and 360px layouts. Verify every language switch keeps the corresponding route and a manual selection overrides automatic detection.
+- [ ] Confirm Netlify publishes the configured `language-redirect` edge function and exposes `NETLIFY=true` to the Next.js proxy. Test unprefixed URLs from Myanmar and another country (including a VPN), saved `site_language=en/my` preferences, browser-language fallback, and direct localized URLs. Do not mark live Geo-IP routing passed based only on mocked/local tests.
+- [ ] Confirm language negotiation uses temporary private/no-store redirects, never sets a preference cookie automatically, and does not send visitor IPs to a separate lookup provider. Review the one-year language cookie notice and resubmit the localized sitemap after deployment.
+
 - [ ] Run the established lint, TypeScript, and production build checks; record exact commands and results. Separate code failures from environment/network failures and do not mark unrun checks as passed.
 - [ ] Record the release revision, deployment URL/date, reviewer, tested browser/device coverage, provider/configuration review, and unresolved issues without including API keys or personal test content.
 - [ ] Do a final deployed smoke test of `/`, `/#contact`, `/privacy`, `/terms`, `/cookies`, the Open Graph image, robots, sitemap, and the complete opt-in/withdrawal chat flow.

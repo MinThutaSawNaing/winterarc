@@ -6,6 +6,8 @@ import '@/components/poweredByWinterArcAnimation/poweredByWinterArcAnimation.css
 import { LOLI_OPEN_EVENT } from '@/lib/loli-config'
 import ContactModal from '@/components/ContactModal'
 import MobileNav, { AnimatedMenuIcon } from '@/components/MobileNav'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
+import type { Locale } from '@/lib/i18n'
 
 const navItems = [
   { name: 'Home', href: '#home' },
@@ -32,7 +34,9 @@ function CalendarIcon() {
   )
 }
 
-export default function Header() {
+export default function Header({ locale = 'en' }: { locale?: Locale }) {
+  const my = locale === 'my'
+  const items = navItems.map((item, index) => ({ ...item, name: my ? ['ပင်မ', 'ဝန်ဆောင်မှုများ', 'ကျွန်ုပ်တို့အကြောင်း', 'လုပ်ငန်းစဉ်', 'Loli', 'ဆက်သွယ်ရန်'][index] : item.name }))
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
@@ -129,14 +133,14 @@ export default function Header() {
               Winter Arc Myanmar
             </span>
             <span className="header-brand-tagline mt-0.5 hidden truncate text-[0.62rem] font-semibold uppercase tracking-[0.2em] min-[420px]:block sm:text-[0.7rem] md:text-[0.75rem]">
-              Digital Delivery
+              {my ? 'ဒစ်ဂျစ်တယ် နည်းပညာဝန်ဆောင်မှု' : 'Digital Delivery'}
             </span>
           </div>
         </Link>
 
-        <div className="hidden min-w-0 flex-1 items-center justify-end gap-2 lg:flex xl:gap-3">
-          <nav aria-label="Primary" className="header-nav-rail min-w-0 shrink">
-            {navItems.map((item) => (
+        <div className="hidden min-w-0 flex-1 items-center justify-end gap-2 xl:flex xl:gap-3">
+          <nav aria-label={my ? 'အဓိက မီနူး' : 'Primary'} className="header-nav-rail min-w-0 shrink">
+            {items.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
@@ -156,19 +160,21 @@ export default function Header() {
 
           <button type="button" onClick={() => setContactModalOpen(true)} className="header-cta shrink-0">
             <CalendarIcon />
-            <span>Let&apos;s Talk</span>
+            <span>{my ? 'ဆွေးနွေးကြမယ်' : "Let's Talk"}</span>
           </button>
         </div>
+
+        <LanguageSwitcher locale={locale} />
 
         <button
           type="button"
           aria-controls={mobileNavId}
           aria-haspopup="dialog"
           onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className={`header-menu-toggle shrink-0 p-2.5 text-[var(--color-ink)] focus-visible:outline-none lg:hidden ${
+          className={`header-menu-toggle shrink-0 p-2.5 text-[var(--color-ink)] focus-visible:outline-none xl:hidden ${
             mobileMenuOpen ? 'header-menu-toggle--open' : ''
           }`}
-          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={my ? (mobileMenuOpen ? 'မီနူးပိတ်ရန်' : 'မီနူးဖွင့်ရန်') : (mobileMenuOpen ? 'Close menu' : 'Open menu')}
           aria-expanded={mobileMenuOpen}
         >
           <AnimatedMenuIcon open={mobileMenuOpen} />
@@ -176,10 +182,11 @@ export default function Header() {
       </div>
 
       <MobileNav
+        locale={locale}
         open={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
         navId={mobileNavId}
-        navItems={navItems}
+        navItems={items}
         activeSection={activeSection}
         onNavigate={scrollToSection}
         onBookCall={() => {
@@ -188,7 +195,7 @@ export default function Header() {
         }}
       />
 
-      <ContactModal open={contactModalOpen} onClose={() => setContactModalOpen(false)} />
+      <ContactModal locale={locale} open={contactModalOpen} onClose={() => setContactModalOpen(false)} />
     </header>
   )
 }

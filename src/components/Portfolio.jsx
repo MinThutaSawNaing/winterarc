@@ -30,7 +30,32 @@ const projects = [
   },
 ]
 
-export default function Portfolio() {
+export default function Portfolio({ locale = 'en' }) {
+  const my = locale === 'my'
+  const translations = [
+    {
+      title: 'ဝန်ဆောင်မှုအဖြစ် ပေးအပ်သည့် AI (AIaaS)',
+      category: 'AI ဖြေရှင်းနည်း',
+      description: 'အသုံးပြုမှုအတွေ့အကြုံကို ရှင်းလင်းပြီး ယုံကြည်စိတ်ချရစေသည့်အပြင် ထပ်တလဲလဲလုပ်ရသော အလုပ်များကို လျှော့ချပေးရန် ဖန်တီးထားသည့် အလိုအလျောက်စနစ်နှင့် ဉာဏ်ရည်တုအခြေပြု လုပ်ငန်းစဉ်များ။',
+      focus: 'လုပ်ငန်းထိရောက်မှုနှင့် ဆုံးဖြတ်ချက်ချရာတွင် ပိုမိုကောင်းမွန်သော အထောက်အကူရရှိရေးအတွက် ဒီဇိုင်းရေးဆွဲထားပါသည်။',
+      tech: ['Python', 'AWS', 'API ချိတ်ဆက်မှု'],
+    },
+    {
+      title: 'အွန်လိုင်းဆော့ဖ်ဝဲဝန်ဆောင်မှု (SaaS)',
+      category: 'ဆော့ဖ်ဝဲပလက်ဖောင်း',
+      description: 'စနစ်တကျ ဖွဲ့စည်းထားသော စီမံခန့်ခွဲမှုမျက်နှာပြင်များ၊ အကောင့်စီမံမှုနှင့် တိုးတက်မှုကို ပံ့ပိုးသည့် အသုံးပြုမှုဒီဇိုင်းစနစ်တို့ ပါဝင်သည့် အခကြေးငွေပေးသွင်း အသုံးပြုနိုင်သော ထုတ်ကုန်အခြေခံစနစ်များ။',
+      focus: 'အသုံးပြုသူအသစ်များကို စနစ်တကျ ကြိုဆိုလမ်းညွှန်နိုင်ရန်နှင့် တိုးချဲ့နိုင်သော ထုတ်ကုန်များ ပေးအပ်နိုင်ရန် ဒီဇိုင်းရေးဆွဲထားပါသည်။',
+      tech: ['Next.js', 'Node.js', 'Docker'],
+    },
+    {
+      title: 'ကလောက်စနစ်သို့ ပြောင်းရွှေ့ရေး ပလက်ဖောင်း',
+      category: 'ကလောက် ဖြေရှင်းနည်း',
+      description: 'နည်းပညာပြောင်းလဲမှုကို ထိန်းချုပ်နိုင်ပြီး ရှင်းလင်းမြင်သာကာ စီမံရလွယ်ကူစေရန် ဒီဇိုင်းရေးဆွဲထားသည့် ခေတ်မီစနစ်သို့ အဆင့်မြှင့်တင်ရေး လုပ်ငန်းစဉ်များနှင့် ကလောက်အစီအစဉ်များ။',
+      focus: 'ရှုပ်ထွေးသော စနစ်ပြောင်းရွှေ့မှုများကို ရှင်းလင်းစွာ စီမံနိုင်ရန်နှင့် အနှောင့်အယှက်များ ရှောင်ရှားနိုင်ရန် ဒီဇိုင်းရေးဆွဲထားပါသည်။',
+      tech: ['AWS', 'Docker', 'ကလောက်စနစ် ဖွဲ့စည်းပုံ'],
+    },
+  ]
+  const localizedProjects = projects.map((project, index) => my ? { ...project, ...translations[index] } : project)
   return (
     <section
       id="portfolio"
@@ -38,18 +63,18 @@ export default function Portfolio() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-5 md:max-w-3xl">
-          <span className="section-label">Solution Examples</span>
+          <span className="section-label">{my ? 'ဖြေရှင်းနည်း နမူနာများ' : 'Solution Examples'}</span>
           <h2 className="text-2xl font-bold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl lg:text-4xl">
-            Digital products shaped around business clarity, not just feature delivery.
+            {my ? 'လုပ်ဆောင်ချက်များ ပေးအပ်ရုံမျှ မဟုတ်ဘဲ လုပ်ငန်းလိုအပ်ချက်ကို ရှင်းလင်းစွာ အခြေခံတည်ဆောက်ထားသည့် ဒစ်ဂျစ်တယ်ထုတ်ကုန်များ။' : 'Digital products shaped around business clarity, not just feature delivery.'}
           </h2>
           <p className="text-sm leading-7 text-[var(--color-muted)] md:text-base">
-            Illustrative solution areas, not published client case studies. Talk to us
-            about relevant demonstrations and the work we can share with permission.
+            {my ? 'ဤအရာများသည် ဖြေရှင်းနည်းနယ်ပယ် နမူနာများသာဖြစ်ပြီး ဖောက်သည်ပရောဂျက်များအကြောင်း ထုတ်ပြန်ထားသော လေ့လာတင်ပြချက်များ မဟုတ်ပါ။ သက်ဆိုင်ရာ သရုပ်ပြမှုများနှင့် ခွင့်ပြုချက်ဖြင့် မျှဝေနိုင်သော လုပ်ဆောင်မှုများအကြောင်း ကျွန်ုပ်တို့နှင့် ဆွေးနွေးပါ။' : <>Illustrative solution areas, not published client case studies. Talk to us
+            about relevant demonstrations and the work we can share with permission.</>}
           </p>
         </div>
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {projects.map((project) => (
+          {localizedProjects.map((project) => (
             <article
               key={project.title}
               className="panel-card overflow-hidden rounded-xl transition hover:-translate-y-1 hover:shadow-[var(--shadow-elevated)]"

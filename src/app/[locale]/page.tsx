@@ -12,20 +12,23 @@ import LoliAssistant from '@/components/LoliAssistant'
 import ScrollToTop from '@/components/ScrollToTop'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
+import { isLocale, localizedSite } from '@/lib/i18n'
+import { notFound } from 'next/navigation'
 import {
   contactDetails,
-  siteDescription,
   siteName,
   siteUrl,
 } from '@/lib/site'
 
-export default function Home() {
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  if (!isLocale(locale)) notFound()
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     '@id': `${siteUrl}/#organization`,
     name: siteName,
-    description: siteDescription,
+    description: localizedSite[locale].description,
     areaServed: 'Myanmar',
     serviceType: [
       'Freelance software services',
@@ -62,14 +65,14 @@ export default function Home() {
     '@id': `${siteUrl}/#website`,
     publisher: { '@id': `${siteUrl}/#organization` },
     name: siteName,
-    description: siteDescription,
-    url: siteUrl || undefined,
-    inLanguage: 'en',
+    description: localizedSite[locale].description,
+    url: `${siteUrl}/${locale}`,
+    inLanguage: locale,
   }
 
   return (
     <>
-      <Header />
+      <Header locale={locale} />
       <main
         id="main-content"
         className="relative min-h-screen overflow-x-clip bg-[var(--color-bg)] text-[var(--color-ink)]"
@@ -81,20 +84,20 @@ export default function Home() {
             __html: JSON.stringify([organizationSchema, websiteSchema]).replace(/</g, '\\u003c'),
           }}
         />
-        <Hero />
-        <Customers />
-        <DeliveryModel />
-        <Services />
-        <About />
+        <Hero locale={locale} />
+        <Customers locale={locale} />
+        <DeliveryModel locale={locale} />
+        <Services locale={locale} />
+        <About locale={locale} />
         {/* <TeamMembers /> */}
-        <Technologies />
-        <Portfolio />
-        <ProjectFaq />
-        <Contact />
-        <LoliAssistant />
+        <Technologies locale={locale} />
+        <Portfolio locale={locale} />
+        <ProjectFaq locale={locale} />
+        <Contact locale={locale} />
+        <LoliAssistant locale={locale} />
       </main>
-      <Footer />
-      <ScrollToTop />
+      <Footer locale={locale} />
+      <ScrollToTop locale={locale} />
     </>
   )
 }

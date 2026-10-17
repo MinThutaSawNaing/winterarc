@@ -3,3 +3,7 @@
 
 [build.environment]
   SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_SITE_URL"
+
+[[edge_functions]]
+  function = "language-redirect"
+  pattern = "^/(?:$|services(?:/.*)?$|privacy/?$|terms/?$|cookies/?$)"

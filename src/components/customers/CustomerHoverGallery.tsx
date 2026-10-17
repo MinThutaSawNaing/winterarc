@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Image from 'next/image'
+import { localizedPath, type Locale } from '@/lib/i18n'
 import './customer-showcase.css'
 
 const defaultCustomerSlides: Slide[] = [
@@ -42,6 +43,17 @@ const defaultCustomerSlides: Slide[] = [
   },
 ]
 
+const burmeseCustomerSlides: Slide[] = defaultCustomerSlides.map((slide, index) => ({
+  ...slide,
+  ...[
+    { alt: 'My Dentist Premium Dental Center နှင့် Winter Arc Myanmar တို့၏ ပူးပေါင်းဆောင်ရွက်မှု', caption: 'အဆင့်မြင့် သွားကျန်းမာရေးစင်တာ' },
+    { alt: 'ဖောက်သည်နှင့် မိတ်ဖက်ပူးပေါင်းမှုအထိမ်းအမှတ် လက်ဆွဲနှုတ်ဆက်ခြင်း', title: 'ဖောက်သည်၏ အောင်မြင်မှု', caption: 'လုပ်ငန်းအကောင်အထည်ဖော်ရေးအတွက် ယုံကြည်စိတ်ချရသော မိတ်ဖက်' },
+    { alt: 'Unity Fitness နှင့် Winter Arc Myanmar တို့၏ အသိအမှတ်ပြုလက်မှတ် ပေးအပ်ခြင်း', caption: 'လုပ်ငန်းအပ်နှံမှု အသိအမှတ်ပြုလက်မှတ်' },
+    { alt: 'Leox Group of Companies ရုံးတွင် Winter Arc Myanmar နှင့် မိတ်ဖက်ပူးပေါင်းမှုအထိမ်းအမှတ် လက်ဆွဲနှုတ်ဆက်ခြင်း', caption: 'မိတ်ဖက်ပူးပေါင်းမှုအထိမ်းအမှတ် လက်ဆွဲနှုတ်ဆက်ခြင်း' },
+    { alt: 'ACT Dental Center ဆေးခန်းသို့ Winter Arc Myanmar ၏ မိတ်ဖက်တွေ့ဆုံရေး ခရီးစဉ်', caption: 'မိတ်ဖက်ဆေးခန်းသို့ သွားရောက်တွေ့ဆုံခြင်း' },
+  ][index],
+}))
+
 export interface Slide {
   id: string | number
   src: string
@@ -52,6 +64,7 @@ export interface Slide {
 }
 
 interface ThreeDImageCarouselProps {
+  locale?: Locale
   slides?: Slide[]
   itemCount?: 3 | 5
   autoplay?: boolean
@@ -63,7 +76,8 @@ interface ThreeDImageCarouselProps {
 }
 
 export function ThreeDImageCarousel({
-  slides = defaultCustomerSlides,
+  locale = 'en',
+  slides,
   itemCount = 5,
   autoplay = false,
   delay = 3,
@@ -77,7 +91,7 @@ export function ThreeDImageCarousel({
   const containerRef = useRef<HTMLDivElement>(null)
   const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  const safeSlides = slides ?? defaultCustomerSlides
+  const safeSlides = slides ?? (locale === 'my' ? burmeseCustomerSlides : defaultCustomerSlides)
   const totalSlides = safeSlides.length
   const visibleCount = Math.min(itemCount, Math.max(totalSlides, 1))
 
@@ -168,7 +182,7 @@ export function ThreeDImageCarousel({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       role="region"
-      aria-label="Customer partner gallery"
+      aria-label={locale === 'my' ? 'ဖောက်သည် မိတ်ဖက်များ၏ ဓာတ်ပုံပြခန်း' : 'Customer partner gallery'}
       tabIndex={0}
     >
       <div className="cascade-slider_slides">
@@ -184,10 +198,10 @@ export function ThreeDImageCarousel({
             >
               <div className="cascade-slider_image-wrapper">
                 {slide.href ? (
-                  <a href={slide.href}>
+                  <a href={slide.href.startsWith('/') && !slide.href.startsWith('//') ? localizedPath(locale, slide.href) : slide.href}>
                     <Image
                       src={slide.src}
-                      alt={slide.alt || `Slide ${index + 1}`}
+                      alt={slide.alt || (locale === 'my' ? `ပုံ ${index + 1}` : `Slide ${index + 1}`)}
                       fill
                       className="cascade-slider_image"
                       priority={isCenter}
@@ -196,14 +210,14 @@ export function ThreeDImageCarousel({
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement
                         target.onerror = null
-                        target.src = `https://placehold.co/350x200/4F46E5/ffffff?text=Slide%20${index + 1}`
+                        target.src = `https://placehold.co/350x200/4F46E5/ffffff?text=${encodeURIComponent(locale === 'my' ? `ပုံ ${index + 1}` : `Slide ${index + 1}`)}`
                       }}
                     />
                   </a>
                 ) : (
                   <Image
                     src={slide.src}
-                    alt={slide.alt || `Slide ${index + 1}`}
+                    alt={slide.alt || (locale === 'my' ? `ပုံ ${index + 1}` : `Slide ${index + 1}`)}
                     fill
                     className="cascade-slider_image"
                     priority={isCenter}
@@ -212,7 +226,7 @@ export function ThreeDImageCarousel({
                     onError={(e) => {
                       const target = e.currentTarget as HTMLImageElement
                       target.onerror = null
-                      target.src = `https://placehold.co/350x200/4F46E5/ffffff?text=Slide%20${index + 1}`
+                      target.src = `https://placehold.co/350x200/4F46E5/ffffff?text=${encodeURIComponent(locale === 'my' ? `ပုံ ${index + 1}` : `Slide ${index + 1}`)}`
                     }}
                   />
                 )}
@@ -233,7 +247,7 @@ export function ThreeDImageCarousel({
           <button
             className="cascade-slider_arrow cascade-slider_arrow-left"
             onClick={(e) => { e.stopPropagation(); goToPrev() }}
-            aria-label="Previous slide"
+            aria-label={locale === 'my' ? 'ယခင်ပုံ' : 'Previous slide'}
             type="button"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -243,7 +257,7 @@ export function ThreeDImageCarousel({
           <button
             className="cascade-slider_arrow cascade-slider_arrow-right"
             onClick={(e) => { e.stopPropagation(); goToNext() }}
-            aria-label="Next slide"
+            aria-label={locale === 'my' ? 'နောက်ပုံ' : 'Next slide'}
             type="button"
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -264,7 +278,7 @@ export function ThreeDImageCarousel({
               activeIndex === idx ? 'cascade-slider_dot--active' : ''
             }`}
             onClick={() => goToSlide(idx)}
-            aria-label={`Go to slide ${idx + 1}`}
+            aria-label={locale === 'my' ? `ပုံ ${idx + 1} သို့ သွားရန်` : `Go to slide ${idx + 1}`}
           />
         ))}
       </div>
@@ -277,6 +291,7 @@ type CustomerHoverGalleryProps = Omit<ThreeDImageCarouselProps, 'slides'> & {
 }
 
 export default function CustomerHoverGallery({
+  locale = 'en',
   slides,
   itemCount = 3,
   className = '',
@@ -289,7 +304,8 @@ export default function CustomerHoverGallery({
 
   return (
     <ThreeDImageCarousel
-      slides={slides ?? defaultCustomerSlides}
+      locale={locale}
+      slides={slides}
       itemCount={itemCount}
       className={className}
       style={style}

@@ -53,10 +53,21 @@ For live HTTP regression tests, start the production server with `npm run start 
 
 Read `docs/LAUNCH-CHECKLIST.md` before publishing. Privacy, terms and cookie pages describe the implementation, but are not a legal certification. The business operator must confirm its legal identity, applicable jurisdictions, provider arrangements and actual retention practices.
 
-- Service landing pages are available under `/services`, with unique metadata and structured data.
+- Service landing pages are available under `/en/services` and `/my/services`, with unique metadata and structured data.
 - `/sitemap.xml` lists the homepage, services and policy pages; `/robots.txt` references it.
 - Set `GOOGLE_SITE_VERIFICATION` to the Google Search Console HTML verification token if using URL-prefix verification. Domain-property DNS verification is also possible and does not need this variable. Rebuild after changing the token.
 - The root layout no longer mounts the blocking brand intro or animated snowfall. Content is available immediately and with JavaScript disabled.
 - Image optimization uses the Next.js image endpoint. Deploy using a Next.js-compatible runtime, not a static export.
 - Verify production headers and any host-injected tracking separately; infrastructure settings are outside this repository.
 - Technical SEO cannot guarantee indexing, a #1 ranking, or continuous visibility. Deployment and Search Console submission require access to the hosting/domain and Google account.
+
+## Burmese and English
+
+- `/my` serves Burmese Unicode and `/en` serves English. Both versions are server-rendered, statically generated and listed with language alternates in the sitemap. Explicit language URLs never redirect based on location or cookies.
+- Unprefixed entry URLs (including old links such as `/services`) negotiate language. Priority: a valid `site_language` cookie, Myanmar country code `MM`, browser language, then English. Automatic detection does not set a cookie.
+- On Netlify, `netlify/edge-functions/language-redirect.mjs` uses the platform's trusted `context.geo.country.code`. No external IP lookup, IP logging or browser geolocation permission is added. Deploy the repository's `netlify.toml` edge-function configuration. Geo-IP can be inaccurate and reflects VPN/proxy location.
+- The Next.js proxy defers to the Netlify edge function when `NETLIFY=true`. Locally and on other hosts it uses the preference cookie and `Accept-Language`, not untrusted country headers. Other hosts need their own trusted country integration for IP-based selection.
+- The Myanmar/EN switch works with ordinary form submission (including without JavaScript), keeps the route/query and, with JavaScript, the hash, and sets a one-year HttpOnly, SameSite=Lax preference cookie (Secure on HTTPS). It overrides automatic selection on later unprefixed visits. Clear site cookies to reset it.
+- Negotiation responses are temporary redirects marked private/no-store; localized page caching does not depend on visitor IP or cookies.
+- Burmese uses the self-hosted Padauk Unicode font via `next/font`, with increased line height and no letter spacing. Obtain native-language review of translated copy, especially policy wording, before launch.
+- Run `npm run test:locale` for offline country/preference/edge-function tests, plus `npm run test:smoke` against a running production server for both languages. Live Netlify country detection must also be verified after deployment from Myanmar/non-Myanmar connections.
