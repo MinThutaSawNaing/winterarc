@@ -20,9 +20,9 @@ const highlights = [
 export default function Customers({ locale = 'en' }: { locale?: Locale }) {
   const my = locale === 'my'
   const localizedHighlights = my ? [
-    'ဆေးခန်းများ၊ ကိုယ်ကာယလေ့ကျင့်ရေးလုပ်ငန်းများ၊ စီးပွားရေးအဖွဲ့များတို့နှင့် လက်တွေ့ပူးပေါင်းဆောင်ရွက်မှုများ',
-    'လုပ်ငန်းအဆင့်ဆင့် ပြီးမြောက်မှုကို ဖောက်သည်များနှင့်အတူ ၎င်းတို့၏လုပ်ငန်းခွင်တွင် ဂုဏ်ပြုခြင်း',
-    'စတင်အသုံးပြုပြီးနောက်တွင်လည်း ရေရှည်ပံ့ပိုးကူညီခြင်း',
+    'ဆေးခန်း၊ ကိုယ်ကာယလေ့ကျင့်ရေးနှင့် စီးပွားရေးလုပ်ငန်း နယ်ပယ်အသီးသီးမှ မိတ်ဖက်များနှင့် ပူးပေါင်းဆောင်ရွက်မှုများ',
+    'လုပ်ငန်းအဆင့်မှတ်တိုင်များ ပြီးမြောက်မှုကို ဖောက်သည်များနှင့်အတူ ၎င်းတို့၏ လုပ်ငန်းခွင်တွင် ဂုဏ်ပြုခြင်း',
+    'စတင်အသုံးပြုပြီးနောက်တွင်လည်း ရေရှည် ပံ့ပိုးကူညီခြင်း',
   ] : highlights
   return (
     <section
@@ -36,12 +36,12 @@ export default function Customers({ locale = 'en' }: { locale?: Locale }) {
           </Reveal>
           <Reveal delay={0.06}>
             <h2 className="text-2xl font-bold tracking-[-0.03em] text-[var(--color-ink)] md:text-3xl lg:text-4xl">
-              {my ? 'ရှင်းလင်းတိကျမှုနှင့် ဂရုစိုက်မှုဖြင့် အကောင်အထည်ဖော်ပေးမည်ဟု Winter Arc Myanmar ကို ယုံကြည်သည့် မိတ်ဖက်များ။' : 'Partners who trust Winter Arc Myanmar to deliver with clarity and care.'}
+              {my ? 'ရှင်းလင်းတိကျမှုနှင့် ဂရုတစိုက် အကောင်အထည်ဖော်မှုကို ယုံကြည်သော Winter Arc Myanmar ၏ မိတ်ဖက်များ။' : 'Partners who trust Winter Arc Myanmar to deliver with clarity and care.'}
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="max-w-2xl text-sm leading-7 text-[var(--color-muted)] sm:text-base">
-              {my ? 'သွားဆေးခန်းများမှ ကိုယ်ကာယလေ့ကျင့်ရေး အမှတ်တံဆိပ်များနှင့် တိုးတက်နေသော လုပ်ငန်းများအထိ၊ ဆွေးနွေးတင်ပြချိန်တွင် ယုံကြည်မှုရရှိပြီး လက်တွေ့အသုံးပြုချိန်တွင်လည်း ထိရောက်စွာ လုပ်ဆောင်နိုင်သည့် ဒစ်ဂျစ်တယ်ထုတ်ကုန်များကို တည်ဆောက်ပေးပါသည်။' : <>From dental centers to fitness brands and growing businesses, we build
+              {my ? 'သွားဆေးခန်းများမှ ကိုယ်ကာယလေ့ကျင့်ရေး အမှတ်တံဆိပ်များနှင့် တိုးတက်နေသော လုပ်ငန်းများအထိ၊ ဆွေးနွေးတင်ပြချိန်တွင် ယုံကြည်မှုရရှိပြီး လက်တွေ့အသုံးပြုချိန်တွင်လည်း ထိရောက်စွာ လုပ်ဆောင်နိုင်သော ဒစ်ဂျစ်တယ်ထုတ်ကုန်များကို တည်ဆောက်ပေးပါသည်။' : <>From dental centers to fitness brands and growing businesses, we build
               digital products that earn confidence in the room and perform in production.</>}
             </p>
           </Reveal>

@@ -52,7 +52,7 @@ export default function Technologies({ locale = 'en' }) {
             </div>
 
             <p className="max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
-              {my ? 'မလိုအပ်သော ရှုပ်ထွေးမှုများကို ရှောင်ရှားလျက် မြန်ဆန်သော အသုံးပြုသူမျက်နှာပြင်များ၊ ယုံကြည်စိတ်ချရသော နောက်ကွယ်လုပ်ငန်းစဉ်များနှင့် ကလောက်ပေါ်တွင် အသုံးပြုရန် အသင့်ဖြစ်မှုကို ကျွန်ုပ်တို့ အသုံးပြုသည့် နည်းပညာများက ပံ့ပိုးပေးပါသည်။' : <>Our stack supports fast interfaces, dependable backend workflows,
+              {my ? 'မလိုအပ်သော ရှုပ်ထွေးမှုများကို ရှောင်ရှားထားပြီး မြန်ဆန်သော မျက်နှာပြင်များ၊ ယုံကြည်စိတ်ချရသော နောက်ကွယ်လုပ်ငန်းစဉ်များနှင့် Cloud ပေါ်တွင် အသုံးပြုရန် အသင့်ဖြစ်မှုတို့ကို ကျွန်ုပ်တို့၏ နည်းပညာများက ပံ့ပိုးပေးပါသည်။' : <>Our stack supports fast interfaces, dependable backend workflows,
               and cloud-ready delivery while staying pragmatic about complexity.</>}
             </p>
           </div>

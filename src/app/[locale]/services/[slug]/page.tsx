@@ -134,7 +134,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                   <ul className="grid gap-x-4 sm:grid-cols-2">
                     {[
                       { href: '#scope', label: t('Scope', 'လုပ်ငန်းအတိုင်းအတာ') },
-                      { href: '#deliverables', label: t('Deliverables', 'ရရှိမည့်အရာများ') },
+                      { href: '#deliverables', label: t('Deliverables', 'ပေးအပ်မည့်ရလဒ်များ') },
                       { href: '#prepare', label: t('What to prepare', 'ကြိုတင်ပြင်ဆင်ရန်') },
                       { href: '#process', label: t('Process', 'လုပ်ဆောင်ပုံအဆင့်ဆင့်') },
                       { href: '#faq', label: t('FAQs', 'မေးလေ့ရှိသော မေးခွန်းများ') },
@@ -154,7 +154,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <span className="section-label">{t('Scope', 'လုပ်ငန်းအတိုင်းအတာ')}</span>
             <h2 id="scope-heading" className="mt-4 text-2xl font-bold sm:text-3xl">{t('What we can help you build', 'ကျွန်ုပ်တို့ ကူညီတည်ဆောက်ပေးနိုင်သည့်အရာများ')}</h2>
-            <p className="mt-4 max-w-2xl leading-8 text-[var(--color-muted)]">{t('These capabilities are a starting point for discussion. The final scope reflects your priorities, existing systems, and project constraints.', 'ဤလုပ်ဆောင်နိုင်မှုများသည် ဆွေးနွေးမှုစတင်ရန် အခြေခံဖြစ်ပါသည်။ နောက်ဆုံးလုပ်ငန်းအတိုင်းအတာကို သင့်ဦးစားပေးအချက်များ၊ လက်ရှိစနစ်နှင့် ပရောဂျက်ကန့်သတ်ချက်များအတိုင်း သတ်မှတ်ပါသည်။')}</p>
+            <p className="mt-4 max-w-2xl leading-8 text-[var(--color-muted)]">{t('These capabilities are a starting point for discussion. The final scope reflects your priorities, existing systems, and project constraints.', 'အောက်ပါဝန်ဆောင်မှုများကို အခြေခံ၍ စတင်ဆွေးနွေးနိုင်ပါသည်။ အမှန်တကယ် ဆောင်ရွက်မည့်အပိုင်းများကို သင့်ဦးစားပေးချက်များ၊ လက်ရှိစနစ်နှင့် ပရောဂျက်၏ ကန့်သတ်ချက်များအလိုက် ညှိနှိုင်းသတ်မှတ်ပါသည်။')}</p>
             <div className="mt-8 grid gap-5 md:grid-cols-2">
               {service.scope.map((item) => (
                 <article key={item.title} className="panel-card p-6 sm:p-8">
@@ -166,12 +166,12 @@ export default async function ServicePage({ params }: ServicePageProps) {
           </div>
         </section>
 
-        <section className="section-shell bg-[var(--color-bg-alt)] py-16 lg:py-24" aria-label={t('Deliverables and preparation', 'ရရှိမည့်အရာများနှင့် ကြိုတင်ပြင်ဆင်မှု')}>
+        <section className="section-shell bg-[var(--color-bg-alt)] py-16 lg:py-24" aria-label={t('Deliverables and preparation', 'ပေးအပ်မည့်ရလဒ်များနှင့် ကြိုတင်ပြင်ဆင်မှု')}>
           <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
             <div id="deliverables" className="scroll-mt-24">
-              <span className="section-label">{t('Deliverables', 'ရရှိမည့်အရာများ')}</span>
+              <span className="section-label">{t('Deliverables', 'ပေးအပ်မည့်ရလဒ်များ')}</span>
               <h2 className="mt-4 text-2xl font-bold sm:text-3xl">{t('A clear handover, not just a launch', 'စတင်အသုံးပြုနိုင်အောင် ဆောင်ရွက်ပေးရုံသာမက ရှင်းလင်းစွာ လွှဲပြောင်းပေးခြင်း')}</h2>
-              <p className="mt-4 leading-8 text-[var(--color-muted)]">{t('The exact deliverables are agreed before work begins. A typical scope can include:', 'အလုပ်မစမီ ရရှိမည့်အရာများကို တိကျစွာ သဘောတူပါသည်။ ပုံမှန်အားဖြင့် အောက်ပါတို့ ပါဝင်နိုင်ပါသည်။')}</p>
+              <p className="mt-4 leading-8 text-[var(--color-muted)]">{t('The exact deliverables are agreed before work begins. A typical scope can include:', 'အလုပ်မစမီ ပေးအပ်မည့်ရလဒ်များကို တိကျစွာ သဘောတူပါသည်။ ပုံမှန်အားဖြင့် အောက်ပါတို့ ပါဝင်နိုင်ပါသည်။')}</p>
               <ul className="mt-6 space-y-4">
                 {service.deliverables.map((item) => (
                   <li key={item} className="flex gap-3 leading-7 text-[var(--color-muted)]">
@@ -197,7 +197,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 border-t border-[var(--color-line)] pt-5 text-sm leading-7 text-[var(--color-muted)]">{t('For your initial enquiry, use anonymized examples and avoid sending passwords, credentials, or sensitive customer data.', 'ပထမဆုံးစုံစမ်းမေးမြန်းရာတွင် ကိုယ်ရေးအချက်အလက်ဖယ်ထားသော နမူနာများကိုသာ အသုံးပြုပြီး စကားဝှက်၊ အကောင့်ဝင်ရောက်ခွင့်အချက်အလက်နှင့် ဖောက်သည်၏ လျှို့ဝှက်ဒေတာများ မပို့ပါနှင့်။')}</p>
+              <p className="mt-6 border-t border-[var(--color-line)] pt-5 text-sm leading-7 text-[var(--color-muted)]">{t('For your initial enquiry, use anonymized examples and avoid sending passwords, credentials, or sensitive customer data.', 'ပထမဆုံးစုံစမ်းမေးမြန်းရာတွင် ကိုယ်ရေးအချက်အလက်များ ဖယ်ရှားထားသော နမူနာများကိုသာ အသုံးပြုပြီး စကားဝှက်၊ အကောင့်ဝင်ရောက်ခွင့်အချက်အလက်နှင့် ဖောက်သည်၏ လျှို့ဝှက်ဒေတာများ မပို့ပါနှင့်။')}</p>
             </div>
           </div>
         </section>
@@ -206,7 +206,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <span className="section-label">{t('Process', 'လုပ်ဆောင်ပုံအဆင့်ဆင့်')}</span>
             <h2 id="process-heading" className="mt-4 text-2xl font-bold sm:text-3xl">{t('From first conversation to handover', 'ပထမဆုံးဆွေးနွေးမှုမှ လွှဲပြောင်းပေးသည့်အထိ')}</h2>
-            <p className="mt-4 max-w-2xl leading-8 text-[var(--color-muted)]">{t('Review points keep decisions visible. Milestones and timing depend on the agreed scope, access to existing systems, and feedback availability.', 'ပြန်လည်သုံးသပ်သည့်အဆင့်များကြောင့် ဆုံးဖြတ်ချက်များကို ရှင်းလင်းစွာ သိရှိနိုင်ပါသည်။ ပြီးစီးမှုမှတ်တိုင်နှင့် အချိန်ဇယားသည် သဘောတူထားသော အတိုင်းအတာ၊ လက်ရှိစနစ်အသုံးပြုခွင့်နှင့် တုံ့ပြန်ချက်ရရှိနိုင်မှုအပေါ် မူတည်ပါသည်။')}</p>
+            <p className="mt-4 max-w-2xl leading-8 text-[var(--color-muted)]">{t('Review points keep decisions visible. Milestones and timing depend on the agreed scope, access to existing systems, and feedback availability.', 'လုပ်ငန်းအဆင့်အလိုက် အတူပြန်လည်သုံးသပ်ခြင်းဖြင့် ဆုံးဖြတ်ချက်များကို နှစ်ဖက်လုံး ရှင်းလင်းစွာ သိရှိနိုင်ပါသည်။ အဆင့်လိုက် ပြီးစီးရမည့်အချိန်များသည် သဘောတူထားသော လုပ်ငန်းအတိုင်းအတာ၊ လက်ရှိစနစ်များသို့ ဝင်ရောက်အသုံးပြုခွင့်နှင့် တုံ့ပြန်အကြံပြုချက် ရရှိချိန်တို့အပေါ် မူတည်ပါသည်။')}</p>
             <ol className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {service.process.map((step, index) => (
                 <li key={step.title} className="border-t-2 border-[var(--color-line)] pt-5">
@@ -240,7 +240,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
         <section className="section-shell bg-[var(--color-brand-soft)] py-14 sm:py-16" aria-labelledby="contact-heading">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_auto] lg:items-center lg:px-8">
             <div className="max-w-2xl">
-              <h2 id="contact-heading" className="text-2xl font-bold sm:text-3xl">{t('Let’s define the next useful step.', 'နောက်ထပ် အကျိုးရှိမည့်ခြေလှမ်းကို အတူသတ်မှတ်ကြပါစို့။')}</h2>
+              <h2 id="contact-heading" className="text-2xl font-bold sm:text-3xl">{t('Let’s define the next useful step.', 'နောက်တစ်ဆင့်အတွက် အတူတကွ စီစဉ်ကြပါစို့။')}</h2>
               <p className="mt-4 leading-8 text-[var(--color-muted)]">{t('Share what you want to build, who it is for, and the constraints we should understand. We can discuss scope and open questions from there.', 'တည်ဆောက်လိုသောအရာ၊ ရည်ရွယ်ထားသော အသုံးပြုသူများနှင့် ကျွန်ုပ်တို့ သိထားသင့်သော ကန့်သတ်ချက်များကို မျှဝေပါ။ ထိုအချက်များကို အခြေခံ၍ လုပ်ငန်းအတိုင်းအတာနှင့် မရှင်းလင်းသေးသော မေးခွန်းများကို ဆက်လက်ဆွေးနွေးနိုင်ပါသည်။')}</p>
             </div>
             <Link href={localizedPath(locale, '/#contact')} className="inline-flex min-h-12 items-center justify-center gap-3 justify-self-start rounded-lg bg-[var(--color-brand)] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-brand-deep)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-brand)]">

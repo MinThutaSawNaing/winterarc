@@ -46,9 +46,9 @@ export default function ContactModal({ open, onClose, locale = 'en' }: ContactMo
     ...option,
     label: my ? ({ Call: 'ဖုန်းခေါ်ရန်', Email: 'အီးမေးလ်' }[option.label] ?? option.label) : option.label,
     description: my ? ({
-      Call: 'ကျွန်ုပ်တို့အဖွဲ့နှင့် တိုက်ရိုက်ပြောဆိုပါ',
-      Email: 'အသေးစိတ်အချက်အလက်များကို စာဖြင့် ပို့ပါ',
-      WhatsApp: 'ချက်ချင်း စကားပြောရန် ဆက်သွယ်ပါ',
+      Call: 'ကျွန်ုပ်တို့အဖွဲ့နှင့် တိုက်ရိုက် ပြောဆိုပါ',
+      Email: 'အသေးစိတ်အချက်အလက်များကို အီးမေးလ်ဖြင့် ပို့ပါ',
+      WhatsApp: 'ချက်ချင်း စတင် စကားပြောပါ',
     }[option.label] ?? option.description) : option.description,
     href: my && option.label === 'Email'
       ? `mailto:${contactDetails.email}?subject=${encodeURIComponent('ဝက်ဘ်ဆိုက်မှ စုံစမ်းမေးမြန်းခြင်း')}&body=${encodeURIComponent('မင်္ဂလာပါ Winter Arc Myanmar၊')}`
@@ -101,7 +101,7 @@ export default function ContactModal({ open, onClose, locale = 'en' }: ContactMo
         </button>
 
         <span className="inline-flex rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-blue-100">
-          {my ? 'ဆွေးနွေးကြရအောင်' : "Let's Talk"}
+          {my ? 'စကားပြောကြရအောင်' : "Let's Talk"}
         </span>
 
         <h2 id="contact-dialog-title" className="mt-4 text-xl font-bold tracking-[-0.03em] text-white sm:text-2xl">

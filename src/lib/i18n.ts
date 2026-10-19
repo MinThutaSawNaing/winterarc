@@ -22,7 +22,7 @@ export const localizedSite = {
     description: 'Web development, mobile apps, cloud solutions and custom business software from Winter Arc Myanmar in Yangon. Explore our services and discuss your project.',
   },
   my: {
-    title: 'မြန်မာနိုင်ငံအတွက် ဝက်ဘ်ဆိုက်နှင့် ဆော့ဖ်ဝဲ ရေးဆွဲခြင်း | Winter Arc Myanmar',
-    description: 'ရန်ကုန်အခြေစိုက် Winter Arc Myanmar မှ ဝက်ဘ်ဆိုက်၊ မိုဘိုင်းအက်ပ်၊ Cloud နှင့် လုပ်ငန်းသုံးဆော့ဖ်ဝဲများ ရေးဆွဲပေးပါသည်။ သင့်လုပ်ငန်းလိုအပ်ချက်ကို ဆွေးနွေးနိုင်ပါသည်။',
+    title: 'မြန်မာနိုင်ငံရှိ ဝက်ဘ်ဆိုက်နှင့် ဆော့ဖ်ဝဲ ဖန်တီးရေးဝန်ဆောင်မှု | Winter Arc Myanmar',
+    description: 'ရန်ကုန်အခြေစိုက် Winter Arc Myanmar မှ ဝက်ဘ်ဆိုက်၊ မိုဘိုင်းအက်ပ်နှင့် လုပ်ငန်းသုံးဆော့ဖ်ဝဲများ ဖန်တီးပေးပြီး Cloud ဝန်ဆောင်မှုများလည်း ဆောင်ရွက်ပေးပါသည်။ သင့်ပရောဂျက်အတွက် ဆက်သွယ်ဆွေးနွေးနိုင်ပါသည်။',
   },
 }

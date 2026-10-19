@@ -286,7 +286,7 @@ export default function MobileNav({
               variants={footerVariants}
             >
               <p className="mb-3 text-center text-[0.68rem] font-medium uppercase tracking-[0.16em] text-[var(--color-muted)]">
-                {locale === 'my' ? 'ပရောဂျက် စတင်ဖို့ အဆင်သင့်ဖြစ်ပြီလား။' : 'Ready to start a project?'}
+                {locale === 'my' ? 'ပရောဂျက်တစ်ခု စတင်ရန် အသင့်ဖြစ်ပြီလား။' : 'Ready to start a project?'}
               </p>
               <button
                 type="button"
@@ -294,7 +294,7 @@ export default function MobileNav({
                 className="header-cta w-full justify-center py-3.5 text-sm"
               >
                 <CalendarIcon />
-                {locale === 'my' ? 'ဖုန်းပြောရန် အချိန်ညှိမယ်' : 'Book a Call'}
+                {locale === 'my' ? 'ဖုန်းဖြင့် ဆွေးနွေးရန် အချိန်ညှိပါ' : 'Book a Call'}
               </button>
             </motion.div>
           </motion.nav>

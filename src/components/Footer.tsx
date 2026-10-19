@@ -14,7 +14,7 @@ const footerLinks = [
 
 export default function Footer({ locale = 'en' }: { locale?: Locale }) {
   const my = locale === 'my'
-  const links = footerLinks.map((item, index) => ({ name: my ? ['ပင်မ', 'ဝန်ဆောင်မှုများ', 'ကျွန်ုပ်တို့အကြောင်း', 'လုပ်ငန်းစဉ်', 'ဖြေရှင်းနည်း နမူနာများ', 'ဆက်သွယ်ရန်'][index] : item.name, href: localizedPath(locale, item.href) }))
+  const links = footerLinks.map((item, index) => ({ name: my ? ['ပင်မစာမျက်နှာ', 'ဝန်ဆောင်မှုများ', 'ကျွန်ုပ်တို့အကြောင်း', 'လုပ်ငန်းစဉ်', 'ဖြေရှင်းချက် နမူနာများ', 'ဆက်သွယ်ရန်'][index] : item.name, href: localizedPath(locale, item.href) }))
   return (
     <footer data-snow-surface="dark" className="bg-[var(--color-panel-dark)] text-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-14">
@@ -29,7 +29,7 @@ export default function Footer({ locale = 'en' }: { locale?: Locale }) {
               </h3>
             </div>
             <p className="mt-4 text-sm leading-7 text-slate-300">
-              {my ? 'အသုံးပြုရ ရှင်းလင်းလွယ်ကူပြီး ရေရှည်လုပ်ငန်းတိုးတက်မှုကို အထောက်အကူပြုမည့် ဝက်ဘ်ဆိုက်၊ ပလက်ဖောင်းနှင့် ဆော့ဖ်ဝဲစနစ်များကို ရေးဆွဲပေးပါသည်။' : 'Websites, platforms, and software systems designed to feel clear, credible, and ready to support long-term growth.'}
+              {my ? 'အသုံးပြုရ ရှင်းလင်းလွယ်ကူပြီး ရေရှည်တိုးတက်မှုကို အထောက်အကူပြုသော ဝက်ဘ်ဆိုက်၊ ပလက်ဖောင်းနှင့် ဆော့ဖ်ဝဲစနစ်များကို ဒီဇိုင်းရေးဆွဲ တည်ဆောက်ပေးပါသည်။' : 'Websites, platforms, and software systems designed to feel clear, credible, and ready to support long-term growth.'}
             </p>
           </div>
 
@@ -52,7 +52,7 @@ export default function Footer({ locale = 'en' }: { locale?: Locale }) {
             </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-                {my ? 'အခြားအချက်အလက်များ' : 'More'}
+                {my ? 'အခြား' : 'More'}
               </p>
               <nav aria-label={my ? 'အောက်ခြေ အခြားမီနူး' : 'Footer secondary'} className="mt-4 flex flex-col gap-2.5">
                 {links.slice(3).map((item) => (
@@ -89,8 +89,8 @@ export default function Footer({ locale = 'en' }: { locale?: Locale }) {
           </p>
           <nav aria-label={my ? 'မူဝါဒများ' : 'Policies'} className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-300">
             <a href={localizedPath(locale, '/privacy')} className="inline-flex min-h-11 items-center hover:text-white">{my ? 'ကိုယ်ရေးအချက်အလက် မူဝါဒ' : 'Privacy Policy'}</a>
-            <a href={localizedPath(locale, '/terms')} className="inline-flex min-h-11 items-center hover:text-white">{my ? 'အသုံးပြုမှု စည်းကမ်းများ' : 'Terms of Use'}</a>
-            <a href={localizedPath(locale, '/cookies')} className="inline-flex min-h-11 items-center hover:text-white">{my ? 'ကွတ်ကီး အချက်အလက်' : 'Cookie Information'}</a>
+            <a href={localizedPath(locale, '/terms')} className="inline-flex min-h-11 items-center hover:text-white">{my ? 'အသုံးပြုမှု စည်းကမ်းချက်များ' : 'Terms of Use'}</a>
+            <a href={localizedPath(locale, '/cookies')} className="inline-flex min-h-11 items-center hover:text-white">{my ? 'ကွတ်ကီး မူဝါဒ' : 'Cookie Information'}</a>
           </nav>
           <LanguageSwitcher locale={locale} />
         </div>

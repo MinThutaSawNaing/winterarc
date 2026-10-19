@@ -69,8 +69,8 @@ export default function Contact({ locale = 'en' }: { locale?: Locale }) {
   }))
   const points = my ? [
     'သင့်လုပ်ငန်းရည်မှန်းချက်များနှင့် အသုံးပြုသူလိုအပ်ချက်များ',
-    'အချိန်ဇယား၊ လုပ်ငန်းအတိုင်းအတာနှင့် အကောင်အထည်ဖော်မှုဆိုင်ရာ အန္တရာယ်များ',
-    'စိတ်ကူးမှ လက်တွေ့စတင်အသုံးပြုနိုင်သည်အထိ လက်တွေ့အကျဆုံးနည်းလမ်း',
+    'အချိန်ဇယား၊ ဆောင်ရွက်မည့်နယ်ပယ်နှင့် အကောင်အထည်ဖော်မှုဆိုင်ရာ အန္တရာယ်များ',
+    'စိတ်ကူးမှ စတင်အသုံးပြုနိုင်သည်အထိ လက်တွေ့အကျဆုံး လမ်းကြောင်း',
   ] : conversationPoints
   return (
     <section
@@ -85,11 +85,11 @@ export default function Contact({ locale = 'en' }: { locale?: Locale }) {
             </span>
 
             <h2 className="mt-4 text-2xl font-bold tracking-[-0.03em] text-white md:text-3xl lg:text-4xl">
-              {my ? 'သင်ဖန်တီးလိုသည့်အရာကို ပြောပြပါ။' : 'Tell us what you want to build.'}
+              {my ? 'သင်တည်ဆောက်လိုသည့်အရာကို ပြောပြပါ။' : 'Tell us what you want to build.'}
             </h2>
 
             <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
-              {my ? 'ပရောဂျက်စုံစမ်းမေးမြန်းမှု၊ ထုတ်ကုန်စီမံကိန်းရေးဆွဲမှု၊ ဒီဇိုင်းပြန်လည်ရေးဆွဲမှု သို့မဟုတ် နည်းပညာပံ့ပိုးမှုတို့အတွက် ဆက်သွယ်နိုင်ပါသည်။ နောက်တစ်ဆင့်တွင် လုပ်ဆောင်ရမည့်အရာများ ရှင်းလင်းပြီး လက်တွေ့လုပ်ဆောင်ရလွယ်ကူစေရန် ကျွန်ုပ်တို့ ကူညီပေးပါမည်။' : 'Reach out for project inquiries, product planning, redesign work, or support discussions. We aim to make the next step feel clear, practical, and easy to act on.'}
+              {my ? 'ပရောဂျက် စုံစမ်းမေးမြန်းမှု၊ ထုတ်ကုန်စီမံကိန်း ရေးဆွဲမှု၊ ဒီဇိုင်း ပြန်လည်ရေးဆွဲမှု သို့မဟုတ် နည်းပညာ ပံ့ပိုးမှုတို့အတွက် ဆက်သွယ်နိုင်ပါသည်။ နောက်တစ်ဆင့်အတွက် လုပ်ဆောင်ရမည့်အရာများကို ရှင်းလင်းပြီး လက်တွေ့ ဆက်လက်ဆောင်ရွက်နိုင်အောင် ကူညီပေးပါသည်။' : 'Reach out for project inquiries, product planning, redesign work, or support discussions. We aim to make the next step feel clear, practical, and easy to act on.'}
             </p>
 
             <div className="mt-8 rounded-xl border border-white/8 bg-white/[0.04] p-6">
@@ -155,8 +155,8 @@ export default function Contact({ locale = 'en' }: { locale?: Locale }) {
           </div>
         </div>
         <p className="mt-8 max-w-3xl text-sm leading-7 text-[var(--color-muted)]">
-          {my ? 'စတင်ရန် သင့်ရည်မှန်းချက်များ၊ လိုအပ်သည့်လုပ်ဆောင်ချက်များနှင့် မျှော်မှန်းအချိန်ဇယားကို မျှဝေပါ။ စကားဝှက်များ၊ ငွေကြေးအချက်အလက်များ သို့မဟုတ် လူနာမှတ်တမ်းများ မပို့ပါနှင့်။ ပြင်ပဆက်သွယ်ရေးဝန်ဆောင်မှုများတွင် သီးခြား ကိုယ်ရေးအချက်အလက်ဆိုင်ရာ လုပ်ထုံးလုပ်နည်းများ ရှိပါသည်။ ကျွန်ုပ်တို့၏ ' : "To get started, share your goals, the features you need and your preferred timeline. Please don't send passwords, financial details or patient records. External contact services have their own privacy practices. Read our "}
-          <a href={`/${locale}/privacy`} className="font-semibold text-[var(--color-brand-deep)] underline underline-offset-4">{my ? 'ကိုယ်ရေးအချက်အလက်မူဝါဒ' : 'Privacy Policy'}</a>{my ? 'ကို ဖတ်ရှုပါ။' : '.'}
+          {my ? 'စတင်ရန် သင့်ရည်မှန်းချက်များ၊ လိုအပ်သော လုပ်ဆောင်ချက်များနှင့် မျှော်မှန်းအချိန်ဇယားကို မျှဝေပါ။ စကားဝှက်များ၊ ငွေရေးကြေးရေး အချက်အလက်များ သို့မဟုတ် လူနာမှတ်တမ်းများကို မပို့ပါနှင့်။ ပြင်ပ ဆက်သွယ်ရေးဝန်ဆောင်မှုများတွင် သီးခြား ကိုယ်ရေးအချက်အလက် လုပ်ထုံးလုပ်နည်းများ ရှိပါသည်။ ကျွန်ုပ်တို့၏ ' : "To get started, share your goals, the features you need and your preferred timeline. Please don't send passwords, financial details or patient records. External contact services have their own privacy practices. Read our "}
+          <a href={`/${locale}/privacy`} className="font-semibold text-[var(--color-brand-deep)] underline underline-offset-4">{my ? 'ကိုယ်ရေးအချက်အလက် မူဝါဒ' : 'Privacy Policy'}</a>{my ? 'ကို ဖတ်ရှုပါ။' : '.'}
         </p>
       </div>
     </section>

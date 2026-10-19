@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test:smoke": "node --test scripts/smoke-test.mjs",
-    "test:locale": "node --test scripts/locale-routing.test.mjs"
+    "test:locale": "node --test scripts/locale-routing.test.mjs",
+    "test:copy": "node --test scripts/burmese-copy.test.mjs"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",

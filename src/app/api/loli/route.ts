@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
   if (!messages.length || messages.at(-1)?.role !== 'user') {
     return jsonResponse(
       {
-        message: my ? 'မှန်ကန်သောပုံစံဖြင့် အသုံးပြုသူမက်ဆေ့ချ် အနည်းဆုံးတစ်ခု ပို့ပါ။' : 'Please send at least one valid user message.',
+        message: my ? 'မေးခွန်း သို့မဟုတ် စာသားတစ်ခု ရေးထည့်ပြီး ပေးပို့ပါ။' : 'Please send at least one valid user message.',
       },
       400
     )
@@ -192,7 +192,7 @@ export async function POST(request: NextRequest) {
   if (!answer) {
     return jsonResponse(
       {
-        message: my ? 'Loli ထံမှ ဖတ်ရှုနိုင်သည့်အဖြေ မရရှိခဲ့ပါ။ ပြန်ကြိုးစားပါ။' : 'Loli did not return a readable response. Please try again.',
+        message: my ? 'Loli ထံမှ အဖြေကို ရယူ၍ မရခဲ့ပါ။ ထပ်မံကြိုးစားပါ။' : 'Loli did not return a readable response. Please try again.',
       },
       502
     )

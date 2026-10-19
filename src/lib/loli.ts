@@ -28,7 +28,7 @@ export type LoliUsage = SignedUsagePayload & {
 export function buildLoliSystemPrompt(locale: Locale = 'en') {
   const configuredPrompt = process.env.LOLI_SYSTEM_PROMPT?.trim()
   const languagePreference = locale === 'my'
-    ? 'The visitor explicitly selected Burmese (Myanmar) as their preferred language. Answer in natural Burmese using Myanmar script by default, unless the visitor explicitly requests another language. Keep company names, product names, URLs, and technical terms in their original form where helpful.'
+    ? 'The visitor explicitly selected Burmese (Myanmar) as their preferred language. Answer in natural, professional Burmese using standard Unicode Myanmar spelling and grammar by default, unless the visitor explicitly requests another language. Write for the business context instead of translating English word for word. Prefer short, clear sentences and consistent terminology: လုပ်ငန်းစဉ် for workflow and လုပ်ငန်းလိုအပ်ချက်အလိုက် ဆော့ဖ်ဝဲ for custom software. Keep company names, product names, URLs, and familiar technical terms such as Cloud, API, SEO, Android and iOS in their original form where helpful. Explain unfamiliar jargon briefly. Avoid literal English metaphors, invented Burmese technical terms and unnecessary formality.'
     : 'The visitor explicitly selected English as their preferred language. Answer in English by default, unless the visitor explicitly requests another language.'
 
   if (configuredPrompt) {

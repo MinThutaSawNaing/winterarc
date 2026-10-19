@@ -36,7 +36,7 @@ function CalendarIcon() {
 
 export default function Header({ locale = 'en' }: { locale?: Locale }) {
   const my = locale === 'my'
-  const items = navItems.map((item, index) => ({ ...item, name: my ? ['ပင်မ', 'ဝန်ဆောင်မှုများ', 'ကျွန်ုပ်တို့အကြောင်း', 'လုပ်ငန်းစဉ်', 'Loli', 'ဆက်သွယ်ရန်'][index] : item.name }))
+  const items = navItems.map((item, index) => ({ ...item, name: my ? ['ပင်မစာမျက်နှာ', 'ဝန်ဆောင်မှုများ', 'ကျွန်ုပ်တို့အကြောင်း', 'လုပ်ငန်းစဉ်', 'Loli', 'ဆက်သွယ်ရန်'][index] : item.name }))
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
@@ -133,7 +133,7 @@ export default function Header({ locale = 'en' }: { locale?: Locale }) {
               Winter Arc Myanmar
             </span>
             <span className="header-brand-tagline mt-0.5 hidden truncate text-[0.62rem] font-semibold uppercase tracking-[0.2em] min-[420px]:block sm:text-[0.7rem] md:text-[0.75rem]">
-              {my ? 'ဒစ်ဂျစ်တယ် နည်းပညာဝန်ဆောင်မှု' : 'Digital Delivery'}
+              {my ? 'ဒစ်ဂျစ်တယ် နည်းပညာဝန်ဆောင်မှုများ' : 'Digital Delivery'}
             </span>
           </div>
         </Link>
@@ -160,7 +160,7 @@ export default function Header({ locale = 'en' }: { locale?: Locale }) {
 
           <button type="button" onClick={() => setContactModalOpen(true)} className="header-cta shrink-0">
             <CalendarIcon />
-            <span>{my ? 'ဆွေးနွေးကြမယ်' : "Let's Talk"}</span>
+            <span>{my ? 'ဆွေးနွေးရန်' : "Let's Talk"}</span>
           </button>
         </div>
 
