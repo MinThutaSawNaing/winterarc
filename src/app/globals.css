@@ -30,6 +30,14 @@ html {
   scroll-padding-top: 5rem;
 }
 
+/* Desktop-only 80% zoom — the layout reads tighter on wide screens.
+   ponytail: compounds with the visitor's own browser zoom (80% of their level). */
+@media (min-width: 1024px) {
+  html {
+    zoom: 80%;
+  }
+}
+
 :focus-visible {
   outline: 3px solid var(--color-brand);
   outline-offset: 4px;
@@ -86,10 +94,9 @@ html[lang="my"] h1 { line-height: 1.6; font-size: clamp(1.9rem, 4.2vw, 3.25rem);
 html[lang="my"] .header-brand-name,
 html[lang="my"] .header-brand-tagline { line-height: 1.6; }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+/* No `a { color: inherit }` here: unlayered rules outrank Tailwind's
+   `@layer utilities`, which silently killed `text-white`, `text-[var(--color-*)]`
+   and `hover:underline` on every link. Preflight already resets link colour. */
 
 button,
 input,
